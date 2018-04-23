@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<>
 
 <div class="container">
     <div class="page-header">
@@ -21,9 +21,40 @@
     <div class="input-group input-group-sm">
         <input type="text" class="form-control" placeholder="enter text">
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Search</button>
+            <button class="btn btn-default"
+                    type="button"
+                    onclick="searchMechanism()">
+                Search
+            </button>
+            <script>
+                function searchMechanism() {
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.open('GET', 'http://127.0.0.1:8000/api/mechanisms/', false);
+                    xhttp.setRequestHeader('Content-type', 'application/json');
+                    xhttp.send();
+
+                    if(xhttp.status==200) {
+                        const response = JSON.parse(xhttp.responseText);
+                        const list = document.getElementById('mechanisms');
+                        list.innerHTML = '';
+
+                        for(mechanism of Object.keys(response)) {
+                            const entry = document.createElement('li');
+                            entry.appendChild(document.createTextNode(mechanism));
+                            list.appendChild(entry);
+                        }
+                    }
+                }
+            </script>
         </span>
     </div>
+</div>
+
+<br></br>
+
+<div class="container">
+    <ol id="mechanisms">
+    </ol>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
