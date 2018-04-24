@@ -3,3 +3,13 @@
     height: 30px;
     margin-right: 10px;
 }
+
+.row {
+    display: flex;
+    max-width: 600px;
+}
+
+.column {
+    flex: 50%;
+    margin-right: 50px;
+}
