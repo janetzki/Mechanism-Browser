@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<>
 
 <div class="container">
     <div class="page-header">
@@ -18,9 +17,85 @@
 </div>
 
 <div class="container">
-    <div class="input-group input-group-sm">
-        <input type="text" class="form-control" placeholder="enter text">
-        <span class="input-group-btn">
+    <div class="form-group row">
+        <label for="r1" class="col-sm-2 col-form-label">
+            <img class="icon" src="icons/r1.png" align="left">
+            Rotation X
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="r1" placeholder="number">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="r2" class="col-sm-2 col-form-label">
+            <img class="icon" src="icons/r2.png" align="left">
+            Rotation Y
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="r2" placeholder="number">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="r3" class="col-sm-2 col-form-label">
+            <img class="icon" src="icons/r3.png" align="left">
+            Rotation Z
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="r3" placeholder="number">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="t1" class="col-sm-2 col-form-label">
+            <img class="icon" src="icons/t1.png" align="left">
+            Translation X
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="t1" placeholder="number">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="t2" class="col-sm-2 col-form-label">
+            <img class="icon" src="icons/t2.png" align="left">
+            Translation Y
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="t2" placeholder="number">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="t3" class="col-sm-2 col-form-label">
+            <img class="icon" src="icons/t3.png" align="left">
+            Translation Z
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="t3" placeholder="number">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="transmission" class="col-sm-2 col-form-label">
+            Transmission
+        </label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="transmission" placeholder="number">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">
+            Name
+        </label>
+        <div class="col-sm-10">
+            <input type="search" class="form-control" id="name" placeholder="text">
+        </div>
+    </div>
+
+    <span class="input-group-btn">
             <button class="btn btn-default"
                     type="button"
                     onclick="searchMechanism()">
@@ -28,29 +103,42 @@
             </button>
             <script>
                 function searchMechanism() {
+                    const params = {
+                        r1: document.querySelector("#r1").value,
+                        r2: document.querySelector("#r2").value,
+                        r3: document.querySelector("#r3").value,
+                        t1: document.querySelector("#t1").value,
+                        t2: document.querySelector("#t2").value,
+                        t3: document.querySelector("#t3").value,
+                        transmission: document.querySelector("#transmission").value,
+                        name: document.querySelector("#name").value
+                    };
+                    console.log(params);
+
                     const xhttp = new XMLHttpRequest();
-                    xhttp.open('GET', 'http://127.0.0.1:8000/api/mechanisms/', false);
+                    xhttp.open('GET', 'http://127.0.0.1:8000/api/mechanisms/');
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();
+                    xhttp.onreadystatechange = function() {
+                        if (xhttp.readyState == 4 && xhttp.status == 200) {
+                            const response = JSON.parse(xhttp.responseText);
+                            const list = document.getElementById('mechanisms');
+                            list.innerHTML = '';
 
-                    if(xhttp.status==200) {
-                        const response = JSON.parse(xhttp.responseText);
-                        const list = document.getElementById('mechanisms');
-                        list.innerHTML = '';
-
-                        for(mechanism of Object.keys(response)) {
-                            const entry = document.createElement('li');
-                            entry.appendChild(document.createTextNode(mechanism));
-                            list.appendChild(entry);
+                            for (mechanism of Object.keys(response)) {
+                                const entry = document.createElement('li');
+                                entry.appendChild(document.createTextNode(mechanism));
+                                list.appendChild(entry);
+                            }
                         }
-                    }
+                    };
+                    // xhttp.send(JSON.stringify(params));
                 }
             </script>
         </span>
-    </div>
 </div>
 
-<br></br>
+<br/>
 
 <div class="container">
     <ol id="mechanisms">
