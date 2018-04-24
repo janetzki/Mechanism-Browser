@@ -14,3 +14,7 @@ db.sqlite3
 
 # virtualenvironment
 venv/
+
+# Chrome
+CChrome/
+start_chrome.sh
