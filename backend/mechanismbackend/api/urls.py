@@ -2,7 +2,6 @@ from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
-    #url(r'^mechanisms/$', 'mechanism_collection'),
-    url(r'^mechanisms/$', views.api_root),
-    #url(r'^$', views.api_root),
+    url(r'^mechanisms/$', views.mechanism_list),
+    url(r'^mechanisms/(?P<pk>[0-9]+)/$', views.mechanism_detail),
 ]
