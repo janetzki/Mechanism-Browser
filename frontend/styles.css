@@ -6,10 +6,26 @@
 
 .row {
     display: flex;
-    max-width: 600px;
+    max-width: 500px;
 }
 
 .column {
     flex: 50%;
     margin-right: 50px;
+}
+
+.btn.btn-secondary {
+    background-color: lightgray;
+}
+
+.btn.btn-secondary.positive.active {
+    background-color: green;
+}
+
+.btn.btn-secondary.neutral.active {
+    background-color: gray;
+}
+
+.btn.btn-secondary.negative.active {
+    background-color: red;
 }
