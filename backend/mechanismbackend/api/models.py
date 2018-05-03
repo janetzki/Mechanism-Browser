@@ -7,7 +7,7 @@ class Mechanism(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=200)
     link = models.URLField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='img/')
     inputRotationX = models.BooleanField()
     inputRotationY = models.BooleanField()
     inputRotationZ = models.BooleanField()
