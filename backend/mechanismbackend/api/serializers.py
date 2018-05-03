@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Mechanism
 
+
 class MechanismSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mechanism
@@ -23,48 +24,35 @@ class MechanismSerializer(serializers.ModelSerializer):
                  'comments',
                  'created')
 
-"""TODO: create proper JSON reprensentation as soon as JSON model is decided on
     def to_representation(self, instance):
-        input = list()
-        input
+        input_dict = dict()
+        input_dict['r1'] = instance.inputRotationX
+        input_dict['r2'] = instance.inputRotationY
+        input_dict['r3'] = instance.inputRotationZ
+        input_dict['t1'] = instance.inputTranslationX
+        input_dict['t2'] = instance.inputTranslationY
+        input_dict['t3'] = instance.inputTranslationZ
+
+        output_dict = dict()
+        output_dict['r1'] = instance.outputRotationX
+        output_dict['r2'] = instance.outputRotationY
+        output_dict['r3'] = instance.outputRotationZ
+        output_dict['t1'] = instance.outputTranslationX
+        output_dict['t2'] = instance.outputTranslationY
+        output_dict['t3'] = instance.outputTranslationZ
+
 
         details = dict()
+        details['id'] = instance.id
         details['link'] = instance.link
-        details['image'] = instance.image
-        details['input'] =
-
+        details['image'] = instance.image.url
+        details['input'] = input_dict
+        details['output'] = output_dict
+        details['transmission'] = instance.transmission
+        details['comments'] = instance.comments
+        details['created'] = instance.created
 
         representation = {
-            instance.name: instance.name,
-
+            instance.name: details
         }
-"""
-
-
-"""
-        "bevelgears": {
-    "link": "https://grabcad.com/library/parametric-bevel-gear-set-for-nx-1",
-    "image": "/img/0002-bevelgears.jpg",
-    "input": [
-            {   "r1": 1 },
-            {   "r2": 0 },
-            {   "r3": 0 },
-            {   "t1": 0 },
-            {   "t2": 0 },
-            {   "t3": 0 }
-            ],
-    "output": [
-            {   "r1": 0 },
-            {   "r2": 1 },
-            {   "r3": 0 },
-            {   "t1": 0 },
-            {   "t2": 0 },
-            {   "t3": 0 }
-            ],
-    "transmission": 10,
-    "comments": [],
-    "metadata": []
-}
-        
-        
-        """
+        return representation
