@@ -1,8 +1,20 @@
 # project files
-*.idea/
+.idea/
 frontend/node_modules/
 frontend/package-lock.json
 
 # test code
 frontend/bootstraptut.html
 
+# compiled code
+__pycache__/
+
+# database
+db.sqlite3
+
+# virtualenvironment
+venv/
+
+# Chrome
+CChrome/
+start_chrome.sh
