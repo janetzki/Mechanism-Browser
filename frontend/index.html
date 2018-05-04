@@ -377,7 +377,6 @@
             function searchMechanism() {
                 const xhttp = new XMLHttpRequest();
                 const parameters = getParameters();
-                console.log(parameters);
                 const url = getSearchQueryURL('http://mechanism-browser:8000/api/mechanisms/', parameters);
                 xhttp.open('GET', url.toString());
                 xhttp.setRequestHeader('Content-type', 'application/json');
