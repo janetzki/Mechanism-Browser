@@ -1,14 +1,11 @@
-# MechanismBrowser
+# Mechanism Browser
 You do not know engineering terminology but want to 3D print machines? This project lets you browse and find mechanisms that you need by describing their functionality.
 
+
+<br></br>
 ## Setup
 ### Add server to hostfile
-For any system that should have access to the Mechanism Browser, add
-```
-[IP address of server] mechanism-browser
-```
-to its hostfile.
-
+For any system that should have access to the Mechanism Browser, add the IP of the server and the hostname "mechanism-browser" to its hostsfile.
 
 ### Run the Django server
 Install the requirements:
@@ -36,6 +33,8 @@ No setup is needed, just run:
 npm start --prefix frontend
 ```
 
+
+<br></br>
 ## Usage
 ### Create a mechanism
 In your browser, open `http://mechainsm-browser:8000/admin`.
@@ -46,4 +45,3 @@ In your browser, open `http://mechanism-browser:8000/api/mechanisms`.
 
 ### Search mechanisms
 In your browser, open `http://mechanism-browser:8080`.
-
