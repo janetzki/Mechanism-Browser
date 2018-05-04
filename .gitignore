@@ -12,6 +12,9 @@ __pycache__/
 # database
 db.sqlite3
 
+# media
+backend/www/
+
 # virtualenvironment
 venv/
 
