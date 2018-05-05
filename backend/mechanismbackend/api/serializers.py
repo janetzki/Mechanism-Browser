@@ -41,9 +41,9 @@ class MechanismSerializer(serializers.ModelSerializer):
         output_dict['t2'] = instance.outputTranslationY
         output_dict['t3'] = instance.outputTranslationZ
 
-
         details = dict()
         details['id'] = instance.id
+        details['name'] = instance.name
         details['link'] = instance.link
         details['image'] = instance.image.url
         details['input'] = input_dict
@@ -52,7 +52,4 @@ class MechanismSerializer(serializers.ModelSerializer):
         details['comments'] = instance.comments
         details['created'] = instance.created
 
-        representation = {
-            instance.name: details
-        }
-        return representation
+        return details
