@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
+<body>
 <div class="top-nav">
     <div class="container">
         <div class="page-header">
@@ -378,6 +379,7 @@
                                 const entry = document.querySelector("div[data-type='template']").cloneNode(true);
                                 entry.querySelector("a.mechanism-name").textContent = mechanism.name;
                                 entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
+                                entry.querySelector("a.image-link").href = mechanism.link;
                                 entry.querySelector("img").src = mechanism.image.substring(1);
                                 entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
                                 entry.querySelector("a.mechanism-link").textContent = mechanism.link;
@@ -385,16 +387,9 @@
                                 entry.querySelector("div.mechanism-parameters").textContent = "Transmission: " + mechanism.transmission;
                                 entry.style.display = "block";
                                 list.appendChild(entry);
-
-                                /*
-                                const entry = document.createElement('li');
-                                entry.appendChild(document.createTextNode(response[mechanism].name));
-                                list.appendChild(entry);
-                                */
                             }
                         }
                     };
-                    // xhttp.send(JSON.stringify(params));
                 }
                 </script>
         </span>
@@ -410,7 +405,7 @@
     </a>
     <div>
         <div class="col-sm-2" style="padding-left: 0">
-            <img class="preview-image" align="left">
+            <a class="image-link"><img class="preview-image"></a>
         </div>
         <a class="mechanism-link">
             link
