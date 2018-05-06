@@ -377,7 +377,7 @@
                                 const mechanism = response[mechanismId];
                                 const entry = document.querySelector("div[data-type='template']").cloneNode(true);
                                 entry.querySelector("a.mechanism-name").textContent = mechanism.name;
-                                entry.querySelector("a.mechanism-name").href = mechanism.name;
+                                entry.querySelector("a.mechanism-name").href = "mechanisms/" + mechanism.id + ".html";
                                 entry.querySelector("img").src = mechanism.image.substring(1);
                                 entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
                                 entry.querySelector("a.mechanism-link").textContent = mechanism.link;
