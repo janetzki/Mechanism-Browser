@@ -29,3 +29,36 @@
 .btn.btn-secondary.negative.active {
     background-color: red;
 }
+
+.search-result {
+    margin-bottom: 110px;
+}
+
+.preview-image {
+    height: 100px;
+}
+
+.mechanism-name {
+    font-size: 26px;
+    color: #0000cc;
+}
+
+.mechanism-link {
+    font-size: 18px;
+    color: green;
+}
+
+.mechanism-description {
+    font-size: 18px;
+}
+
+.mechanism-parameters {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.top-nav {
+    background-color: #f8f8f8;
+    padding-bottom: 10px;
+    border-bottom: 1px solid lightgray;
+}
