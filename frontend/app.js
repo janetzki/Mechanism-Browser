@@ -17,13 +17,12 @@ app.get('/', function (req, res) {
 app.get('/mechanism/:id', function (req, res) {
     const xhttp = new XMLHttpRequest();
     // TODO: Change IP address
-    xhttp.open('GET', 'http://127.0.0.1:8000/api/mechanism/?id=' + req.params['id']);
+    xhttp.open('GET', 'http://127.0.0.1:8000/api/mechanisms/?id=' + req.params['id']);
     xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             const response = JSON.parse(xhttp.responseText);
-            console.log(response);
             res.render('mechanism-article', response[0])
         }
     };
