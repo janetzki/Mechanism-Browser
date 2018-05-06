@@ -360,7 +360,6 @@
                     transmission: document.querySelector("#transmission").value,
                     name: document.querySelector("#name").value
                 };
-                console.log(params);
 
                 const xhttp = new XMLHttpRequest();
                 xhttp.open('GET', 'http://127.0.0.1:8000/api/mechanisms/');
@@ -372,9 +371,9 @@
                         const list = document.getElementById('mechanisms');
                         list.innerHTML = '';
 
-                        for (mechanism of Object.keys(response)) {
+                        for (const mechanism of Object.keys(response)) {
                             const entry = document.createElement('li');
-                            entry.appendChild(document.createTextNode(mechanism));
+                            entry.appendChild(document.createTextNode(response[mechanism].name));
                             list.appendChild(entry);
                         }
                     }
