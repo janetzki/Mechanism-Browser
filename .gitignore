@@ -21,3 +21,6 @@ venv/
 # Chrome
 CChrome/
 start_chrome.sh
+
+# logs
+*.log
