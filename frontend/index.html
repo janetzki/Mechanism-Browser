@@ -389,7 +389,7 @@
 
                         for (const mechanism of Object.keys(response)) {
                             const entry = document.createElement('li');
-                            entry.appendChild(document.createTextNode(mechanism));
+                            entry.appendChild(document.createTextNode(response[mechanism].name));
                             list.appendChild(entry);
                         }
                     }
