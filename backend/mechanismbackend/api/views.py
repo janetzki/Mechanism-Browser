@@ -10,18 +10,18 @@ class MechanismList(generics.ListAPIView):
     filter_backends = (filters.DjangoFilterBackend,)  # enable filter-backend for this view
     filter_fields = ('name',
                      'transmission',
-                     'inputRotationX',
-                     'inputRotationY',
-                     'inputRotationZ',
-                     'inputTranslationX',
-                     'inputTranslationX',
-                     'inputTranslationX',
-                     'outputRotationX',
-                     'outputRotationY',
-                     'outputRotationZ',
-                     'outputTranslationX',
-                     'outputTranslationY',
-                     'outputTranslationZ',)
+                     'inputR1',
+                     'inputR2',
+                     'inputR3',
+                     'inputT1',
+                     'inputT2',
+                     'inputT3',
+                     'outputR1',
+                     'outputR2',
+                     'outputR3',
+                     'outputT1',
+                     'outputT2',
+                     'outputT3',)
 
 
 class MechanismDetail(generics.RetrieveAPIView):
