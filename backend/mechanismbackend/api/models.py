@@ -26,4 +26,3 @@ class Mechanism(models.Model):
 
     class Meta:
         ordering = ('created',)
-

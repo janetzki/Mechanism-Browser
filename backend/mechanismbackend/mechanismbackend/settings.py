@@ -25,7 +25,7 @@ SECRET_KEY = 'iy8%*dw##7a9t#e$267%=3%#@0qfaicsl8!m9n%01$k-u@2gq)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ 'mechanism-browser' ]
 
 
 # Application definition

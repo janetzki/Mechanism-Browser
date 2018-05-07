@@ -362,7 +362,7 @@
                 };
 
                 const xhttp = new XMLHttpRequest();
-                xhttp.open('GET', 'http://127.0.0.1:8000/api/mechanisms/');
+                xhttp.open('GET', 'http://mechanism-browser:8000/api/mechanisms/');
                 xhttp.setRequestHeader('Content-type', 'application/json');
                 xhttp.send();
                 xhttp.onreadystatechange = function() {
