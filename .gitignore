@@ -13,7 +13,7 @@ __pycache__/
 db.sqlite3
 
 # media
-backend/www/
+media/
 
 # virtualenvironment
 venv/
@@ -21,3 +21,6 @@ venv/
 # Chrome
 CChrome/
 start_chrome.sh
+
+# logs
+*.log

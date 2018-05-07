@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <title>{{name}}</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+        <div class="container">
+            <div class="page-header">
+                <h1>{{name}}</h1>
+            </div>
+        </div>
+
+    <div class="container content">
+        <table class="infobox">
+            <tbody>
+            <tr>
+                <td style="text-align: center" colspan="2">
+                    <img class="image" src="{{image}}">
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2" style="text-align: center; background: lightblue;">
+                    Parameters
+                </th>
+            </tr>
+            <tr>
+                <th style="text-align: left">Link</th>
+                <td>
+                    <a href="{{link}}">{{link}}</a>
+                </td>
+            </tr>
+            <tr>
+                <th style="text-align: left">Input</th>
+                <td>
+                    <span>r1: {{input.r1}}</span><br>
+                    <span>r2: {{input.r2}}</span><br>
+                    <span>r3: {{input.r3}}</span><br>
+                    <span>t1: {{input.t1}}</span><br>
+                    <span>t2: {{input.t2}}</span><br>
+                    <span>t3: {{input.t3}}</span>
+                </td>
+            </tr>
+            <tr>
+                <th style="text-align: left">Output</th>
+                <td>
+                    <span>r1: {{output.r1}}</span><br>
+                    <span>r2: {{output.r2}}</span><br>
+                    <span>r3: {{output.r3}}</span><br>
+                    <span>t1: {{output.t1}}</span><br>
+                    <span>t2: {{output.t2}}</span><br>
+                    <span>t3: {{output.t3}}</span>
+                </td>
+            </tr>
+            <tr>
+                <th style="text-align: left">Transmission</th>
+                <td>
+                    {{transmission}}
+                </td>
+            </tr>
+            </tbody>
+            <tr>
+                <th style="text-align: left">3D model</th>
+                <td>
+                    <a>{{name}}.scad</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>{{comments}}</p>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<p>
+        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+        <p>Stet clita kasd gubergren, no sea takimata sanctus est. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+    </div>
+
+    <footer class="bottom-nav">
+        <p>Created: {{created}}
+            <button class="btn btn-default btn-lg" style="float: right; margin-right: 1em; margin-bottom: 1em">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                Edit
+            </button>
+        </p>
+    </footer>
+</body>
+</html>

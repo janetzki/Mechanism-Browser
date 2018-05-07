@@ -8,7 +8,8 @@ class MechanismList(generics.ListAPIView):
     queryset = Mechanism.objects.all()
     serializer_class = MechanismSerializer
     filter_backends = (filters.DjangoFilterBackend,)  # enable filter-backend for this view
-    filter_fields = ('name',
+    filter_fields = ('id',
+                     'name',
                      'transmission',
                      'inputR1',
                      'inputR2',
