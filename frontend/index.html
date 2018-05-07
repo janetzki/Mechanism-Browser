@@ -339,31 +339,46 @@
             Search
         </button>
         <script>
-            function searchMechanism() {
-                const params = {
-                    input: {
-                        inputR1: $('#inputR1 input:radio:checked').val(),
-                        inputR2: $('#inputR2 input:radio:checked').val(),
-                        inputR3: $('#inputR3 input:radio:checked').val(),
-                        inputT1: $('#inputT1 input:radio:checked').val(),
-                        inputT2: $('#inputT2 input:radio:checked').val(),
-                        inputT3: $('#inputT3 input:radio:checked').val()
-                    },
-                    output: {
-                        outputR1: $('#outputR1 input:radio:checked').val(),
-                        outputR2: $('#outputR2 input:radio:checked').val(),
-                        outputR3: $('#outputR3 input:radio:checked').val(),
-                        outputT1: $('#outputT1 input:radio:checked').val(),
-                        outputT2: $('#outputT2 input:radio:checked').val(),
-                        outputT3: $('#outputT3 input:radio:checked').val()
-                    },
+            function getParameters() {
+                const parameters = {
+                    inputR1: $('#inputR1 input:radio:checked').val(),
+                    inputR2: $('#inputR2 input:radio:checked').val(),
+                    inputR3: $('#inputR3 input:radio:checked').val(),
+                    inputT1: $('#inputT1 input:radio:checked').val(),
+                    inputT2: $('#inputT2 input:radio:checked').val(),
+                    inputT3: $('#inputT3 input:radio:checked').val(),
+                    outputR1: $('#outputR1 input:radio:checked').val(),
+                    outputR2: $('#outputR2 input:radio:checked').val(),
+                    outputR3: $('#outputR3 input:radio:checked').val(),
+                    outputT1: $('#outputT1 input:radio:checked').val(),
+                    outputT2: $('#outputT2 input:radio:checked').val(),
+                    outputT3: $('#outputT3 input:radio:checked').val(),
                     transmission: document.querySelector("#transmission").value,
                     name: document.querySelector("#name").value
                 };
-                console.log(params);
 
+                // remove undefined parameters
+                for (const key of Object.keys(parameters)) {
+                    if (parameters[key] === "") {
+                        delete parameters[key];
+                    }
+                }
+                return parameters;
+            }
+
+            function getSearchQueryURL(baseURL, parameters) {
+                let url = new URL(baseURL);
+                for (const key of Object.keys(parameters)) {
+                    url.searchParams.append(key, parameters[key]);
+                }
+                return url;
+            }
+
+            function searchMechanism() {
                 const xhttp = new XMLHttpRequest();
-                xhttp.open('GET', 'http://127.0.0.1:8000/api/mechanisms/');
+                const parameters = getParameters();
+                const url = getSearchQueryURL('http://mechanism-browser:8000/api/mechanisms/', parameters);
+                xhttp.open('GET', url.toString());
                 xhttp.setRequestHeader('Content-type', 'application/json');
                 xhttp.send();
                 xhttp.onreadystatechange = function() {
@@ -372,14 +387,13 @@
                         const list = document.getElementById('mechanisms');
                         list.innerHTML = '';
 
-                        for (mechanism of Object.keys(response)) {
+                        for (const mechanism of Object.keys(response)) {
                             const entry = document.createElement('li');
-                            entry.appendChild(document.createTextNode(mechanism));
+                            entry.appendChild(document.createTextNode(response[mechanism].name));
                             list.appendChild(entry);
                         }
                     }
                 };
-                // xhttp.send(JSON.stringify(params));
             }
             </script>
     </span>
