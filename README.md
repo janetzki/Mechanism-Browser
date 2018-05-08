@@ -37,7 +37,7 @@ python backend/mechanismbackend/manage.py runserver 0.0.0.0:8000
 ### Run the Node server
 No setup is needed, just run:
 ```
-npm start --prefix frontend
+sudo npm start --prefix frontend
 ```
 
 
