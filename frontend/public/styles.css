@@ -36,6 +36,7 @@
 
 .preview-image {
     height: 100px;
+    margin-right: 1em;
 }
 
 .mechanism-name {
@@ -82,6 +83,7 @@
     border-spacing: 1em;
     border-collapse: separate;
     margin-left: 1em;
+    max-width: 300px;
 }
 
 .content {

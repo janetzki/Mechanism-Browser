@@ -394,7 +394,7 @@
                                 const entry = document.querySelector("div[data-type='template']").cloneNode(true);
                                 entry.querySelector("a.mechanism-name").textContent = mechanism.name;
                                 entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
-                                entry.querySelector("a.image-link").href = mechanism.link;
+                                entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
                                 entry.querySelector("img").src = mechanism.image.substring(1);
                                 entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
                                 entry.querySelector("a.mechanism-link").textContent = mechanism.link;
@@ -418,9 +418,7 @@
         title
     </a>
     <div>
-        <div class="col-sm-2" style="padding-left: 0">
-            <a class="image-link"><img class="preview-image"></a>
-        </div>
+        <a class="image-link"><img class="preview-image" align="left"></a>
         <a class="mechanism-link">
             link
         </a>
