@@ -4,8 +4,8 @@ You do not know engineering terminology but want to 3D print machines? This proj
 
 <br></br>
 ## Setup
-### Add server to hostfile
-For any system that should have access to the Mechanism Browser, add the IP of the server and the hostname "mechanism-browser" to its hostsfile.
+### Add server to hosts file
+For any system that should have access to the Mechanism Browser, add the IP of the server and the hostname "mechanism-browser" to its hosts file.
 
 ### Setup the Django server
 Install the requirements:
