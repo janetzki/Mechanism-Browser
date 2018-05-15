@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'rest_framework',  # DRF dependency
     'api',  # pulling in our own API
     'django_filters',  # easy filtering
+    'corsheaders',  # allowing OPTION requests (CORS)
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -124,3 +126,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'www', 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'www', 'media')
+
+# CORS Settings
+CORS_ORIGIN_ALLOW_ALL = True
