@@ -30,4 +30,8 @@ class MechanismDetail(generics.RetrieveAPIView):
     serializer_class = MechanismSerializer
 
 
+class MechanismCreate(generics.CreateAPIView):
+    serializer_class = MechanismSerializer
+
+
 
