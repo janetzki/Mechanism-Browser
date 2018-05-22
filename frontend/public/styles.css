@@ -1,12 +1,12 @@
 .icon {
     display: block;
-    height: 30px;
-    margin-right: 10px;
+    height: 50px;
+    margin-bottom: 20px;
 }
 
 .row {
     display: flex;
-    max-width: 600px;
+    max-width: 400px;
 }
 
 .column {

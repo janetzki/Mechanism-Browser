@@ -21,348 +21,87 @@
     </div>
     <div class="container">
         <div class="row">
-            <form class="column">
-                <h2>Input</h2>
-
-                <div class="form-group row">
-                    <label for="inputR1" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/r1.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="inputR1" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio7" id="inputR1on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active checked">
-                                <input type="radio" name="radio7" id="inputR1neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio7" id="inputR1off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
+            <div class="column">
+                <h3>Input</h3>
+                <div class="col-lg-12 text-center">
+                    <img class="icon" id="inputR1" src="icons/r1_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="inputR2" src="icons/r2_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="inputR3" src="icons/r3_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="inputT1" src="icons/t1_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="inputT2" src="icons/t2_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="inputT3" src="icons/t3_undefined.png" data-status="" onclick=toggleImage(this)>
                 </div>
-
-                <div class="form-group row">
-                    <label for="inputR2" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/r2.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="inputR2" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio2" id="inputR2on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio2" id="inputR2neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio2" id="inputR2off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
+            </div>
+            <div class="column">
+                <h3>Output</h3>
+                <div class="col-lg-12 text-center">
+                    <img class="icon" id="outputR1" src="icons/r1_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="outputR2" src="icons/r2_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="outputR3" src="icons/r3_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="outputT1" src="icons/t1_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="outputT2" src="icons/t2_undefined.png" data-status="" onclick=toggleImage(this)>
+                    <img class="icon" id="outputT3" src="icons/t3_undefined.png" data-status="" onclick=toggleImage(this)>
                 </div>
-
-                <div class="form-group row">
-                    <label for="inputR3" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/r3.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="inputR3" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio3" id="inputR3on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio3" id="inputR3neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio3" id="inputR3off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
+            </div>
+            <div class="column">
+                <h3>More</h3>
+                <div class="form-group">
+                    <label for="transmission">Transmission</label>
+                    <input type="number" class="form-control" id="transmission" placeholder="number">
                 </div>
-
-                <div class="form-group row">
-                    <label for="inputT1" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/t1.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="inputT1" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio4" id="inputT1on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio4" id="inputT1neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio4" id="inputT1off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input type="search" class="form-control" id="name" placeholder="text">
                 </div>
-
-                <div class="form-group row">
-                    <label for="inputT2" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/t2.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="inputT2" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio5" id="inputT2on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio5" id="inputT2neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio5" id="inputT2off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="inputT3" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/t3.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="inputT3" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio6" id="inputT3on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio6" id="inputT3neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio6" id="inputT3off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <form class="column">
-                <h2>Output</h2>
-
-                <div class="form-group row">
-                    <label for="outputR1" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/r1.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="outputR1" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio7" id="outputR1on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio7" id="outputR1neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio7" id="outputR1off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="outputR2" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/r2.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="outputR2" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio8" id="outputR2on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio8" id="outputR2neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio8" id="outputR2off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="outputR3" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/r3.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="outputR3" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio9" id="outputR3on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio9" id="outputR3neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio9" id="outputR3off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="outputT1" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/t1.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="outputT1" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio10" id="outputT1on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio10" id="outputT1neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio10" id="outputT1off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="outputT2" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/t2.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="outputT2" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio11" id="outputT2on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio11" id="outputT2neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio11" id="outputT2off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="outputT3" class="col-sm-2 col-form-label">
-                        <img class="icon" src="icons/t3.png" align="left">
-                    </label>
-                    <div class="col-sm-10">
-                        <div class="btn-group btn-group-toggle" id="outputT3" data-toggle="buttons">
-                            <label class="btn btn-secondary positive">
-                                <input type="radio" name="radio12" id="outputT3on" autocomplete="off" value="1">
-                                <i class="glyphicon glyphicon-ok"></i>
-                            </label>
-
-                            <label class="btn btn-secondary neutral active">
-                                <input type="radio" name="radio12" id="outputT3neutral" autocomplete="off" value="" checked="checked">
-                                <i class="glyphicon glyphicon-minus"></i>
-                            </label>
-
-                            <label class="btn btn-secondary negative">
-                                <input type="radio" name="radio12" id="outputT3off" autocomplete="off" value="0">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="form-group row">
-            <label for="transmission" class="col-sm-2 col-form-label">
-                Transmission
-            </label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="transmission" placeholder="number">
+                <button class="btn btn-default"
+                        type="button"
+                        onclick="searchMechanism()">
+                    Search
+                </button>
             </div>
         </div>
+        <script>
+                function toggleImage(img) {
+                    const baseFileName = img.id
+                        .slice(-2)
+                        .toLowerCase();
+                    switch ($(img).data('status')) {
+                        case 1:
+                            $(img).data('status', 0);
+                            img.src = 'icons/deselected.png';
+                            break;
+                        case 0:
+                            $(img).data('status', '');
+                            img.src = 'icons/' + baseFileName + '_undefined.png';
+                            break;
+                        default:
+                            // ''
+                            $(img).data('status', 1);
+                            img.src = 'icons/' + baseFileName + '.png';
+                    }
+                }
 
-        <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label">
-                Name
-            </label>
-            <div class="col-sm-10">
-                <input type="search" class="form-control" id="name" placeholder="text">
-            </div>
-        </div>
-
-        <span class="input-group-btn">
-            <button class="btn btn-default"
-                    type="button"
-                    onclick="searchMechanism()">
-                Search
-            </button>
-            <script>
                 function getParameters() {
                     const parameters = {
-                        inputR1: $('#inputR1 input:radio:checked').val(),
-                        inputR2: $('#inputR2 input:radio:checked').val(),
-                        inputR3: $('#inputR3 input:radio:checked').val(),
-                        inputT1: $('#inputT1 input:radio:checked').val(),
-                        inputT2: $('#inputT2 input:radio:checked').val(),
-                        inputT3: $('#inputT3 input:radio:checked').val(),
-                        outputR1: $('#outputR1 input:radio:checked').val(),
-                        outputR2: $('#outputR2 input:radio:checked').val(),
-                        outputR3: $('#outputR3 input:radio:checked').val(),
-                        outputT1: $('#outputT1 input:radio:checked').val(),
-                        outputT2: $('#outputT2 input:radio:checked').val(),
-                        outputT3: $('#outputT3 input:radio:checked').val(),
+                        inputR1: $('#inputR1').data('status'),
+                        inputR2: $('#inputR2').data('status'),
+                        inputR3: $('#inputR3').data('status'),
+                        inputT1: $('#inputT1').data('status'),
+                        inputT2: $('#inputT2').data('status'),
+                        inputT3: $('#inputT3').data('status'),
+                        outputR1: $('#outputR1').data('status'),
+                        outputR2: $('#outputR2').data('status'),
+                        outputR3: $('#outputR3').data('status'),
+                        outputT1: $('#outputT1').data('status'),
+                        outputT2: $('#outputT2').data('status'),
+                        outputT3: $('#outputT3').data('status'),
                         transmission: document.querySelector("#transmission").value,
                         name: document.querySelector("#name").value
                     };
 
                     // remove undefined parameters
                     for (const key of Object.keys(parameters)) {
-                        if (parameters[key] === "") {
+                        if (parameters[key] === '') {
                             delete parameters[key];
                         }
                     }
@@ -409,11 +148,10 @@
                     };
                 }
 
-                $('input[type=radio], input[type=number], input[type=search]').on('change keydown paste input', function() {
+                $('img[class=icon], input[type=number], input[type=search]').on('change keydown paste input click', function() {
                     searchMechanism()
                 });
-                </script>
-        </span>
+        </script>
     </div>
 </div>
 
