@@ -124,8 +124,13 @@
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();
                     xhttp.onreadystatechange = function() {
-                        if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        if (xhttp.readyState === 4 && xhttp.status === 200) {
                             const response = JSON.parse(xhttp.responseText);
+                            if (response.length === 1) {
+                                $('#results').text(response.length + ' result');
+                            } else {
+                                $('#results').text(response.length + ' results');
+                            }
                             const list = document.getElementById('mechanisms');
                             list.innerHTML = '';
 
@@ -175,6 +180,7 @@
     </div>
 </div>
 <div class="container">
+    <p id="results" style="color: gray"></p>
     <div id="mechanisms" class="column">
     </div>
 </div>
