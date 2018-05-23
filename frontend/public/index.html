@@ -116,21 +116,29 @@
                     return url;
                 }
 
+                function showResultInfo(responseLength) {
+                    const resultsInfo = document.getElementById('results');
+                    if (responseLength === 1) {
+                        resultsInfo.innerText = '1 result';
+                    } else {
+                        resultsInfo.innerText = responseLength + ' results';
+                        if (responseLength === 0) {
+                            resultsInfo.innerHTML = 'No results found. Do you want to <a href="create">create</a> it?';
+                        }
+                    }
+                }
+
                 function searchMechanism() {
                     const xhttp = new XMLHttpRequest();
                     const parameters = getParameters();
-                    const url = getSearchQueryURL('http://mechanism-browser:8000/api/mechanisms/', parameters);
+                    const url = getSearchQueryURL('http://127.0.0.:8000/api/mechanisms/', parameters);
                     xhttp.open('GET', url.toString());
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();
                     xhttp.onreadystatechange = function() {
                         if (xhttp.readyState === 4 && xhttp.status === 200) {
                             const response = JSON.parse(xhttp.responseText);
-                            if (response.length === 1) {
-                                $('#results').text(response.length + ' result');
-                            } else {
-                                $('#results').text(response.length + ' results');
-                            }
+                            showResultInfo(response.length);
                             const list = document.getElementById('mechanisms');
                             list.innerHTML = '';
 
