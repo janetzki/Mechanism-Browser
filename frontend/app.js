@@ -27,4 +27,8 @@ app.get('/mechanism/:id', function (req, res) {
     };
 });
 
+app.get('/create', function (req, res) {
+    res.sendFile(__dirname + '/public/create.html');
+});
+
 app.listen(80);
