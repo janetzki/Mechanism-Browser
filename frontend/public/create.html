@@ -21,15 +21,23 @@
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" placeholder="enter text">
+                <p id="name-errors" style="color:red"></p>
             </div>
             <div class="form-group">
                 <label for="link">Link</label>
                 <input type="text" class="form-control" id="link" placeholder="enter text">
+                <p id="link-errors" style="color:red"></p>
             </div>
             <div class="form-group">
                 <label for="transmission">Transmission</label>
                 <input type="number" class="form-control" id="transmission" placeholder="enter number">
+                <p id="transmission-errors" style="color:red"></p>
             </div>
+            <form class="form-group">
+                <label for="image">Image</label>
+                <input type="file" id="image">
+                <p id="image-errors" style="color:red"></p>
+            </form>
         </form>
     </div>
 
@@ -39,7 +47,6 @@
                 onclick="createMechanism()">
             Create
         </button>
-        <p id="errors" style="color:red"></p>
     </div>
 </body>
 <script>
@@ -47,15 +54,26 @@
         const data = {
             name: document.querySelector('#name').value,
             link: document.querySelector('#link').value,
-            image: "icons/r1.png",
+            image: document.querySelector('#image').value,
             transmission: document.querySelector('#transmission').value
         };
         return JSON.stringify(data);
     }
 
+    function showErrors(errors) {
+        const inputFields = ['name', 'link', 'transmission', 'image'];
+        for (const inputField of inputFields) {
+            $('#' + inputField + '-errors').text('');
+        }
+
+        for (const inputField in errors) {
+            $('#' + inputField + '-errors').text(errors[inputField]);
+        }
+    }
+
     function createMechanism() {
         const xhttp = new XMLHttpRequest();
-        const url = 'http://mechanism-backend:8000/api/mechanisms/create/';
+        const url = 'http://mechanism-browser:8000/api/mechanisms/create/';
         xhttp.open('POST', url.toString());
         xhttp.setRequestHeader('Content-type', 'application/json');
         xhttp.onreadystatechange = function() {
@@ -64,9 +82,7 @@
                     const response = JSON.parse(xhttp.responseText);
                 } else if (xhttp.status !== 200) {
                     const response = JSON.parse(xhttp.responseText);
-                    console.log(response);
-                    $('#errors').text(response['link'][0]);
-                    console.log(response);
+                    showErrors(response);
                 }
             }
         };

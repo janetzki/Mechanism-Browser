@@ -131,7 +131,7 @@
                 function searchMechanism() {
                     const xhttp = new XMLHttpRequest();
                     const parameters = getParameters();
-                    const url = getSearchQueryURL('http://127.0.0.1:8000/api/mechanisms/', parameters);
+                    const url = getSearchQueryURL('http://mechanism-browser:8000/api/mechanisms/', parameters);
                     xhttp.open('GET', url.toString());
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();
