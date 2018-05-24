@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <title>Create mechanism</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <div class="container">
+        <div class="page-header">
+            <h1>Create mechanism</h1>
+        </div>
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="enter text">
+            </div>
+            <div class="form-group">
+                <label for="link">Link</label>
+                <input type="text" class="form-control" id="link" placeholder="enter text">
+            </div>
+            <div class="form-group">
+                <label for="transmission">Transmission</label>
+                <input type="number" class="form-control" id="transmission" placeholder="enter number">
+            </div>
+        </form>
+    </div>
+
+    <div class="container content">
+        <button class="btn btn-default"
+                type="button"
+                onclick="createMechanism()">
+            Create
+        </button>
+        <p id="errors" style="color:red"></p>
+    </div>
+</body>
+<script>
+    function getParameters() {
+        const data = {
+            name: document.querySelector('#name').value,
+            link: document.querySelector('#link').value,
+            image: "icons/r1.png",
+            transmission: document.querySelector('#transmission').value
+        };
+        return JSON.stringify(data);
+    }
+
+    function createMechanism() {
+        const xhttp = new XMLHttpRequest();
+        const url = 'http://mechanism-backend:8000/api/mechanisms/create/';
+        xhttp.open('POST', url.toString());
+        xhttp.setRequestHeader('Content-type', 'application/json');
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState === 4) {
+                if (xhttp.status === 200) {
+                    const response = JSON.parse(xhttp.responseText);
+                } else if (xhttp.status !== 200) {
+                    const response = JSON.parse(xhttp.responseText);
+                    console.log(response);
+                    $('#errors').text(response['link'][0]);
+                    console.log(response);
+                }
+            }
+        };
+        xhttp.send(getParameters());
+    }
+</script>
+</html>
