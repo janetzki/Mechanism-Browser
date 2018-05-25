@@ -25,13 +25,11 @@ class MechanismList(generics.ListAPIView):
                      'outputT3',)
 
 
-class MechanismDetail(generics.RetrieveAPIView):
+class MechanismRetrieveUpdate(generics.RetrieveUpdateAPIView):
     queryset = Mechanism.objects.all()
     serializer_class = MechanismSerializer
 
 
 class MechanismCreate(generics.CreateAPIView):
     serializer_class = MechanismSerializer
-
-
 
