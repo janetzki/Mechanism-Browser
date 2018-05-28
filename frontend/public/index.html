@@ -126,10 +126,10 @@
                     xhttp.onreadystatechange = function() {
                         if (xhttp.readyState === 4 && xhttp.status === 200) {
                             const response = JSON.parse(xhttp.responseText);
-                            if (response.length === 1) {
-                                $('#results').text(response.length + ' result');
+                            if (response.count === 1) {
+                                $('#results').text(response.count + ' result');
                             } else {
-                                $('#results').text(response.length + ' results');
+                                $('#results').text(response.count + ' results');
                             }
                             const list = document.getElementById('mechanisms');
                             list.innerHTML = '';
