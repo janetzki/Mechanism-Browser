@@ -113,11 +113,23 @@
             imageData = image.files[0];
         }
     }
-
+    
     previewImage();
 
     function getParameters() {
         const parameters = {
+            inputR1: $('#inputR1').data('status'),
+            inputR2: $('#inputR2').data('status'),
+            inputR3: $('#inputR3').data('status'),
+            inputT1: $('#inputT1').data('status'),
+            inputT2: $('#inputT2').data('status'),
+            inputT3: $('#inputT3').data('status'),
+            outputR1: $('#outputR1').data('status'),
+            outputR2: $('#outputR2').data('status'),
+            outputR3: $('#outputR3').data('status'),
+            outputT1: $('#outputT1').data('status'),
+            outputT2: $('#outputT2').data('status'),
+            outputT3: $('#outputT3').data('status'),
             name: document.querySelector('#name').value,
             link: document.querySelector('#link').value,
             image: imageData,
