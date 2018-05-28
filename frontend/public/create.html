@@ -19,7 +19,7 @@
                 <h1>Create mechanism</h1>
             </div>
         </div>
-        <div class="container">
+        <form id="form" class="container" enctype=”multipart/form-data” action="http://localhost:8000/api/mechanisms/create/" method="POST">
             <div class="row">
                 <div class="column">
                     <h3>Input</h3>
@@ -60,11 +60,12 @@
                         <input type="number" class="form-control" id="transmission" placeholder="enter number">
                         <p id="transmission-errors" style="color:red"></p>
                     </div>
-                    <form class="form-group">
+                    <div class="form-group">
                         <label for="image">Image</label>
-                        <input type="file" id="image">
+                        <input type="file" id="image" onchange="previewImage()">
+                        <img id="preview" src="">
                         <p id="image-errors" style="color:red"></p>
-                    </form>
+                    </div>
                     <div class="form-group">
                         <label for="comments">Comments</label>
                         <input type="text" class="form-control" id="comments" placeholder="enter text">
@@ -77,7 +78,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </body>
 <script>
@@ -97,11 +98,33 @@
         }
     }
 
+    let imageData = '';
+
+    function previewImage() {
+        const preview = $('#preview');
+        const file = $('#image')[0].files[0];
+        // const reader = new FileReader();
+        //
+        // reader.onloadend = function () {
+        //     imageData = reader.result;
+        //     preview.src = imageData;
+        // };
+        //
+        // if (file) {
+        //     reader.readAsText(file);
+        // } else {
+        //     preview.src = '';
+        // }
+        imageData = file;
+    }
+
+    previewImage();
+
     function getParameters() {
         const parameters = {
             name: document.querySelector('#name').value,
             link: document.querySelector('#link').value,
-            image: document.querySelector('#image').value,
+            image: imageData,
             transmission: document.querySelector('#transmission').value
         };
 
@@ -111,8 +134,21 @@
                 delete parameters[key];
             }
         }
-        console.log(parameters);
         return parameters;
+    }
+
+    function getFormData() {
+        // const form = document.getElementById('form');
+        const formData = new FormData();
+
+        const parameters = getParameters();
+        for (const key in parameters) {
+            console.log(key);
+            console.log(parameters[key]);
+            formData.append(key, parameters[key]);
+        }
+
+        return formData;
     }
 
     function showErrors(errors) {
@@ -128,20 +164,37 @@
 
     function createMechanism() {
         const xhttp = new XMLHttpRequest();
-        const url = 'http://mechanism-browser:8000/api/mechanisms/create/';
-        xhttp.open('POST', url.toString());
-        xhttp.setRequestHeader('Content-type', 'application/json');
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState === 4) {
-                if (xhttp.status === 200) {
-                    const response = JSON.parse(xhttp.responseText);
-                } else if (xhttp.status !== 200) {
-                    const response = JSON.parse(xhttp.responseText);
-                    showErrors(response);
-                }
-            }
-        };
-        xhttp.send(JSON.stringify(getParameters()));
+        const url = 'http://localhost:8000/api/mechanisms/create/';
+        // xhttp.open('POST', url.toString(), true);
+        // xhttp.setRequestHeader('Content-type', 'multipart/form-data');
+        // xhttp.onreadystatechange = function() {
+        //     if (xhttp.readyState === 4) {
+        //         if (xhttp.status === 200) {
+        //             const response = JSON.parse(xhttp.responseText);
+        //         } else if (xhttp.status !== 200) {
+        //             console.log(xhttp.responseText);
+        //             const response = JSON.parse(xhttp.responseText);
+        //             showErrors(response);
+        //         }
+        //     }
+        // };
+        // xhttp.send(getFormData());
+        $.ajax({
+            url : $('#form').attr('action'),
+            type: "POST",
+            data : getFormData(),
+            processData: false,
+            contentType: false,
+            success:function(data, textStatus, jqXHR){
+                // const response = JSON.parse(xhttp.responseText);
+                console.log(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log(textStatus);
+                // console.log(xhttp.responseText);
+                // const response = JSON.parse(xhttp.responseText);
+                // showErrors(response);
+            }})
     }
 </script>
 </html>
