@@ -63,7 +63,7 @@
                     <div class="form-group">
                         <label for="image">Image</label>
                         <input type="file" id="image" onchange="previewImage()">
-                        <img id="preview" src="">
+                        <img id="preview" src="" style="max-height:100px">
                         <p id="image-errors" style="color:red"></p>
                     </div>
                     <div class="form-group">
@@ -101,21 +101,17 @@
     let imageData = '';
 
     function previewImage() {
-        const preview = $('#preview');
-        const file = $('#image')[0].files[0];
-        // const reader = new FileReader();
-        //
-        // reader.onloadend = function () {
-        //     imageData = reader.result;
-        //     preview.src = imageData;
-        // };
-        //
-        // if (file) {
-        //     reader.readAsText(file);
-        // } else {
-        //     preview.src = '';
-        // }
-        imageData = file;
+        const image = $('#image')[0];
+        if (image.files && image.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(file) {
+                $('#preview').attr('src', file.target.result);
+            };
+
+            reader.readAsDataURL(image.files[0]);
+            imageData = image.files[0];
+        }
     }
 
     previewImage();
