@@ -138,7 +138,7 @@
                     xhttp.onreadystatechange = function() {
                         if (xhttp.readyState === 4 && xhttp.status === 200) {
                             const response = JSON.parse(xhttp.responseText);
-                            showResultInfo(response.length);
+                            showResultInfo(response.count);
                             const list = document.getElementById('mechanisms');
                             list.innerHTML = '';
 

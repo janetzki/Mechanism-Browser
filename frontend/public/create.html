@@ -51,13 +51,21 @@
 </body>
 <script>
     function getParameters() {
-        const data = {
+        const parameters = {
             name: document.querySelector('#name').value,
             link: document.querySelector('#link').value,
             image: document.querySelector('#image').value,
             transmission: document.querySelector('#transmission').value
         };
-        return JSON.stringify(data);
+
+        // remove undefined parameters
+        for (const key of Object.keys(parameters)) {
+            if (parameters[key] === '') {
+                delete parameters[key];
+            }
+        }
+        console.log(parameters);
+        return parameters;
     }
 
     function showErrors(errors) {
@@ -86,7 +94,7 @@
                 }
             }
         };
-        xhttp.send(getParameters());
+        xhttp.send(JSON.stringify(getParameters()));
     }
 </script>
 </html>
