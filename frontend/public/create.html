@@ -138,13 +138,10 @@
     }
 
     function getFormData() {
-        // const form = document.getElementById('form');
         const formData = new FormData();
 
         const parameters = getParameters();
         for (const key in parameters) {
-            console.log(key);
-            console.log(parameters[key]);
             formData.append(key, parameters[key]);
         }
 
@@ -165,35 +162,17 @@
     function createMechanism() {
         const xhttp = new XMLHttpRequest();
         const url = 'http://localhost:8000/api/mechanisms/create/';
-        // xhttp.open('POST', url.toString(), true);
-        // xhttp.setRequestHeader('Content-type', 'multipart/form-data');
-        // xhttp.onreadystatechange = function() {
-        //     if (xhttp.readyState === 4) {
-        //         if (xhttp.status === 200) {
-        //             const response = JSON.parse(xhttp.responseText);
-        //         } else if (xhttp.status !== 200) {
-        //             console.log(xhttp.responseText);
-        //             const response = JSON.parse(xhttp.responseText);
-        //             showErrors(response);
-        //         }
-        //     }
-        // };
-        // xhttp.send(getFormData());
         $.ajax({
             url : $('#form').attr('action'),
             type: "POST",
             data : getFormData(),
             processData: false,
             contentType: false,
-            success:function(data, textStatus, jqXHR){
-                // const response = JSON.parse(xhttp.responseText);
-                console.log(data);
+            success: function(data, textStatus, jqXHR1){
+                window.location.replace('/mechanism/' + data.id);
             },
             error: function(jqXHR, textStatus, errorThrown){
-                console.log(textStatus);
-                // console.log(xhttp.responseText);
-                // const response = JSON.parse(xhttp.responseText);
-                // showErrors(response);
+                showErrors(jqXHR.responseJSON);
             }})
     }
 </script>
