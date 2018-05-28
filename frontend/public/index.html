@@ -391,8 +391,8 @@
                             list.innerHTML = '';
 
                             // https://stackoverflow.com/a/41447500/8816968
-                            for (const mechanismId of Object.keys(response)) {
-                                const mechanism = response[mechanismId];
+                            for (const mechanismId of Object.keys(response.results)) {
+                                const mechanism = response.results[mechanismId];
                                 const entry = document.querySelector("div[data-type='template']").cloneNode(true);
                                 entry.querySelector("a.mechanism-name").textContent = mechanism.name;
                                 entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
