@@ -206,7 +206,7 @@
             processData: false,
             contentType: false,
             success: function(data, textStatus, jqXHR1){
-                window.location.replace('/mechanism/' + data.id);
+                window.location.href = '/mechanism/' + data.id
             },
             error: function(jqXHR, textStatus, errorThrown){
                 showErrors(jqXHR.responseJSON);

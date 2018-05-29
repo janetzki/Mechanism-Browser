@@ -53,10 +53,18 @@
                     <label for="name">Name</label>
                     <input type="search" class="form-control" id="name" placeholder="text">
                 </div>
-                <button class="btn btn-default"
+            </div>
+            <div class="column">
+                <h3>Actions</h3>
+                <button class="btn btn-default action"
                         type="button"
                         onclick="searchMechanism()">
                     Search
+                </button>
+                <button class="btn btn-default action"
+                        type="button"
+                        onclick="createMechanism()">
+                    Create
                 </button>
             </div>
         </div>
@@ -159,6 +167,10 @@
                             }
                         }
                     };
+                }
+
+                function createMechanism() {
+                    window.location.href = getURLWithParameters('http://localhost/create/', getParameters());
                 }
 
                 $('img[class=icon], input[type=number], input[type=search]').on('change keydown paste input click', function() {
