@@ -125,16 +125,25 @@
                 }
 
                 function showResultInfo(responseLength) {
-                    const resultsInfo = document.getElementById('results');
+                    const resultInfo = document.getElementById('resultInfo');
                     if (responseLength === 1) {
-                        resultsInfo.innerText = '1 result';
+                        resultInfo.innerText = '1 result';
                     } else {
-                        resultsInfo.innerText = responseLength + ' results';
+                        resultInfo.innerText = responseLength + ' results';
                         if (responseLength === 0) {
                             const url = getURLWithParameters('http://mechanism-browser/create/', getParameters());
-                            resultsInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
+                            resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
                         }
                     }
+                }
+
+                function showPageInfo(first, previous, next, last) {
+                    const pageInfo = document.getElementById('pageInfo');
+                    pageInfo.style.display = '';
+                    document.getElementById('firstPage').href = first;
+                    document.getElementById('previousPage').href = previous;
+                    document.getElementById('nextPage').href = next;
+                    document.getElementById('lastPage').href = last;
                 }
 
                 function searchMechanism() {
@@ -147,6 +156,7 @@
                         if (xhttp.readyState === 4 && xhttp.status === 200) {
                             const response = JSON.parse(xhttp.responseText);
                             showResultInfo(response.count);
+                            showPageInfo(response.first, response.previous, response.next, response.last);
                             const list = document.getElementById('mechanisms');
                             list.innerHTML = '';
 
@@ -200,9 +210,18 @@
     </div>
 </div>
 <div class="container">
-    <p id="results" style="color: gray"></p>
+    <p id="resultInfo" style="color: gray"></p>
     <div id="mechanisms" class="column">
     </div>
 </div>
+
+<footer id="pageInfo" class="bottom-nav" style="display: none">
+    <div align="center">
+        <a id="firstPage">First</a>
+        <a id="previousPage">Previous</a>
+        <a id="nextPage">Next</a>
+        <a id="lastPage">Last</a>
+    </div>
+</footer>
 </body>
 </html>
