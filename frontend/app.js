@@ -20,9 +20,10 @@ app.get('/mechanism/:id', function (req, res) {
     xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send();
     xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
             const response = JSON.parse(xhttp.responseText);
-            res.render('mechanism-article', response[0])
+            console.log(response);
+            res.render('mechanism-article', response.results[0])
         }
     };
 });
