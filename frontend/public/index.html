@@ -140,15 +140,26 @@
                 function showPageInfo(first, previous, next, last) {
                     const pageInfo = document.getElementById('pageInfo');
                     pageInfo.style.display = '';
-                    document.getElementById('firstPage').href = first;
-                    document.getElementById('previousPage').href = previous;
-                    document.getElementById('nextPage').href = next;
-                    document.getElementById('lastPage').href = last;
+
+                    document.getElementById('firstPage').setAttribute('onclick', 'searchMechanism("' + first + '")');
+                    if (previous !== null) {
+                        document.getElementById('previousPage').setAttribute('onclick', 'searchMechanism("' + previous + '")');
+                        document.getElementById('previousPage').style.display = '';
+                    } else {
+                        document.getElementById('previousPage').style.display = 'none';
+                    }
+                    if (next !== null) {
+                        document.getElementById('nextPage').setAttribute('onclick', 'searchMechanism("' + next + '")');
+                        document.getElementById('nextPage').style.display = '';
+                    } else {
+                        document.getElementById('nextPage').style.display = 'none';
+                    }
+                    document.getElementById('lastPage').setAttribute('onclick', 'searchMechanism("' + last + '")');
                 }
 
-                function searchMechanism() {
+                function searchMechanism(baseURL = 'http://mechanism-browser:8000/api/mechanisms/') {
                     const xhttp = new XMLHttpRequest();
-                    const url = getURLWithParameters('http://mechanism-browser:8000/api/mechanisms/', getParameters());
+                    const url = getURLWithParameters(baseURL, getParameters());
                     xhttp.open('GET', url.toString());
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();
@@ -217,10 +228,26 @@
 
 <footer id="pageInfo" class="bottom-nav" style="display: none">
     <div align="center">
-        <a id="firstPage">First</a>
-        <a id="previousPage">Previous</a>
-        <a id="nextPage">Next</a>
-        <a id="lastPage">Last</a>
+        <button id="firstPage"
+                type="button"
+                onclick="searchMechanism()">
+            First
+        </button>
+        <button id="previousPage"
+                type="button"
+                onclick="searchMechanism()">
+            Previous
+        </button>
+        <button id="nextPage"
+                type="button"
+                onclick="searchMechanism()">
+            Next
+        </button>
+        <button id="lastPage"
+                type="button"
+                onclick="searchMechanism()">
+            Last
+        </button>
     </div>
 </footer>
 </body>
