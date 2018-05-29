@@ -131,7 +131,7 @@
                     } else {
                         resultsInfo.innerText = responseLength + ' results';
                         if (responseLength === 0) {
-                            const url = getURLWithParameters('http://localhost/create/', getParameters());
+                            const url = getURLWithParameters('http://mechanism-browser/create/', getParameters());
                             resultsInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
                         }
                     }
@@ -139,7 +139,7 @@
 
                 function searchMechanism() {
                     const xhttp = new XMLHttpRequest();
-                    const url = getURLWithParameters('http://localhost:8000/api/mechanisms/', getParameters());
+                    const url = getURLWithParameters('http://mechanism-browser:8000/api/mechanisms/', getParameters());
                     xhttp.open('GET', url.toString());
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();
@@ -170,7 +170,7 @@
                 }
 
                 function createMechanism() {
-                    window.location.href = getURLWithParameters('http://localhost/create/', getParameters());
+                    window.location.href = getURLWithParameters('http://mechanism-browser/create/', getParameters());
                 }
 
                 $('img[class=icon], input[type=number], input[type=search]').on('change keydown paste input click', function() {

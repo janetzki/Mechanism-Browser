@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
 
 app.get('/mechanism/:id', function (req, res) {
     const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', 'http://localhost:8000/api/mechanisms/?id=' + req.params['id']);
+    xhttp.open('GET', 'http://mechanism-browser:8000/api/mechanisms/?id=' + req.params['id']);
     xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send();
     xhttp.onreadystatechange = function() {
