@@ -108,7 +108,7 @@
                     return parameters;
                 }
 
-                function getSearchQueryURL(baseURL, parameters) {
+                function getURLWithParameters(baseURL, parameters) {
                     let url = new URL(baseURL);
                     for (const key of Object.keys(parameters)) {
                         url.searchParams.append(key, parameters[key]);
@@ -123,15 +123,15 @@
                     } else {
                         resultsInfo.innerText = responseLength + ' results';
                         if (responseLength === 0) {
-                            resultsInfo.innerHTML = 'No results found. Do you want to <a href="create">create</a> it?';
+                            const url = getURLWithParameters('http://localhost/create/', getParameters());
+                            resultsInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
                         }
                     }
                 }
 
                 function searchMechanism() {
                     const xhttp = new XMLHttpRequest();
-                    const parameters = getParameters();
-                    const url = getSearchQueryURL('http://mechanism-browser:8000/api/mechanisms/', parameters);
+                    const url = getURLWithParameters('http://localhost:8000/api/mechanisms/', getParameters());
                     xhttp.open('GET', url.toString());
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();

@@ -82,19 +82,51 @@
     </div>
 </body>
 <script>
-    function toggleImage(img) {
+    inputFields = {
+        axes: ['inputR1', 'inputR2', 'inputR3', 'inputT1', 'inputT2', 'inputT3', 'outputR1', 'outputR2', 'outputR3', 'outputT1', 'outputT2', 'outputT3'],
+        notAxes: ['name', 'link', 'transmission', 'image', 'comments']
+    };
+
+    function updateImageInput(img, status) {
         const baseFileName = img.id
             .slice(-2)
             .toLowerCase();
-        switch ($(img).data('status')) {
+
+        $(img).data('status', status);
+        switch (status) {
             case 1:
-                $(img).data('status', 0);
                 img.src = 'icons/deselected.png';
                 break;
             default:
                 // 0
-                $(img).data('status', 1);
                 img.src = 'icons/' + baseFileName + '.png';
+        }
+    }
+
+    function initializeInputs() {
+        const url = new URL(window.location.href);
+        for (const axis of inputFields.axes) {
+            if (url.searchParams.get(axis) === '1') {
+                updateImageInput(document.getElementById(axis), url.searchParams.get(axis));
+            }
+        }
+        for (const inputField of inputFields.notAxes) {
+            if (url.searchParams.get(inputField) !== '') {
+                document.getElementById(inputField).value = url.searchParams.get(inputField);
+            }
+        }
+    }
+
+    initializeInputs();
+
+    function toggleImage(img) {
+        switch ($(img).data('status')) {
+            case 1:
+                updateImageInput(img, 0);
+                break;
+            default:
+                // 0
+                updateImageInput(img, 1);
         }
     }
 
@@ -157,8 +189,7 @@
     }
 
     function showErrors(errors) {
-        const inputFields = ['name', 'link', 'transmission', 'image', 'comments'];
-        for (const inputField of inputFields) {
+        for (const inputField of inputFields.notAxes) {
             $('#' + inputField + '-errors').text('');
         }
 
@@ -168,8 +199,6 @@
     }
 
     function createMechanism() {
-        const xhttp = new XMLHttpRequest();
-        const url = 'http://localhost:8000/api/mechanisms/create/';
         $.ajax({
             url : $('#form').attr('action'),
             type: "POST",
