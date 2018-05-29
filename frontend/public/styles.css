@@ -103,3 +103,8 @@
 .html {
     min-height: 100%;
 }
+
+.upload-preview-image {
+    max-height: 100px;
+    margin-top: 10px;
+}
