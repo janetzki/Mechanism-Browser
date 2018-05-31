@@ -21,5 +21,5 @@ class FirstLastPageNumberPaginator(pagination.PageNumberPagination):
 
     def get_last_link(self):
         url = self.request.build_absolute_uri()
-        page_number = self.page.paginator.count
+        page_number = self.page.paginator.num_pages
         return replace_query_param(url, self.page_query_param, page_number)
