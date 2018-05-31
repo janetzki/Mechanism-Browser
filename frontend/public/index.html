@@ -116,8 +116,8 @@
                     return parameters;
                 }
 
-                function getURLWithParameters(baseURL, parameters) {
-                    let url = new URL(baseURL);
+                function getUrlWithParameters(baseUrl, parameters) {
+                    let url = new URL(baseUrl);
                     for (const key of Object.keys(parameters)) {
                         url.searchParams.append(key, parameters[key]);
                     }
@@ -131,35 +131,38 @@
                     } else {
                         resultInfo.innerText = responseLength + ' results';
                         if (responseLength === 0) {
-                            const url = getURLWithParameters('http://mechanism-browser/create/', getParameters());
+                            const url = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
                             resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
                         }
                     }
                 }
 
-                function showPageInfo(first, previous, next, last) {
-                    const pageInfo = document.getElementById('pageInfo');
-                    pageInfo.style.display = '';
-
-                    document.getElementById('firstPage').setAttribute('onclick', 'searchMechanism("' + first + '")');
-                    if (previous !== null) {
-                        document.getElementById('previousPage').setAttribute('onclick', 'searchMechanism("' + previous + '")');
-                        document.getElementById('previousPage').style.display = '';
-                    } else {
-                        document.getElementById('previousPage').style.display = 'none';
-                    }
-                    if (next !== null) {
-                        document.getElementById('nextPage').setAttribute('onclick', 'searchMechanism("' + next + '")');
-                        document.getElementById('nextPage').style.display = '';
-                    } else {
-                        document.getElementById('nextPage').style.display = 'none';
-                    }
-                    document.getElementById('lastPage').setAttribute('onclick', 'searchMechanism("' + last + '")');
+                function setButtonStatus(button, activated, searchUrl) {
+                    button.disabled = !activated;
+                    button.setAttribute('onclick', 'searchMechanism("' + searchUrl + '")');
                 }
 
-                function searchMechanism(baseURL = 'http://mechanism-browser:8000/api/mechanisms/') {
+                function showPageInfo(first, previous, next, last) {
+                    const pageInfo = document.getElementById('pageInfo');
+                    if (first === last) {
+                        pageInfo.style.display = 'none';
+                        return;
+                    }
+                    pageInfo.style.display = '';
+
+                    const lastUrl = new URL(last);
+                    const pages = parseInt(lastUrl.searchParams.get('page'));
+                    const currentPage = 1; // TODO
+
+                    setButtonStatus(document.getElementById('firstPage'), currentPage !== 1, first);
+                    setButtonStatus(document.getElementById('previousPage'), previous !== null, previous);
+                    setButtonStatus(document.getElementById('nextPage'), next !== null, next);
+                    setButtonStatus(document.getElementById('lastPage'), currentPage !== pages, last);
+                }
+
+                function searchMechanism(baseUrl = 'http://mechanism-browser:8000/api/mechanisms/') {
                     const xhttp = new XMLHttpRequest();
-                    const url = getURLWithParameters(baseURL, getParameters());
+                    const url = getUrlWithParameters(baseUrl, getParameters());
                     xhttp.open('GET', url.toString());
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();
@@ -191,7 +194,7 @@
                 }
 
                 function createMechanism() {
-                    window.location.href = getURLWithParameters('http://mechanism-browser/create/', getParameters());
+                    window.location.href = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
                 }
 
                 $('img[class=icon], input[type=number], input[type=search]').on('change keydown paste input click', function() {
@@ -226,26 +229,22 @@
     </div>
 </div>
 
-<footer id="pageInfo" class="bottom-nav" style="display: none">
+<footer id="pageInfo" class="bottom-nav" style="display:none">
     <div align="center">
         <button id="firstPage"
-                type="button"
-                onclick="searchMechanism()">
+                type="button">
             First
         </button>
         <button id="previousPage"
-                type="button"
-                onclick="searchMechanism()">
+                type="button">
             Previous
         </button>
         <button id="nextPage"
-                type="button"
-                onclick="searchMechanism()">
+                type="button">
             Next
         </button>
         <button id="lastPage"
-                type="button"
-                onclick="searchMechanism()">
+                type="button">
             Last
         </button>
     </div>
