@@ -108,3 +108,8 @@
     max-height: 100px;
     margin-top: 10px;
 }
+
+input, p {
+    display: inline-block;
+    vertical-align: middle;
+}
