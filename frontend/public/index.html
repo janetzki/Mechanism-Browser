@@ -142,6 +142,14 @@
                     button.setAttribute('onclick', 'searchMechanism("' + searchUrl + '")');
                 }
 
+                String.prototype.format = function () {
+                    let string = this;
+                    for (const i in arguments) {
+                        string = string.replace(new RegExp('\\{' + i + '\\}', 'g'), arguments[i]);
+                    }
+                    return string
+                };
+
                 function showPageInfo(first, previous, next, last) {
                     const pageInfo = document.getElementById('pageInfo');
                     if (first === last) {
@@ -153,6 +161,8 @@
                     const lastUrl = new URL(last);
                     const pages = parseInt(lastUrl.searchParams.get('page'));
                     const currentPage = 1; // TODO
+
+                    document.getElementById('pageInfoText').textContent = 'Page {0} of {1}'.format(currentPage, pages);
 
                     setButtonStatus(document.getElementById('firstPage'), currentPage !== 1, first);
                     setButtonStatus(document.getElementById('previousPage'), previous !== null, previous);
@@ -230,6 +240,7 @@
 </div>
 
 <footer id="pageInfo" class="bottom-nav" style="display:none">
+    <p id="pageInfoText" align="center"></p>
     <div align="center">
         <button id="firstPage"
                 type="button">
