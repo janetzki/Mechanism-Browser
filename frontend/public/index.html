@@ -50,13 +50,21 @@
                     <input type="number" class="form-control" id="transmission" placeholder="number">
                 </div>
                 <div class="form-group">
-                    <label for="Name">Name</label>
+                    <label for="name">Name</label>
                     <input type="search" class="form-control" id="name" placeholder="text">
                 </div>
-                <button class="btn btn-default"
+            </div>
+            <div class="column">
+                <h3>Actions</h3>
+                <button class="btn btn-default action"
                         type="button"
                         onclick="searchMechanism()">
                     Search
+                </button>
+                <button class="btn btn-default action"
+                        type="button"
+                        onclick="createMechanism()">
+                    Create
                 </button>
             </div>
         </div>
@@ -108,35 +116,77 @@
                     return parameters;
                 }
 
-                function getSearchQueryURL(baseURL, parameters) {
-                    let url = new URL(baseURL);
+                function getUrlWithParameters(baseUrl, parameters) {
+                    let url = new URL(baseUrl);
                     for (const key of Object.keys(parameters)) {
                         url.searchParams.append(key, parameters[key]);
                     }
                     return url;
                 }
 
-                function searchMechanism() {
+                function showResultInfo(responseLength) {
+                    const resultInfo = document.getElementById('resultInfo');
+                    if (responseLength === 1) {
+                        resultInfo.innerText = '1 result';
+                    } else {
+                        resultInfo.innerText = responseLength + ' results';
+                        if (responseLength === 0) {
+                            const url = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
+                            resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
+                        }
+                    }
+                }
+
+                function setButtonStatus(button, activated, searchUrl) {
+                    button.disabled = !activated;
+                    button.setAttribute('onclick', 'searchMechanism("' + searchUrl + '")');
+                }
+
+                String.prototype.format = function () {
+                    let string = this;
+                    for (const i in arguments) {
+                        string = string.replace(new RegExp('\\{' + i + '\\}', 'g'), arguments[i]);
+                    }
+                    return string
+                };
+
+                function showPageInfo(first, previous, next, last) {
+                    const pageInfo = document.getElementById('pageInfo');
+                    if (first === last) {
+                        pageInfo.style.display = 'none';
+                        return;
+                    }
+                    pageInfo.style.display = '';
+
+                    const lastUrl = new URL(last);
+                    const pages = parseInt(lastUrl.searchParams.get('page'));
+                    const currentPage = 1; // TODO
+
+                    document.getElementById('pageInfoText').textContent = 'Page {0} of {1}'.format(currentPage, pages);
+
+                    setButtonStatus(document.getElementById('firstPage'), currentPage !== 1, first);
+                    setButtonStatus(document.getElementById('previousPage'), previous !== null, previous);
+                    setButtonStatus(document.getElementById('nextPage'), next !== null, next);
+                    setButtonStatus(document.getElementById('lastPage'), currentPage !== pages, last);
+                }
+
+                function searchMechanism(baseUrl = 'http://mechanism-browser:8000/api/mechanisms/') {
                     const xhttp = new XMLHttpRequest();
-                    const parameters = getParameters();
-                    const url = getSearchQueryURL('http://mechanism-browser:8000/api/mechanisms/', parameters);
+                    const url = getUrlWithParameters(baseUrl, getParameters());
                     xhttp.open('GET', url.toString());
                     xhttp.setRequestHeader('Content-type', 'application/json');
                     xhttp.send();
                     xhttp.onreadystatechange = function() {
                         if (xhttp.readyState === 4 && xhttp.status === 200) {
                             const response = JSON.parse(xhttp.responseText);
-                            if (response.length === 1) {
-                                $('#results').text(response.length + ' result');
-                            } else {
-                                $('#results').text(response.length + ' results');
-                            }
+                            showResultInfo(response.count);
+                            showPageInfo(response.first, response.previous, response.next, response.last);
                             const list = document.getElementById('mechanisms');
                             list.innerHTML = '';
 
                             // https://stackoverflow.com/a/41447500/8816968
-                            for (const mechanismId of Object.keys(response)) {
-                                const mechanism = response[mechanismId];
+                            for (const mechanismId of Object.keys(response.results)) {
+                                const mechanism = response.results[mechanismId];
                                 const entry = document.querySelector("div[data-type='template']").cloneNode(true);
                                 entry.querySelector("a.mechanism-name").textContent = mechanism.name;
                                 entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
@@ -151,6 +201,10 @@
                             }
                         }
                     };
+                }
+
+                function createMechanism() {
+                    window.location.href = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
                 }
 
                 $('img[class=icon], input[type=number], input[type=search]').on('change keydown paste input click', function() {
@@ -180,9 +234,35 @@
     </div>
 </div>
 <div class="container">
-    <p id="results" style="color: gray"></p>
+    <p id="resultInfo" style="color: gray"></p>
     <div id="mechanisms" class="column">
     </div>
 </div>
+
+<footer id="pageInfo" class="bottom-nav" style="display:none">
+    <div align="center">
+        <button id="firstPage"
+                class="btn btn-default action"
+                type="button">
+            <<
+        </button>
+        <button id="previousPage"
+                class="btn btn-default action"
+                type="button">
+            <
+        </button>
+        <p id="pageInfoText" class="page-info"></p>
+        <button id="nextPage"
+                class="btn btn-default action"
+                type="button">
+            >
+        </button>
+        <button id="lastPage"
+                class="btn btn-default action"
+                type="button">
+                >>
+        </button>
+    </div>
+</footer>
 </body>
 </html>

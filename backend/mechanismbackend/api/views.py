@@ -28,7 +28,7 @@ class MechanismList(generics.ListAPIView):
                      'outputT3',)
 
 
-class MechanismDetail(generics.RetrieveAPIView):
+class MechanismRetrieveUpdate(generics.RetrieveUpdateAPIView):
     queryset = Mechanism.objects.all()
     serializer_class = MechanismSerializer
 
@@ -42,5 +42,4 @@ class MechanismCreate(generics.CreateAPIView):
         except IntegrityError as e:
             content = {'error': str(e)}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
-
 

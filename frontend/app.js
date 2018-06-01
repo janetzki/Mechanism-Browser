@@ -20,11 +20,19 @@ app.get('/mechanism/:id', function (req, res) {
     xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send();
     xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
             const response = JSON.parse(xhttp.responseText);
-            res.render('mechanism-article', response[0])
+            res.render('mechanism-article', response.results[0])
         }
     };
+});
+
+app.get('/create', function (req, res) {
+    res.sendFile(__dirname + '/public/create.html');
+});
+
+app.get('*icons/:name', function (req, res) {
+    res.sendFile(__dirname + '/public/icons/' + req.params['name']);
 });
 
 app.listen(80);
