@@ -162,7 +162,7 @@
                     const pages = parseInt(lastUrl.searchParams.get('page'));
                     const currentPage = current;
 
-                    document.getElementById('pageInfoText').textContent = 'Page {0} of {1}'.format(currentPage, pages);
+                    document.getElementById('pageInfoText').textContent = '{0}/{1}'.format(currentPage, pages);
 
                     setButtonStatus(document.getElementById('firstPage'), currentPage !== 1, first);
                     setButtonStatus(document.getElementById('previousPage'), previous !== null, previous);
