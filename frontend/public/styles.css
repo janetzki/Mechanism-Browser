@@ -1,17 +1,21 @@
 .icon {
     display: block;
-    height: 30px;
-    margin-right: 10px;
+    height: 50px;
+    margin-bottom: 20px;
 }
 
 .row {
     display: flex;
-    max-width: 600px;
+    max-width: 400px;
 }
 
 .column {
     flex: 50%;
     margin-right: 50px;
+}
+
+.action {
+    margin-bottom: 15px;
 }
 
 .btn.btn-secondary {
@@ -68,13 +72,13 @@
 
 .bottom-nav {
     background-color: #f8f8f8;
-    padding-top: 10px;
+    padding: 5px;
     border-top: 1px solid lightgray;
     margin-top: 20px;
-    float: bottom;
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
+    min-height: 3em;
 }
 
 .infobox {
@@ -98,4 +102,14 @@
 
 .html {
     min-height: 100%;
+}
+
+.upload-preview-image {
+    max-height: 100px;
+    margin-top: 10px;
+}
+
+input, p {
+    display: inline-block;
+    vertical-align: middle;
 }

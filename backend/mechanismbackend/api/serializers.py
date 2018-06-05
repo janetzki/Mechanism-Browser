@@ -5,25 +5,7 @@ from .models import Mechanism
 class MechanismSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mechanism
-        fields = ('id',
-                 'name',
-                 'link',
-                 'image',
-                 'inputR1',
-                 'inputR2',
-                 'inputR3',
-                 'inputT1',
-                 'inputT2',
-                 'inputT3',
-                 'outputR1',
-                 'outputR2',
-                 'outputR3',
-                 'outputT1',
-                 'outputT2',
-                 'outputT3',
-                 'transmission',
-                 'comments',
-                 'created')
+        fields = '__all__'
 
     def to_representation(self, instance):
         input_dict = dict()
