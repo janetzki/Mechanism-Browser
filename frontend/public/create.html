@@ -150,6 +150,9 @@
 
     function getParameters() {
         const parameters = {
+            name: document.querySelector('#name').value,
+            comments: document.querySelector('#comments').value,
+            transmission: document.querySelector('#transmission').value,
             inputR1: $('#inputR1').data('status'),
             inputR2: $('#inputR2').data('status'),
             inputR3: $('#inputR3').data('status'),
@@ -162,10 +165,8 @@
             outputT1: $('#outputT1').data('status'),
             outputT2: $('#outputT2').data('status'),
             outputT3: $('#outputT3').data('status'),
-            name: document.querySelector('#name').value,
-            link: document.querySelector('#link').value,
             image: imageData,
-            transmission: document.querySelector('#transmission').value
+            link: document.querySelector('#link').value
         };
 
         // remove undefined parameters
