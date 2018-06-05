@@ -150,7 +150,7 @@
                     return string
                 };
 
-                function showPageInfo(first, previous, next, last) {
+                function showPageInfo(first, previous, current, next, last) {
                     const pageInfo = document.getElementById('pageInfo');
                     if (first === last) {
                         pageInfo.style.display = 'none';
@@ -160,9 +160,9 @@
 
                     const lastUrl = new URL(last);
                     const pages = parseInt(lastUrl.searchParams.get('page'));
-                    const currentPage = 1; // TODO
+                    const currentPage = current;
 
-                    document.getElementById('pageInfoText').textContent = 'Page {0} of {1}'.format(currentPage, pages);
+                    document.getElementById('pageInfoText').textContent = '{0}/{1}'.format(currentPage, pages);
 
                     setButtonStatus(document.getElementById('firstPage'), currentPage !== 1, first);
                     setButtonStatus(document.getElementById('previousPage'), previous !== null, previous);
@@ -180,7 +180,7 @@
                         if (xhttp.readyState === 4 && xhttp.status === 200) {
                             const response = JSON.parse(xhttp.responseText);
                             showResultInfo(response.count);
-                            showPageInfo(response.first, response.previous, response.next, response.last);
+                            showPageInfo(response.first, response.previous, response.current, response.next, response.last);
                             const list = document.getElementById('mechanisms');
                             list.innerHTML = '';
 

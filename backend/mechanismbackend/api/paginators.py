@@ -7,6 +7,7 @@ from rest_framework.utils.urls import replace_query_param
 class FirstLastPageNumberPaginator(pagination.PageNumberPagination):
     def get_paginated_response(self, data):
         return Response(OrderedDict([
+            ('current', self.page.number),
             ('count', self.page.paginator.count),
             ('first', self.get_first_link()),
             ('previous', self.get_previous_link()),
@@ -21,5 +22,5 @@ class FirstLastPageNumberPaginator(pagination.PageNumberPagination):
 
     def get_last_link(self):
         url = self.request.build_absolute_uri()
-        page_number = self.page.paginator.count
+        page_number = self.page.paginator.num_pages
         return replace_query_param(url, self.page_query_param, page_number)
