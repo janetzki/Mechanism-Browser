@@ -53,23 +53,23 @@
                         <tr>
                             <th style="text-align: left">Input</th>
                             <td>
-                                <img class="small-icon" id="inputR1" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="inputR2" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="inputR3" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="inputT1" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="inputT2" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="inputT3" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputR1" src="icons/deselected.png" data-status={{input.r1}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputR2" src="icons/deselected.png" data-status={{input.r2}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputR3" src="icons/deselected.png" data-status={{input.r3}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputT1" src="icons/deselected.png" data-status={{input.t1}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputT2" src="icons/deselected.png" data-status={{input.t2}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputT3" src="icons/deselected.png" data-status={{input.t3}} onclick=toggleImage(this)>
                             </td>
                         </tr>
                         <tr>
                             <th style="text-align: left">Output</th>
                             <td>
-                                <img class="small-icon" id="outputR1" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="outputR2" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="outputR3" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="outputT1" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="outputT2" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
-                                <img class="small-icon" id="outputT3" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputR1" src="icons/deselected.png" data-status={{output.r1}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputR2" src="icons/deselected.png" data-status={{output.r2}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputR3" src="icons/deselected.png" data-status={{output.r3}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputT1" src="icons/deselected.png" data-status={{output.t1}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputT2" src="icons/deselected.png" data-status={{output.t2}} onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputT3" src="icons/deselected.png" data-status={{output.t3}} onclick=toggleImage(this)>
                             </td>
                         </tr>
                         <tr>
@@ -110,19 +110,25 @@
         $(img).data('status', status);
         switch (status) {
             case 1:
-                img.src = 'icons/deselected.png';
+                img.src = 'icons/' + baseFileName + '.png';
                 break;
             default:
                 // 0
-                img.src = 'icons/' + baseFileName + '.png';
+                img.src = 'icons/deselected.png';
         }
     }
 
     function initializeInputs() {
         const url = new URL(window.location.href);
         for (const axis of inputFields.axes) {
+            const image = document.getElementById(axis);
+            let status = image.dataset.status;
             if (url.searchParams.get(axis) === '1') {
-                updateImageInput(document.getElementById(axis), url.searchParams.get(axis));
+                updateImageInput(image, url.searchParams.get(axis));
+            } else if (status === 'true') {
+                updateImageInput(image, 1)
+            } else if (status === 'false') {
+                updateImageInput(image, 0)
             }
         }
         for (const inputField of inputFields.notAxes) {
