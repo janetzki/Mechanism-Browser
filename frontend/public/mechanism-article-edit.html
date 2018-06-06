@@ -11,71 +11,229 @@
 </head>
 
 <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <form id="form" action="http://mechanism-browser:8000/api/mechanisms/{{id}}/" method="PATCH">
         <div class="container">
             <div class="page-header">
-                <h1>{{name}}</h1>
+                <input id="name" type="text" class="form-control large-input" placeholder="enter text" value="{{name}}">
+                <p id="name-errors" style="color:red"></p>
             </div>
         </div>
 
-    <div class="container content">
-        <table class="infobox">
-            <tbody>
-            <tr>
-                <td style="text-align: center" colspan="2">
-                    <img class="image" src="{{image}}">
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2" style="text-align: center; background: lightblue;">
-                    Parameters
-                </th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Link</th>
-                <td style="word-break: break-all">
-                    <a href="{{link}}">{{link}}</a>
-                </td>
-            </tr>
-            <tr>
-                <th style="text-align: left">Input</th>
-                <td>
-                    <span>r1: {{input.r1}}</span><br>
-                    <span>r2: {{input.r2}}</span><br>
-                    <span>r3: {{input.r3}}</span><br>
-                    <span>t1: {{input.t1}}</span><br>
-                    <span>t2: {{input.t2}}</span><br>
-                    <span>t3: {{input.t3}}</span>
-                </td>
-            </tr>
-            <tr>
-                <th style="text-align: left">Output</th>
-                <td>
-                    <span>r1: {{output.r1}}</span><br>
-                    <span>r2: {{output.r2}}</span><br>
-                    <span>r3: {{output.r3}}</span><br>
-                    <span>t1: {{output.t1}}</span><br>
-                    <span>t2: {{output.t2}}</span><br>
-                    <span>t3: {{output.t3}}</span>
-                </td>
-            </tr>
-            <tr>
-                <th style="text-align: left">Transmission</th>
-                <td>
-                    {{transmission}}
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="container content">
+            <div style="display: flex">
+                <div class="column">
+                    <textarea class="form-control" id="comments" placeholder="enter comments" cols="100" rows="10">{{comments}}</textarea>
+                    <p id="comments-errors" style="color:red"></p>
+                </div>
+                <div class="column">
+                    <table class="infobox">
+                        <tbody>
+                        <tr>
+                            <td style="text-align: center" colspan="2">
+                                <input id="image" type="file" onchange="previewImage()">
+                                <img class="image" src="{{image}}" id="preview">
+                            </td>
+                            <td id="image-errors" style="color:red"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align: center; background: lightblue;">
+                                Parameters
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left">Link</th>
+                            <td style="word-break: break-all">
+                                <input id="link" type="text" value="{{link}}" placeholder="enter link">
+                            </td>
+                            <td id="link-errors" style="color:red"></td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left">Input</th>
+                            <td>
+                                <img class="small-icon" id="inputR1" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputR2" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputR3" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputT1" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputT2" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="inputT3" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left">Output</th>
+                            <td>
+                                <img class="small-icon" id="outputR1" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputR2" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputR3" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputT1" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputT2" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                                <img class="small-icon" id="outputT3" src="icons/deselected.png" data-status="0" onclick=toggleImage(this)>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: left">Transmission</th>
+                            <td>
+                                <input id="transmission" type="number" value="{{transmission}}" placeholder="enter number">
+                            </td>
+                            <td id="transmission-errors" style="color:red"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
 
-        <p>{{comments}}</p>
-    </div>
-
-        <footer class="bottom-nav">
-            <p>Created: {{created}}</p>
-            <button class="btn btn-default btn-sm" style="float: right">
-                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                Submit
-            </button>
-        </footer>
+    <footer class="bottom-nav">
+        <p>Created: {{created}}</p>
+        <button class="btn btn-default btn-sm"
+                onclick="createMechanism()"
+                style="float: right">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            Submit
+        </button>
+    </footer>
 </body>
+<script>
+    inputFields = {
+        axes: ['inputR1', 'inputR2', 'inputR3', 'inputT1', 'inputT2', 'inputT3', 'outputR1', 'outputR2', 'outputR3', 'outputT1', 'outputT2', 'outputT3'],
+        notAxes: ['name', 'link', 'transmission', 'image', 'comments']
+    };
+
+    function updateImageInput(img, status) {
+        const baseFileName = img.id
+            .slice(-2)
+            .toLowerCase();
+
+        $(img).data('status', status);
+        switch (status) {
+            case 1:
+                img.src = 'icons/deselected.png';
+                break;
+            default:
+                // 0
+                img.src = 'icons/' + baseFileName + '.png';
+        }
+    }
+
+    function initializeInputs() {
+        const url = new URL(window.location.href);
+        for (const axis of inputFields.axes) {
+            if (url.searchParams.get(axis) === '1') {
+                updateImageInput(document.getElementById(axis), url.searchParams.get(axis));
+            }
+        }
+        for (const inputField of inputFields.notAxes) {
+            if (url.searchParams.get(inputField) !== null) {
+                document.getElementById(inputField).value = url.searchParams.get(inputField);
+            }
+        }
+    }
+
+    initializeInputs();
+
+    function toggleImage(img) {
+        switch ($(img).data('status')) {
+            case 1:
+                updateImageInput(img, 0);
+                break;
+            default:
+                // 0
+                updateImageInput(img, 1);
+        }
+    }
+
+    let imageData = '';
+
+    function previewImage() {
+        const image = $('#image')[0];
+        if (image.files && image.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(file) {
+                $('#preview').attr('src', file.target.result);
+            };
+
+            reader.readAsDataURL(image.files[0]);
+            imageData = image.files[0];
+        }
+    }
+
+    previewImage();
+
+    function getParameters() {
+        const parameters = {
+            name: document.querySelector('#name').value,
+            comments: document.querySelector('#comments').value,
+            transmission: document.querySelector('#transmission').value,
+            inputR1: $('#inputR1').data('status'),
+            inputR2: $('#inputR2').data('status'),
+            inputR3: $('#inputR3').data('status'),
+            inputT1: $('#inputT1').data('status'),
+            inputT2: $('#inputT2').data('status'),
+            inputT3: $('#inputT3').data('status'),
+            outputR1: $('#outputR1').data('status'),
+            outputR2: $('#outputR2').data('status'),
+            outputR3: $('#outputR3').data('status'),
+            outputT1: $('#outputT1').data('status'),
+            outputT2: $('#outputT2').data('status'),
+            outputT3: $('#outputT3').data('status'),
+            image: imageData,
+            link: document.querySelector('#link').value
+        };
+
+        // remove undefined parameters
+        for (const key of Object.keys(parameters)) {
+            if (parameters[key] === '') {
+                delete parameters[key];
+            }
+        }
+        return parameters;
+    }
+
+    function getFormData() {
+        const formData = new FormData();
+
+        const parameters = getParameters();
+        for (const key in parameters) {
+            formData.append(key, parameters[key]);
+        }
+
+        return formData;
+    }
+
+    function showErrors(errors) {
+        for (const inputField of inputFields.notAxes) {
+            $('#' + inputField + '-errors').text('');
+        }
+
+        for (const inputField in errors) {
+            $('#' + inputField + '-errors').text(errors[inputField]);
+        }
+    }
+
+    function createMechanism() {
+        $.ajax({
+            url : $('#form').attr('action'),
+            type: "PATCH",
+            data: getFormData(),
+            processData: false,
+            contentType: false,
+            success: function(data, textStatus, jqXHR1){
+                window.location.href = '/mechanism/' + data.id;
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                errors = {
+                    comments: "An error occured",
+                    image: "An error occured",
+                    name: "An error occured",
+                    transmission: "An error occured",
+                    link: "An error occured"
+                };
+                showErrors(errors);
+            }})
+    }
+</script>
 </html>
