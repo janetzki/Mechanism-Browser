@@ -3,6 +3,19 @@ const cons = require('consolidate');
 const path = require('path');
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
+function getMechanismAndFillPage(req, res, page) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('GET', 'http://mechanism-browser:8000/api/mechanisms/?id=' + req.params['id']);
+    xhttp.setRequestHeader('Content-type', 'application/json');
+    xhttp.send();
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            const response = JSON.parse(xhttp.responseText);
+            res.render(page, response.results[0])
+        }
+    };
+}
+
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -15,16 +28,11 @@ app.get('/', function (req, res) {
 });
 
 app.get('/mechanism/:id', function (req, res) {
-    const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', 'http://mechanism-browser:8000/api/mechanisms/?id=' + req.params['id']);
-    xhttp.setRequestHeader('Content-type', 'application/json');
-    xhttp.send();
-    xhttp.onreadystatechange = function() {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            const response = JSON.parse(xhttp.responseText);
-            res.render('mechanism-article', response.results[0])
-        }
-    };
+    getMechanismAndFillPage(req, res, 'mechanism-article');
+});
+
+app.get('/mechanism/:id/edit', function (req, res) {
+    getMechanismAndFillPage(req, res, 'mechanism-article-edit');
 });
 
 app.get('/create', function (req, res) {
