@@ -11,70 +11,75 @@
 </head>
 
 <body>
-        <div class="container">
-            <div class="page-header">
-                <h1>{{name}}</h1>
-            </div>
+    <div class="container">
+        <div class="page-header">
+            <h1>{{name}}</h1>
         </div>
+    </div>
 
     <div class="container content">
-        <table class="infobox">
-            <tbody>
-            <tr>
-                <td style="text-align: center" colspan="2">
-                    <img class="image" src="{{image}}">
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2" style="text-align: center; background: lightblue;">
-                    Parameters
-                </th>
-            </tr>
-            <tr>
-                <th style="text-align: left">Link</th>
-                <td style="word-break: break-all">
-                    <a href="{{link}}">{{link}}</a>
-                </td>
-            </tr>
-            <tr>
-                <th style="text-align: left">Input</th>
-                <td>
-                    <span>r1: {{input.r1}}</span><br>
-                    <span>r2: {{input.r2}}</span><br>
-                    <span>r3: {{input.r3}}</span><br>
-                    <span>t1: {{input.t1}}</span><br>
-                    <span>t2: {{input.t2}}</span><br>
-                    <span>t3: {{input.t3}}</span>
-                </td>
-            </tr>
-            <tr>
-                <th style="text-align: left">Output</th>
-                <td>
-                    <span>r1: {{output.r1}}</span><br>
-                    <span>r2: {{output.r2}}</span><br>
-                    <span>r3: {{output.r3}}</span><br>
-                    <span>t1: {{output.t1}}</span><br>
-                    <span>t2: {{output.t2}}</span><br>
-                    <span>t3: {{output.t3}}</span>
-                </td>
-            </tr>
-            <tr>
-                <th style="text-align: left">Transmission</th>
-                <td>
-                    {{transmission}}
-                </td>
-            </tr>
-            <!--<tr>-->
-                <!--Feature for the future-->
-                <!--<th style="text-align: left">3D model</th>-->
-                <!--<td>-->
-                    <!--<a>{{name}}.scad</a>-->
-                <!--</td>-->
-            <!--</tr>-->
-            </tbody>
-        </table>
-
-        <p>{{comments}}</p>
+        <div style="display: flex">
+            <div class="column">
+                <p>{{comments}}</p>
+            </div>
+            <div class="column">
+                <table class="infobox">
+                    <tbody>
+                    <tr>
+                        <td style="text-align: center" colspan="2">
+                            <img class="image" src="{{image}}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="text-align: center; background: lightblue;">
+                            Parameters
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left">Link</th>
+                        <td style="word-break: break-all">
+                            <a href="{{link}}">{{link}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left">Input</th>
+                        <td>
+                            <span>r1: {{input.r1}}</span><br>
+                            <span>r2: {{input.r2}}</span><br>
+                            <span>r3: {{input.r3}}</span><br>
+                            <span>t1: {{input.t1}}</span><br>
+                            <span>t2: {{input.t2}}</span><br>
+                            <span>t3: {{input.t3}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left">Output</th>
+                        <td>
+                            <span>r1: {{output.r1}}</span><br>
+                            <span>r2: {{output.r2}}</span><br>
+                            <span>r3: {{output.r3}}</span><br>
+                            <span>t1: {{output.t1}}</span><br>
+                            <span>t2: {{output.t2}}</span><br>
+                            <span>t3: {{output.t3}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left">Transmission</th>
+                        <td>
+                            {{transmission}}
+                        </td>
+                    </tr>
+                    <!--<tr>-->
+                        <!--Feature for the future-->
+                        <!--<th style="text-align: left">3D model</th>-->
+                        <!--<td>-->
+                            <!--<a>{{name}}.scad</a>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <footer class="bottom-nav">
