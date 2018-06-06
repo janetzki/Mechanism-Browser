@@ -3,7 +3,7 @@ const cons = require('consolidate');
 const path = require('path');
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-function getMechanismAndFillPage(req, res, page) {
+function getMechanismAndRenderPage(req, res, page) {
     const xhttp = new XMLHttpRequest();
     xhttp.open('GET', 'http://mechanism-browser:8000/api/mechanisms/?id=' + req.params['id']);
     xhttp.setRequestHeader('Content-type', 'application/json');
@@ -14,6 +14,33 @@ function getMechanismAndFillPage(req, res, page) {
             res.render(page, response.results[0])
         }
     };
+}
+
+function renderEmtpyPage(req, res, page) {
+    const emptyMechanism = {
+        name: '',
+        comments: '',
+        transmission: null,
+        input: {
+            r1: false,
+            r2: false,
+            r3: false,
+            t1: false,
+            t2: false,
+            t3: false
+        },
+        output: {
+            r1: false,
+            r2: false,
+            r3: false,
+            t1: false,
+            t2: false,
+            t3: false
+        },
+        image: null,
+        link: ''
+    };
+    res.render(page, emptyMechanism)
 }
 
 const app = express();
@@ -28,15 +55,15 @@ app.get('/', function (req, res) {
 });
 
 app.get('/mechanism/:id', function (req, res) {
-    getMechanismAndFillPage(req, res, 'mechanism-article');
+    getMechanismAndRenderPage(req, res, 'mechanism-article');
 });
 
 app.get('/mechanism/:id/edit', function (req, res) {
-    getMechanismAndFillPage(req, res, 'mechanism-article-edit');
+    getMechanismAndRenderPage(req, res, 'mechanism-article-edit');
 });
 
 app.get('/create', function (req, res) {
-    res.sendFile(__dirname + '/public/create.html');
+    renderEmtpyPage(req, res, 'mechanism-article-edit.html');
 });
 
 app.get('*icons/:name', function (req, res) {
