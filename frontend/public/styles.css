@@ -78,12 +78,32 @@
 .bottom-nav {
     background-color: #f8f8f8;
     padding: 5px;
-    border-top: 1px solid lightgray;
     margin-top: 20px;
+    margin-left: 200px;
     position: absolute;
     bottom: 0;
     width: 100%;
     min-height: 3em;
+    border-top: 1px solid lightgray;
+}
+
+.side-nav {
+    background-color: #f8f8f8;
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 200px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
+
+.side-nav img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 
 html, body {
@@ -109,6 +129,12 @@ html, body {
 
 .content {
     padding: 1em 1em 5em 1em; /*push footer down*/
+}
+
+.inside-nav {
+    margin-left: 200px;
+    border-left: 1px solid lightgray;
+    padding: 1em;
 }
 
 .image {
