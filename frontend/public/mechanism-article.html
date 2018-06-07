@@ -13,74 +13,82 @@
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
+    <div class="top-nav-wrapper">
+        <div class="top-nav-fixed">
+            <div class="container">
+                <img src="../media/logo%20vertical.svg" onclick="searchArticle()">
+            </div>
+        </div>
+    </div>
+    
     <div class="container-for-footer">
         <div class="container">
             <div class="page-header">
                 <h1>{{name}}</h1>
             </div>
-        </div>
 
-        <div class="container content">
-            <div style="display: flex">
-                <div class="column">
-                    <p>{{comments}}</p>
-                </div>
-                <div class="column">
-                    <table class="infobox">
-                        <tbody>
-                        <tr>
-                            <td style="text-align: center" colspan="2">
-                                <img class="image" src="{{image}}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="2" style="text-align: center; background: lightblue;">
-                                Parameters
-                            </th>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left">Link</th>
-                            <td style="word-break: break-all">
-                                <a href="{{link}}">{{link}}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left">Input</th>
-                            <td>
-                                <img class="small-icon" id="inputR1" src="icons/deselected.png" data-status={{input.r1}}>
-                                <img class="small-icon" id="inputR2" src="icons/deselected.png" data-status={{input.r2}}>
-                                <img class="small-icon" id="inputR3" src="icons/deselected.png" data-status={{input.r3}}>
-                                <img class="small-icon" id="inputT1" src="icons/deselected.png" data-status={{input.t1}}>
-                                <img class="small-icon" id="inputT2" src="icons/deselected.png" data-status={{input.t2}}>
-                                <img class="small-icon" id="inputT3" src="icons/deselected.png" data-status={{input.t3}}>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left">Output</th>
-                            <td>
-                                <img class="small-icon" id="outputR1" src="icons/deselected.png" data-status={{output.r1}}>
-                                <img class="small-icon" id="outputR2" src="icons/deselected.png" data-status={{output.r2}}>
-                                <img class="small-icon" id="outputR3" src="icons/deselected.png" data-status={{output.r3}}>
-                                <img class="small-icon" id="outputT1" src="icons/deselected.png" data-status={{output.t1}}>
-                                <img class="small-icon" id="outputT2" src="icons/deselected.png" data-status={{output.t2}}>
-                                <img class="small-icon" id="outputT3" src="icons/deselected.png" data-status={{output.t3}}>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left">Transmission</th>
-                            <td>
-                                {{transmission}}
-                            </td>
-                        </tr>
-                        <!--<tr>-->
-                            <!--Feature for the future-->
-                            <!--<th style="text-align: left">3D model</th>-->
-                            <!--<td>-->
-                                <!--<a>{{name}}.scad</a>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        </tbody>
-                    </table>
+            <div class="content">
+                <div style="display: flex">
+                    <div class="column">
+                        <p>{{comments}}</p>
+                    </div>
+                    <div class="column">
+                        <table class="infobox">
+                            <tbody>
+                            <tr>
+                                <td style="text-align: center" colspan="2">
+                                    <img class="image" src="{{image}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" style="text-align: center; background: lightblue;">
+                                    Parameters
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: left">Link</th>
+                                <td style="word-break: break-all">
+                                    <a href="{{link}}">{{link}}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="text-align: left">Input</th>
+                                <td>
+                                    <img class="small-icon" id="inputR1" src="icons/deselected.png" data-status={{input.r1}}>
+                                    <img class="small-icon" id="inputR2" src="icons/deselected.png" data-status={{input.r2}}>
+                                    <img class="small-icon" id="inputR3" src="icons/deselected.png" data-status={{input.r3}}>
+                                    <img class="small-icon" id="inputT1" src="icons/deselected.png" data-status={{input.t1}}>
+                                    <img class="small-icon" id="inputT2" src="icons/deselected.png" data-status={{input.t2}}>
+                                    <img class="small-icon" id="inputT3" src="icons/deselected.png" data-status={{input.t3}}>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="text-align: left">Output</th>
+                                <td>
+                                    <img class="small-icon" id="outputR1" src="icons/deselected.png" data-status={{output.r1}}>
+                                    <img class="small-icon" id="outputR2" src="icons/deselected.png" data-status={{output.r2}}>
+                                    <img class="small-icon" id="outputR3" src="icons/deselected.png" data-status={{output.r3}}>
+                                    <img class="small-icon" id="outputT1" src="icons/deselected.png" data-status={{output.t1}}>
+                                    <img class="small-icon" id="outputT2" src="icons/deselected.png" data-status={{output.t2}}>
+                                    <img class="small-icon" id="outputT3" src="icons/deselected.png" data-status={{output.t3}}>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="text-align: left">Transmission</th>
+                                <td>
+                                    {{transmission}}
+                                </td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--Feature for the future-->
+                                <!--<th style="text-align: left">3D model</th>-->
+                                <!--<td>-->
+                                    <!--<a>{{name}}.scad</a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -130,6 +138,10 @@
     
     function editArticle() {
         window.location.href += '/edit';
+    }
+
+    function searchArticle() {
+        window.location.href = 'http://mechanism-browser/';
     }
 </script>
 </html>

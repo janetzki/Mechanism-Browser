@@ -75,15 +75,34 @@
     margin-bottom: 10px;
 }
 
+.top-nav-wrapper {
+    height: 5em;
+}
+
+.top-nav-fixed {
+    position: fixed;
+    height: 5em;
+    top: 0;
+    background-color: #f8f8f8;
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+    z-index: 1;
+}
+
+.top-nav-fixed img {
+    height: 5em;
+    padding: 1em;
+}
+
 .bottom-nav {
     background-color: #f8f8f8;
     padding: 5px;
-    border-top: 1px solid lightgray;
     margin-top: 20px;
     position: absolute;
     bottom: 0;
     width: 100%;
     min-height: 3em;
+    border-top: 1px solid lightgray;
 }
 
 html, body {
