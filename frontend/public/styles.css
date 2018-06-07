@@ -105,17 +105,6 @@
     border-top: 1px solid lightgray;
 }
 
-.side-nav {
-    background-color: #f8f8f8;
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: 200px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    padding-top: 20px;
-}
-
 html, body {
     /*keeps footer at bottom of page*/
     height: 100%;
