@@ -90,7 +90,8 @@
 }
 
 .top-nav-fixed img {
-    height: 50%;
+    height: 5em;
+    padding: 1em;
 }
 
 .bottom-nav {

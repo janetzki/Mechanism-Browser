@@ -16,7 +16,7 @@
     <div class="top-nav-wrapper">
         <div class="top-nav-fixed">
             <div class="container">
-                <img src="../media/logo%20vertical.svg">
+                <img src="../media/logo%20vertical.svg" onclick="searchArticle()">
             </div>
         </div>
     </div>
@@ -138,6 +138,10 @@
     
     function editArticle() {
         window.location.href += '/edit';
+    }
+
+    function searchArticle() {
+        window.location.href = 'http://mechanism-browser/';
     }
 </script>
 </html>
