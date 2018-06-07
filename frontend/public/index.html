@@ -11,262 +11,293 @@
 </head>
 
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-    <div class="container-for-footer">
-        <div class="top-nav">
-            <div class="container">
-                <div class="page-header">
-                    <img src="media/logo%20horizontal.svg">
-                    <div style="display: none">Gear icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="column">
-                        <h3>Input</h3>
-                        <div class="col-lg-12 text-center">
-                            <img class="icon" id="inputR1" src="icons/r1_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="inputR2" src="icons/r2_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="inputR3" src="icons/r3_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="inputT1" src="icons/t1_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="inputT2" src="icons/t2_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="inputT3" src="icons/t3_undefined.png" data-status="" onclick=toggleImage(this)>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <h3>Output</h3>
-                        <div class="col-lg-12 text-center">
-                            <img class="icon" id="outputR1" src="icons/r1_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="outputR2" src="icons/r2_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="outputR3" src="icons/r3_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="outputT1" src="icons/t1_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="outputT2" src="icons/t2_undefined.png" data-status="" onclick=toggleImage(this)>
-                            <img class="icon" id="outputT3" src="icons/t3_undefined.png" data-status="" onclick=toggleImage(this)>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <h3>More</h3>
-                        <div class="form-group">
-                            <label for="transmission">Transmission</label>
-                            <input type="number" class="form-control" id="transmission" placeholder="number">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="search" class="form-control" id="name" placeholder="text">
-                        </div>
-                    </div>
-                    <div class="column">
-                        <h3>Actions</h3>
-                        <button class="btn btn-default action"
-                                type="button"
-                                onclick="searchMechanism()">
-                            Search
-                        </button>
-                        <button class="btn btn-default action"
-                                type="button"
-                                onclick="createMechanism()">
-                            Create
-                        </button>
-                    </div>
-                </div>
-                <script>
-                        function toggleImage(img) {
-                            const baseFileName = img.id
-                                .slice(-2)
-                                .toLowerCase();
-                            switch ($(img).data('status')) {
-                                case 1:
-                                    $(img).data('status', 0);
-                                    img.src = 'icons/deselected.png';
-                                    break;
-                                case 0:
-                                    $(img).data('status', '');
-                                    img.src = 'icons/' + baseFileName + '_undefined.png';
-                                    break;
-                                default:
-                                    // ''
-                                    $(img).data('status', 1);
-                                    img.src = 'icons/' + baseFileName + '.png';
-                            }
-                        }
-
-                        function getParameters() {
-                            const parameters = {
-                                inputR1: $('#inputR1').data('status'),
-                                inputR2: $('#inputR2').data('status'),
-                                inputR3: $('#inputR3').data('status'),
-                                inputT1: $('#inputT1').data('status'),
-                                inputT2: $('#inputT2').data('status'),
-                                inputT3: $('#inputT3').data('status'),
-                                outputR1: $('#outputR1').data('status'),
-                                outputR2: $('#outputR2').data('status'),
-                                outputR3: $('#outputR3').data('status'),
-                                outputT1: $('#outputT1').data('status'),
-                                outputT2: $('#outputT2').data('status'),
-                                outputT3: $('#outputT3').data('status'),
-                                transmission: document.querySelector("#transmission").value,
-                                name: document.querySelector("#name").value
-                            };
-
-                            // remove undefined parameters
-                            for (const key of Object.keys(parameters)) {
-                                if (parameters[key] === '') {
-                                    delete parameters[key];
-                                }
-                            }
-                            return parameters;
-                        }
-
-                        function getUrlWithParameters(baseUrl, parameters) {
-                            let url = new URL(baseUrl);
-                            for (const key of Object.keys(parameters)) {
-                                url.searchParams.append(key, parameters[key]);
-                            }
-                            return url;
-                        }
-
-                        function showResultInfo(responseLength) {
-                            const resultInfo = document.getElementById('resultInfo');
-                            if (responseLength === 1) {
-                                resultInfo.innerText = '1 result';
-                            } else {
-                                resultInfo.innerText = responseLength + ' results';
-                                if (responseLength === 0) {
-                                    const url = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
-                                    resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
-                                }
-                            }
-                        }
-
-                        function setButtonStatus(button, activated, searchUrl) {
-                            button.disabled = !activated;
-                            button.setAttribute('onclick', 'searchMechanism("' + searchUrl + '")');
-                        }
-
-                        String.prototype.format = function () {
-                            let string = this;
-                            for (const i in arguments) {
-                                string = string.replace(new RegExp('\\{' + i + '\\}', 'g'), arguments[i]);
-                            }
-                            return string
-                        };
-
-                        function showPageInfo(first, previous, current, next, last) {
-                            const pageInfo = document.getElementById('pageInfo');
-                            if (first === last) {
-                                pageInfo.style.display = 'none';
-                                return;
-                            }
-                            pageInfo.style.display = '';
-
-                            const lastUrl = new URL(last);
-                            const pages = parseInt(lastUrl.searchParams.get('page'));
-                            const currentPage = current;
-
-                            document.getElementById('pageInfoText').textContent = '{0}/{1}'.format(currentPage, pages);
-
-                            setButtonStatus(document.getElementById('firstPage'), currentPage !== 1, first);
-                            setButtonStatus(document.getElementById('previousPage'), previous !== null, previous);
-                            setButtonStatus(document.getElementById('nextPage'), next !== null, next);
-                            setButtonStatus(document.getElementById('lastPage'), currentPage !== pages, last);
-                        }
-
-                        function searchMechanism(baseUrl = 'http://mechanism-browser:8000/api/mechanisms/') {
-                            const xhttp = new XMLHttpRequest();
-                            const url = getUrlWithParameters(baseUrl, getParameters());
-                            xhttp.open('GET', url.toString());
-                            xhttp.setRequestHeader('Content-type', 'application/json');
-                            xhttp.send();
-                            xhttp.onreadystatechange = function() {
-                                if (xhttp.readyState === 4 && xhttp.status === 200) {
-                                    const response = JSON.parse(xhttp.responseText);
-                                    showResultInfo(response.count);
-                                    showPageInfo(response.first, response.previous, response.current, response.next, response.last);
-                                    const list = document.getElementById('mechanisms');
-                                    list.innerHTML = '';
-
-                                    // https://stackoverflow.com/a/41447500/8816968
-                                    for (const mechanismId of Object.keys(response.results)) {
-                                        const mechanism = response.results[mechanismId];
-                                        const entry = document.querySelector("div[data-type='template']").cloneNode(true);
-                                        entry.querySelector("a.mechanism-name").textContent = mechanism.name;
-                                        entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
-                                        entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
-                                        entry.querySelector("img").src = mechanism.image.substring(1);
-                                        entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
-                                        entry.querySelector("a.mechanism-link").textContent = mechanism.link;
-                                        entry.querySelector("a.mechanism-link").href = mechanism.link;
-                                        entry.querySelector("div.mechanism-parameters").textContent = "Transmission: " + mechanism.transmission;
-                                        entry.style.display = "block";
-                                        list.appendChild(entry);
-                                    }
-                                }
-                            };
-                        }
-
-                        function createMechanism() {
-                            window.location.href = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
-                        }
-
-                        $('img[class=icon], input[type=number], input[type=search]').on('change keydown paste input click', function() {
-                            searchMechanism()
-                        });
-                </script>
-            </div>
-        </div>
-
-        <br/>
-
-        <div style="display: none" data-type="template" class="search-result">
-            <a class="mechanism-name">
-                title
+<div class="top-nav-wrapper">
+    <div class="top-nav-fixed">
+        <div class="container">
+            <a href="http://mechanism-browser">
+                <img src="../media/logo%20vertical%20white.svg">
             </a>
-            <div>
-                <a class="image-link"><img class="preview-image" align="left"></a>
-                <a class="mechanism-link">
-                    link
-                </a>
-                <div class="mechanism-description">
-                    description
-                </div>
-                <div class="mechanism-parameters">
-                    parameters
-                </div>
-            </div>
+            <a href="https://github.com/janetzki/Mechanism-Browser">
+                <img src="../media/octocat%20white.svg">
+            </a>
         </div>
-        <div class="container content">
-            <p id="resultInfo" style="color: gray"></p>
-            <div id="mechanisms" class="column">
-            </div>
-        </div>
-
-        <footer id="pageInfo" class="bottom-nav" style="display:none;">
-            <div align="center">
-                <button id="firstPage"
-                        class="btn btn-default action"
-                        type="button">
-                    <<
-                </button>
-                <button id="previousPage"
-                        class="btn btn-default action"
-                        type="button">
-                    <
-                </button>
-                <p id="pageInfoText" class="page-info"></p>
-                <button id="nextPage"
-                        class="btn btn-default action"
-                        type="button">
-                    >
-                </button>
-                <button id="lastPage"
-                        class="btn btn-default action"
-                        type="button">
-                        >>
-                </button>
-            </div>
-        </footer>
     </div>
+</div>
+
+<div class="top-nav">
+    <div class="container">
+        <div class="page-header">
+            <img src="media/logo%20horizontal.svg">
+            <div style="display: none">Gear icon made by <a href="http://www.freepik.com"
+                                                            title="Freepik">Freepik</a> from <a
+                    href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a
+                    href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0"
+                    target="_blank">CC 3.0 BY</a></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="column">
+                <h3>Input</h3>
+                <div class="col-lg-12 text-center">
+                    <img class="icon" id="inputR1" src="icons/r1_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="inputR2" src="icons/r2_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="inputR3" src="icons/r3_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="inputT1" src="icons/t1_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="inputT2" src="icons/t2_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="inputT3" src="icons/t3_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                </div>
+            </div>
+            <div class="column">
+                <h3>Output</h3>
+                <div class="col-lg-12 text-center">
+                    <img class="icon" id="outputR1" src="icons/r1_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="outputR2" src="icons/r2_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="outputR3" src="icons/r3_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="outputT1" src="icons/t1_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="outputT2" src="icons/t2_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                    <img class="icon" id="outputT3" src="icons/t3_undefined.png" data-status=""
+                         onclick=toggleImage(this)>
+                </div>
+            </div>
+            <div class="column">
+                <h3>More</h3>
+                <div class="form-group">
+                    <label for="transmission">Transmission</label>
+                    <input type="number" class="form-control" id="transmission" placeholder="number">
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="search" class="form-control" id="name" placeholder="text">
+                </div>
+            </div>
+            <div class="column">
+                <h3>Actions</h3>
+                <button class="btn btn-default action"
+                        type="button"
+                        onclick="searchMechanism()">
+                    Search
+                </button>
+                <button class="btn btn-default action"
+                        type="button"
+                        onclick="createMechanism()">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-for-footer background">
+    <div class="background-overlay">
+        <div class="content content-box container">
+            <div style="display: none" data-type="template" class="search-result">
+                <a class="mechanism-name">
+                    title
+                </a>
+                <div>
+                    <a class="image-link"><img src="" class="preview-image" align="left"></a>
+                    <a class="mechanism-link">
+                        link
+                    </a>
+                    <div class="mechanism-description">
+                        description
+                    </div>
+                    <div class="mechanism-parameters">
+                        parameters
+                    </div>
+                </div>
+            </div>
+            <div id="content" class="content container" style="display: none">
+                <p id="resultInfo" style="color: gray"></p>
+                <div id="mechanisms" class="column">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="pageInfo" class="bottom-nav" style="display:none;">
+        <div align="center">
+            <button id="firstPage"
+                    class="btn btn-default action"
+                    type="button">
+                <<
+            </button>
+            <button id="previousPage"
+                    class="btn btn-default action"
+                    type="button">
+                <
+            </button>
+            <p id="pageInfoText" class="bottom-nav-text"></p>
+            <button id="nextPage"
+                    class="btn btn-default action"
+                    type="button">
+                >
+            </button>
+            <button id="lastPage"
+                    class="btn btn-default action"
+                    type="button">
+                >>
+            </button>
+        </div>
+    </footer>
+</div>
 </body>
+<script>
+    function toggleImage(img) {
+        const baseFileName = img.id
+            .slice(-2)
+            .toLowerCase();
+        switch ($(img).data('status')) {
+            case 1:
+                $(img).data('status', 0);
+                img.src = 'icons/deselected.png';
+                break;
+            case 0:
+                $(img).data('status', '');
+                img.src = 'icons/' + baseFileName + '_undefined.png';
+                break;
+            default:
+                // ''
+                $(img).data('status', 1);
+                img.src = 'icons/' + baseFileName + '.png';
+        }
+    }
+
+    function getParameters() {
+        const parameters = {
+            inputR1: $('#inputR1').data('status'),
+            inputR2: $('#inputR2').data('status'),
+            inputR3: $('#inputR3').data('status'),
+            inputT1: $('#inputT1').data('status'),
+            inputT2: $('#inputT2').data('status'),
+            inputT3: $('#inputT3').data('status'),
+            outputR1: $('#outputR1').data('status'),
+            outputR2: $('#outputR2').data('status'),
+            outputR3: $('#outputR3').data('status'),
+            outputT1: $('#outputT1').data('status'),
+            outputT2: $('#outputT2').data('status'),
+            outputT3: $('#outputT3').data('status'),
+            transmission: document.querySelector("#transmission").value,
+            name: document.querySelector("#name").value
+        };
+
+        // remove undefined parameters
+        for (const key of Object.keys(parameters)) {
+            if (parameters[key] === '') {
+                delete parameters[key];
+            }
+        }
+        return parameters;
+    }
+
+    function getUrlWithParameters(baseUrl, parameters) {
+        let url = new URL(baseUrl);
+        for (const key of Object.keys(parameters)) {
+            url.searchParams.append(key, parameters[key]);
+        }
+        return url;
+    }
+
+    function showResultInfo(responseLength) {
+        const resultInfo = document.getElementById('resultInfo');
+        if (responseLength === 1) {
+            resultInfo.innerText = '1 result';
+        } else {
+            resultInfo.innerText = responseLength + ' results';
+            if (responseLength === 0) {
+                const url = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
+                resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
+            }
+        }
+    }
+
+    function setButtonStatus(button, activated, searchUrl) {
+        button.disabled = !activated;
+        button.setAttribute('onclick', 'searchMechanism("' + searchUrl + '")');
+    }
+
+    String.prototype.format = function () {
+        let string = this;
+        for (const i in arguments) {
+            string = string.replace(new RegExp('\\{' + i + '\\}', 'g'), arguments[i]);
+        }
+        return string
+    };
+
+    function showPageInfo(first, previous, current, next, last) {
+        const pageInfo = document.getElementById('pageInfo');
+        if (first === last) {
+            pageInfo.style.display = 'none';
+            return;
+        }
+        pageInfo.style.display = '';
+
+        const lastUrl = new URL(last);
+        const pages = parseInt(lastUrl.searchParams.get('page'));
+        const currentPage = current;
+
+        document.getElementById('pageInfoText').textContent = '{0}/{1}'.format(currentPage, pages);
+
+        setButtonStatus(document.getElementById('firstPage'), currentPage !== 1, first);
+        setButtonStatus(document.getElementById('previousPage'), previous !== null, previous);
+        setButtonStatus(document.getElementById('nextPage'), next !== null, next);
+        setButtonStatus(document.getElementById('lastPage'), currentPage !== pages, last);
+    }
+
+    function searchMechanism(baseUrl = 'http://mechanism-browser:8000/api/mechanisms/') {
+        const xhttp = new XMLHttpRequest();
+        const url = getUrlWithParameters(baseUrl, getParameters());
+        xhttp.open('GET', url.toString());
+        xhttp.setRequestHeader('Content-type', 'application/json');
+        xhttp.send();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                const response = JSON.parse(xhttp.responseText);
+                document.getElementById('content').style.display = '';
+                showResultInfo(response.count);
+                showPageInfo(response.first, response.previous, response.current, response.next, response.last);
+                const list = document.getElementById('mechanisms');
+                list.innerHTML = '';
+
+                // https://stackoverflow.com/a/41447500/8816968
+                for (const mechanismId of Object.keys(response.results)) {
+                    const mechanism = response.results[mechanismId];
+                    const entry = document.querySelector("div[data-type='template']").cloneNode(true);
+                    entry.querySelector("a.mechanism-name").textContent = mechanism.name;
+                    entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
+                    entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
+                    entry.querySelector("img").src = mechanism.image.substring(1);
+                    entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
+                    entry.querySelector("a.mechanism-link").textContent = mechanism.link;
+                    entry.querySelector("a.mechanism-link").href = mechanism.link;
+                    entry.querySelector("div.mechanism-parameters").textContent = "Transmission: " + mechanism.transmission;
+                    entry.style.display = "block";
+                    list.appendChild(entry);
+                }
+            }
+        };
+    }
+
+    function createMechanism() {
+        window.location.href = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
+    }
+
+    $('img[class=icon], input[type=number], input[type=search]').on('change keydown paste input click', function () {
+        searchMechanism()
+    });
+</script>
 </html>

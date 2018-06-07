@@ -12,99 +12,100 @@
 
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 <div class="top-nav-wrapper">
     <div class="top-nav-fixed">
         <div class="container">
-            <img src="../../media/logo%20vertical.svg" onclick="searchArticle()">
+            <a href="http://mechanism-browser">
+                <img src="../../media/logo%20vertical%20white.svg">
+            </a>
+            <a href="https://github.com/janetzki/Mechanism-Browser">
+                <img src="../../media/octocat%20white.svg">
+            </a>
         </div>
     </div>
 </div>
 
-<div class="container-for-footer">
-    <form class="container">
-        <div class="page-header">
-            <input id="name" type="text" class="form-control large-input" placeholder="enter text" value="{{name}}">
-            <p id="name-errors" style="color:red"></p>
-        </div>
-
-        <div class="content" style="display: flex">
-            <div class="column">
-                <textarea class="form-control" id="comments" placeholder="enter comments" cols="100" rows="10">{{comments}}</textarea>
-                <p id="comments-errors" style="color:red"></p>
+<div class="container-for-footer background">
+    <div class="background-overlay">
+        <form class="content content-box container">
+            <div class="page-header" style="margin-top: 0">
+                <input id="name" type="text" class="form-control large-input page-header-title" placeholder="enter text"
+                       value="{{name}}">
+                <p id="name-errors" style="color:red"></p>
             </div>
-            <div class="column">
-                <table class="infobox">
-                    <tbody>
-                    <tr>
-                        <td style="text-align: center" colspan="2">
-                            <img id="preview" class="upload-preview-image" src="{{image}}">
-                            <input id="image" type="file" onchange="previewImage()">
-                            <p id="image-errors" style="color:red"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2" style="text-align: center; background: lightblue;">
-                            Parameters
-                        </th>
-                    </tr>
-                    <tr>
-                        <th style="text-align: left">Link</th>
-                        <td style="word-break: break-all">
-                            <input id="link" type="text" value="{{link}}" placeholder="enter link">
-                            <p id="link-errors" style="color:red"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th style="text-align: left">Input</th>
-                        <td>
-                            <img class="small-icon" id="inputR1" src="icons/deselected.png" data-status="{{input.r1}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="inputR2" src="icons/deselected.png" data-status="{{input.r2}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="inputR3" src="icons/deselected.png" data-status="{{input.r3}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="inputT1" src="icons/deselected.png" data-status="{{input.t1}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="inputT2" src="icons/deselected.png" data-status="{{input.t2}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="inputT3" src="icons/deselected.png" data-status="{{input.t3}}"
-                                 onclick=toggleImage(this)>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th style="text-align: left">Output</th>
-                        <td>
-                            <img class="small-icon" id="outputR1" src="icons/deselected.png" data-status="{{output.r1}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="outputR2" src="icons/deselected.png" data-status="{{output.r2}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="outputR3" src="icons/deselected.png" data-status="{{output.r3}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="outputT1" src="icons/deselected.png" data-status="{{output.t1}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="outputT2" src="icons/deselected.png" data-status="{{output.t2}}"
-                                 onclick=toggleImage(this)>
-                            <img class="small-icon" id="outputT3" src="icons/deselected.png" data-status="{{output.t3}}"
-                                 onclick=toggleImage(this)>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th style="text-align: left">Transmission</th>
-                        <td>
-                            <input id="transmission" type="number" value="{{transmission}}" placeholder="enter number">
-                            <p id="transmission-errors" style="color:red"></p>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </form>
+            <textarea id="comments" class="comments form-control" placeholder="enter comments"
+                      rows="20">{{comments}}</textarea>
+            <p id="comments-errors" style="color:red"></p>
+            <table class="infobox">
+                <tbody>
+                <tr>
+                    <td style="text-align: center" colspan="2">
+                        <img id="preview" class="upload-preview-image" src="{{image}}">
+                        <input id="image" type="file" onchange="previewImage()">
+                        <p id="image-errors" style="color:red"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align: center; background: lightblue;">
+                        Parameters
+                    </th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Link</th>
+                    <td style="word-break: break-all">
+                        <input id="link" type="text" value="{{link}}" placeholder="enter link">
+                        <p id="link-errors" style="color:red"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Input</th>
+                    <td class="axes-line">
+                        <img class="small-icon" id="inputR1" src="icons/deselected.png" data-status="{{input.r1}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="inputR2" src="icons/deselected.png" data-status="{{input.r2}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="inputR3" src="icons/deselected.png" data-status="{{input.r3}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="inputT1" src="icons/deselected.png" data-status="{{input.t1}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="inputT2" src="icons/deselected.png" data-status="{{input.t2}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="inputT3" src="icons/deselected.png" data-status="{{input.t3}}"
+                             onclick=toggleImage(this)>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Output</th>
+                    <td class="axes-line">
+                        <img class="small-icon" id="outputR1" src="icons/deselected.png" data-status="{{output.r1}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="outputR2" src="icons/deselected.png" data-status="{{output.r2}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="outputR3" src="icons/deselected.png" data-status="{{output.r3}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="outputT1" src="icons/deselected.png" data-status="{{output.t1}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="outputT2" src="icons/deselected.png" data-status="{{output.t2}}"
+                             onclick=toggleImage(this)>
+                        <img class="small-icon" id="outputT3" src="icons/deselected.png" data-status="{{output.t3}}"
+                             onclick=toggleImage(this)>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Transmission</th>
+                    <td>
+                        <input id="transmission" type="number" value="{{transmission}}" placeholder="enter number">
+                        <p id="transmission-errors" style="color:red"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
 
     <footer class="bottom-nav">
-        <p>Created: {{created}}</p>
+        <p class="bottom-nav-text">Created: {{created}}</p>
 
         <button class="btn btn-default btn-sm footer-button"
                 onclick="createOrUpdateArticle()"
@@ -276,10 +277,6 @@
                 showErrors(jqXHR.responseJSON);
             }
         })
-    }
-
-    function searchArticle() {
-        window.location.href = 'http://mechanism-browser/';
     }
 </script>
 </html>
