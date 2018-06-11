@@ -1,4 +1,5 @@
 from django.db import models
+from updown.fields import RatingField, AnonymousRatingField
 
 # Create your models here.
 
@@ -22,6 +23,7 @@ class Mechanism(models.Model):
     outputT3 = models.BooleanField()
     transmission = models.IntegerField(blank=True, null=True)
     comments = models.TextField(blank=True)
+    rating = AnonymousRatingField()
 
     class Meta:
         ordering = ('created',)
