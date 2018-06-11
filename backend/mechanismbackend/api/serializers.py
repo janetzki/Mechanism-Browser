@@ -7,6 +7,11 @@ class MechanismSerializer(serializers.ModelSerializer):
         model = Mechanism
         fields = '__all__'
 
+    def validate(self, attrs):
+        instance = Mechanism(**attrs)
+        instance.clean()
+        return attrs
+
     def to_representation(self, instance):
         input_dict = dict()
         input_dict['r1'] = instance.inputR1
