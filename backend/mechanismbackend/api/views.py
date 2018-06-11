@@ -1,7 +1,10 @@
 from rest_framework import generics
+from rest_framework import status
+from rest_framework.response import Response
 from .models import Mechanism
 from .serializers import MechanismSerializer
 from django_filters import rest_framework as filters
+from django.db.utils import IntegrityError
 
 
 class MechanismList(generics.ListAPIView):
@@ -32,4 +35,11 @@ class MechanismRetrieveUpdate(generics.RetrieveUpdateAPIView):
 
 class MechanismCreate(generics.CreateAPIView):
     serializer_class = MechanismSerializer
+
+    def create(self, request, *args, **kwargs):
+        try:
+            return super(generics.CreateAPIView, self).create(request, *args, **kwargs)
+        except IntegrityError as e:
+            content = {'error': str(e)}
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
