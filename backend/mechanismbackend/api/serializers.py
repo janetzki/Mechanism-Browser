@@ -34,5 +34,8 @@ class MechanismSerializer(serializers.ModelSerializer):
         details['transmission'] = instance.transmission
         details['comments'] = instance.comments
         details['created'] = instance.created
+        details['rating_likes'] = instance.rating_likes
+        details['rating_dislikes'] = instance.rating_dislikes
+
 
         return details
