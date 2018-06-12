@@ -155,7 +155,8 @@ html, body {
 }
 
 .content {
-    min-height: calc(100% - 4em);
+    max-height: calc(100% - 4em);
+    padding: 15px;
 }
 
 .content-box {

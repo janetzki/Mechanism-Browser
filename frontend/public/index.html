@@ -258,6 +258,14 @@
         setButtonStatus(document.getElementById('lastPage'), currentPage !== pages, last);
     }
 
+    function updateStyles() {
+        const documentHeight = document.getElementsByTagName('html')[0].offsetHeight;
+        document.getElementById('content').style.display = '';
+        document.getElementsByTagName('body')[0].style.height = 'auto';
+        document.getElementsByClassName('background')[0].style.minHeight = documentHeight + 'px';
+        document.getElementsByClassName('background-overlay')[0].style.minHeight = documentHeight + 'px';
+    }
+
     function searchMechanism(baseUrl = 'http://mechanism-browser:8000/api/mechanisms/') {
         const xhttp = new XMLHttpRequest();
         const url = getUrlWithParameters(baseUrl, getParameters());
@@ -267,8 +275,7 @@
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState === 4 && xhttp.status === 200) {
                 const response = JSON.parse(xhttp.responseText);
-                document.getElementsByTagName('body')[0].style.height = 'auto';
-                document.getElementById('content').style.display = '';
+                updateStyles();
                 showResultInfo(response.count);
                 showPageInfo(response.first, response.previous, response.current, response.next, response.last);
                 const list = document.getElementById('mechanisms');
