@@ -103,8 +103,8 @@
 
 <div class="container-for-footer background">
     <div class="background-overlay">
-        <div class="content content-box container">
-            <div style="display: none" data-type="template" class="search-result">
+        <div id="content" class="content content-box container" style="display: none;">
+            <div class="search-result" data-type="template" style="display: none" >
                 <a class="mechanism-name">
                     title
                 </a>
@@ -121,15 +121,15 @@
                     </div>
                 </div>
             </div>
-            <div id="content" class="content container" style="display: none">
+            <div class="content container" style="padding-bottom: 3em">
                 <p id="resultInfo" style="color: gray"></p>
-                <div id="mechanisms" class="column">
+                <div id="mechanisms">
                 </div>
             </div>
         </div>
     </div>
 
-    <footer id="pageInfo" class="bottom-nav" style="display:none;">
+    <footer id="pageInfo" class="bottom-nav" style="display: none; position: fixed">
         <div align="center">
             <button id="firstPage"
                     class="btn btn-default action"
@@ -155,7 +155,7 @@
         </div>
     </footer>
 </div>
-</body>
+</idbody>
 <script>
     function toggleImage(img) {
         const baseFileName = img.id
@@ -267,6 +267,7 @@
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState === 4 && xhttp.status === 200) {
                 const response = JSON.parse(xhttp.responseText);
+                document.getElementsByTagName('body')[0].style.height = 'auto';
                 document.getElementById('content').style.display = '';
                 showResultInfo(response.count);
                 showPageInfo(response.first, response.previous, response.current, response.next, response.last);
