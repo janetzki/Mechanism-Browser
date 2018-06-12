@@ -7,25 +7,33 @@ from django_filters import rest_framework as filters
 from django.db.utils import IntegrityError
 
 
+class MechanismFilter(filters.FilterSet):
+    name = filters.CharFilter(name='name', lookup_expr='icontains')
+
+    class Meta:
+        model = Mechanism
+        fields = ['id',
+                  'name',
+                  'transmission',
+                  'inputR1',
+                  'inputR2',
+                  'inputR3',
+                  'inputT1',
+                  'inputT2',
+                  'inputT3',
+                  'outputR1',
+                  'outputR2',
+                  'outputR3',
+                  'outputT1',
+                  'outputT2',
+                  'outputT3']
+
+
 class MechanismList(generics.ListAPIView):
     queryset = Mechanism.objects.all()
     serializer_class = MechanismSerializer
     filter_backends = (filters.DjangoFilterBackend,)  # enable filter-backend for this view
-    filter_fields = ('id',
-                     'name',
-                     'transmission',
-                     'inputR1',
-                     'inputR2',
-                     'inputR3',
-                     'inputT1',
-                     'inputT2',
-                     'inputT3',
-                     'outputR1',
-                     'outputR2',
-                     'outputR3',
-                     'outputT1',
-                     'outputT2',
-                     'outputT3',)
+    filter_class = MechanismFilter
 
 
 class MechanismRetrieveUpdate(generics.RetrieveUpdateAPIView):
