@@ -190,5 +190,39 @@ html, body {
     color: red;
     word-wrap: break-word;
     white-space: -moz-pre-wrap;
-    white-space: pre-wrap;
+  white-space: pre-wrap;
+}
+
+.voting-arrows {
+    width: 30px;
+    height: auto;
+    display: inline-block;
+    margin: 0 1em 0 1em;
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    display: block;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid gray;
+    cursor: pointer;
+}
+
+.rating {
+    margin: 5px 0 5px 0;
+    font-family: "Times New Roman", Times, serif;
+    font-size: large;
+    color: gray;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    display: block;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid gray;
+    cursor: pointer;
 }

@@ -10,8 +10,9 @@ function getMechanismAndRenderPage(req, res, page) {
     xhttp.send();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            const response = JSON.parse(xhttp.responseText);
-            res.render(page, response.results[0])
+            const response = JSON.parse(xhttp.responseText).results[0];
+            response.rating = response.rating_likes - response.rating_dislikes;
+            res.render(page, response)
         }
     };
 }
