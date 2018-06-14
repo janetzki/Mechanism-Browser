@@ -199,8 +199,8 @@ html, body {
     display: block;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
-
     border-bottom: 15px solid gray;
+    cursor: pointer;
 }
 
 .rating {
@@ -216,6 +216,6 @@ html, body {
     display: block;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
-
     border-top: 15px solid gray;
+    cursor: pointer;
 }

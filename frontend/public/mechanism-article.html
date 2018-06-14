@@ -31,9 +31,9 @@
         <section class="content content-box container">
             <div>
                 <div class="voting-arrows">
-                    <a class="arrow-up" onclick="sendVoting(true)"></a>
+                    <a class="arrow-up" onclick="sendVoting(true)" onmousedown="highlight(this, true)" onmouseup="highlight(this, false)"></a>
                     <div class="rating" align="center">{{rating}}</div>
-                    <a class="arrow-down" onclick="sendVoting(false)"></a>
+                    <a class="arrow-down" onclick="sendVoting(false)" onmousedown="highlight(this, true)" onmouseup="highlight(this, false)"></a>
                 </div>
                 <div class="page-header" style="display: inline-block; margin-top: 0">
                     <h1 class="page-header-title">{{name}}</h1>
@@ -170,6 +170,16 @@
                 };
             }
         };
+    }
+
+    function highlight(element, on) {
+        if (on) {
+            $(element).css('borderTopColor', 'lightblue');
+            $(element).css('borderBottomColor', 'lightblue');
+        } else {
+            $(element).css('borderTopColor', 'gray');
+            $(element).css('borderBottomColor', 'gray');
+        }
     }
 </script>
 </html>
