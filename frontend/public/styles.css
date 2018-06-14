@@ -196,6 +196,7 @@ html, body {
 .arrow-up {
     width: 0;
     height: 0;
+    display: block;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
 
@@ -212,6 +213,7 @@ html, body {
 .arrow-down {
     width: 0;
     height: 0;
+    display: block;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
 

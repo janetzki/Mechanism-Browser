@@ -13,6 +13,8 @@ function getMechanismAndRenderPage(req, res, page) {
             const response = JSON.parse(xhttp.responseText).results[0];
             response.rating = response.rating_likes - response.rating_dislikes;
             res.render(page, response)
+            //const response = JSON.parse(xhttp.responseText);
+            //res.render(page, response.results[0])
         }
     };
 }

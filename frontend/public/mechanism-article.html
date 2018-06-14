@@ -7,7 +7,7 @@
 
     <title>{{name}}</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body>
@@ -17,10 +17,10 @@
     <div class="top-nav-fixed">
         <div class="container">
             <a href="http://mechanism-browser">
-                <img src="../media/logo%20vertical%20white.svg">
+                <img src="../../media/logo%20vertical%20white.svg">
             </a>
             <a href="https://github.com/janetzki/Mechanism-Browser">
-                <img src="../media/octocat%20white.svg">
+                <img src="../../media/octocat%20white.svg">
             </a>
         </div>
     </div>
@@ -31,9 +31,9 @@
         <section class="content content-box container">
             <div style="float: left">
                 <div class="voting-arrows">
-                    <div class="arrow-up"></div>
+                    <a class="arrow-up" onclick="sendVoting(true)"></a>
                     <div class="rating" align="center">{{rating}}</div>
-                    <div class="arrow-down"></div>
+                    <a class="arrow-down" onclick="sendVoting(false)"></a>
                 </div>
                 <div class="page-header" style="display: inline-block; margin-top: 0">
                     <h1 class="page-header-title">{{name}}</h1>
@@ -143,6 +143,33 @@
 
     function editArticle() {
         window.location.href += '/edit';
+    }
+
+    const mechanismUrl = 'http://mechanism-browser:8000/api/mechanisms/' + {{id}} + '/';
+
+    function sendVoting(voteUp) {
+        let xhttp = new XMLHttpRequest();
+        let url;
+        if (voteUp) {
+            url = mechanismUrl + 'rate/1';
+        } else {
+            url = mechanismUrl + 'rate/-1';
+        }
+        xhttp.open('GET', url);
+        xhttp.send();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                xhttp = new XMLHttpRequest();
+                xhttp.open('GET', mechanismUrl);
+                xhttp.send();
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState === 4 && xhttp.status === 200) {
+                        const response = JSON.parse(xhttp.responseText);
+                        document.getElementsByClassName('rating')[0].textContent = response.rating_likes - response.rating_dislikes;
+                    }
+                };
+            }
+        };
     }
 </script>
 </html>
