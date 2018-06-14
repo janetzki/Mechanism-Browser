@@ -29,8 +29,15 @@
 <div class="container-for-footer background">
     <div class="background-overlay">
         <section class="content content-box container">
-            <div class="page-header" style="margin-top: 0">
-                <h1 class="page-header-title">{{name}}</h1>
+            <div style="float: left">
+                <div class="voting-arrows">
+                    <div class="arrow-up"></div>
+                    <div class="rating" align="center">{{rating}}</div>
+                    <div class="arrow-down"></div>
+                </div>
+                <div class="page-header" style="display: inline-block; margin-top: 0">
+                    <h1 class="page-header-title">{{name}}</h1>
+                </div>
             </div>
             <p class="comments">{{comments}}</p>
             <table class="infobox">
