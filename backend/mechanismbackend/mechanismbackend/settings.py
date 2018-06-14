@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'api',  # pulling in our own API
     'django_filters',  # easy filtering
     'corsheaders',  # allowing OPTION requests (CORS)
+    'updown',  # simple rating system
 ]
 
 MIDDLEWARE = [
