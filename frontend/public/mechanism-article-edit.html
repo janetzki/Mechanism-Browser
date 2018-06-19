@@ -93,6 +93,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <th></th>
+                    <td>
+                        <p id="non_field_errors-errors" class="error-message"></p>
+                    </td>
+                </tr>
+                <tr>
                     <th style="text-align: left">Transmission</th>
                     <td>
                         <input id="transmission" type="number" value="{{transmission}}" placeholder="enter number">
@@ -241,6 +247,7 @@
         for (const inputField of inputFields.notAxes) {
             $('#' + inputField + '-errors').text('');
         }
+        $('#non_field_errors-errors').text('');
 
         for (const inputField in errors) {
             $('#' + inputField + '-errors').text(errors[inputField]);

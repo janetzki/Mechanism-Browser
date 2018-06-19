@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework.exceptions import ValidationError
 from updown.fields import RatingField, AnonymousRatingField
 
 # Create your models here.
@@ -30,3 +31,19 @@ class Mechanism(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        if (not self.inputR1 and
+                not self.inputR2 and
+                not self.inputR3 and
+                not self.inputT1 and
+                not self.inputT2 and
+                not self.inputT3 and
+                not self.outputR1 and
+                not self.outputR2 and
+                not self.outputR3 and
+                not self.outputT1 and
+                not self.outputT2 and
+                not self.outputT3):
+            raise ValidationError("Mechanism needs at least one input or output to be specified.")
+

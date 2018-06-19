@@ -186,6 +186,13 @@ html, body {
     margin: 0 10px 0 10px;
 }
 
+.error-message {
+    color: red;
+    word-wrap: break-word;
+    white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
+}
+
 .voting-arrows {
     width: 30px;
     height: auto;
