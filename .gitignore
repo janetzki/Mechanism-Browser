@@ -24,3 +24,6 @@ start_chrome.sh
 
 # logs
 *.log
+
+# data
+data/

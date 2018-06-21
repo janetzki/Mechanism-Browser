@@ -13,6 +13,7 @@ class WebPageExtractor(object):
         self.index_url = url
         self.index = dict()
         self.baseUrl = 'http://507movements.com/'
+        self.json_path = '507.json'
 
     @staticmethod
     def _depth(node):
@@ -110,10 +111,44 @@ class WebPageExtractor(object):
             print(id)
             pp.pprint(mechanism)
             mechanisms.append(mechanism)
-        with io.open('507.json', 'w', encoding='utf8') as fout:
+        with io.open(self.json_path, 'w', encoding='utf8') as fout:
             json.dump(mechanisms, fout, indent=2, ensure_ascii=False)
+
+    def _download_image(self, url):
+        parts = url.split(self.baseUrl)
+        file_name = parts[1]
+        with io.open(file_name, 'wb') as fout:
+            fout.write(requests.get(url).content)
+        return file_name
+
+    def create_mechanisms(self):
+        url_to_id = dict()
+        with io.open(self.json_path, 'r', encoding='utf8') as fin:
+            mechanisms = json.load(fin)
+            for mechanism in mechanisms:
+                image_file = self._download_image(mechanism['image'])
+                data = {
+                    'name': mechanism['name'],
+                    'link': mechanism['link'],
+                    'comments': mechanism['comments'],
+                    'inputR1': True
+                }
+                files = {
+                    'image': open(image_file, 'rb')
+                }
+                response = requests.post('http://mechanism-browser:8000/api/mechanisms/create/', data, files=files)
+                pp.pprint(str(response.status_code) + ' ' + response.reason + ' ' + str(response.content))
+                id = json.loads(response.content.decode())['id']
+                url_to_id[mechanism['link']] = id
+                response = requests.patch('http://mechanism-browser:8000/api/mechanisms/' + str(id) + '/',
+                                          {'inputR1': 0})
+                pp.pprint(str(response.status_code) + response.reason + str(response.content))
+
+        with io.open('ids.json', 'w') as fout:
+            json.dump(url_to_id, fout, indent=2)
 
 
 if __name__ == '__main__':
     extractor = WebPageExtractor('http://507movements.com/toc.html')
     extractor.crawl_mechanisms()
+    extractor.create_mechanisms()
