@@ -184,14 +184,14 @@
             .toLowerCase();
         switch (value) {
             case true:
-                img.src = 'icons/' + baseFileName + '.png';
+                img.src = 'icons/' + baseFileName + '_selected.png';
                 break;
             case false:
-                img.src = 'icons/deselected.png';
+                img.src = 'icons/ '+ baseFileName + '_deselected.png';
                 break;
             default:
                 // ''
-                img.src = 'icons/' + baseFileName + '_undefined.png';
+                img.src = 'icons/' + baseFileName + '.png';
         }
     }
 
