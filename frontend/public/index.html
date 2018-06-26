@@ -117,7 +117,22 @@
                         description
                     </div>
                     <div class="mechanism-parameters">
-                        parameters
+                        <div class="axes-line">
+                            <img class="small-icon inputR1">
+                            <img class="small-icon inputR2">
+                            <img class="small-icon inputR3">
+                            <img class="small-icon inputT1">
+                            <img class="small-icon inputT2">
+                            <img class="small-icon inputT3">
+                        </div>
+                        <div class="axes-line">
+                            <img class="small-icon outputR1">
+                            <img class="small-icon outputR2">
+                            <img class="small-icon outputR3">
+                            <img class="small-icon outputT1">
+                            <img class="small-icon outputT2">
+                            <img class="small-icon outputT3">
+                        </div>
                     </div>
                     <div>
                         <div class="mechanism-rating">
@@ -163,24 +178,37 @@
 </div>
 </idbody>
 <script>
-    function toggleImage(img) {
-        const baseFileName = img.id
+    function setImage(img, baseFileName, value) {
+        baseFileName = baseFileName
             .slice(-2)
             .toLowerCase();
-        switch ($(img).data('status')) {
-            case 1:
-                $(img).data('status', 0);
-                img.src = 'icons/deselected.png';
+        console.log(value);
+        switch (value) {
+            case true:
+                img.src = 'icons/' + baseFileName + '.png';
                 break;
-            case 0:
-                $(img).data('status', '');
-                img.src = 'icons/' + baseFileName + '_undefined.png';
+            case false:
+                img.src = 'icons/deselected.png';
                 break;
             default:
                 // ''
-                $(img).data('status', 1);
-                img.src = 'icons/' + baseFileName + '.png';
+                img.src = 'icons/' + baseFileName + '_undefined.png';
         }
+    }
+
+    function toggleImage(img) {
+        switch ($(img).data('status')) {
+            case true:
+                $(img).data('status', false);
+                break;
+            case false:
+                $(img).data('status', '');
+                break;
+            default:
+                // ''
+                $(img).data('status', true);
+        }
+        setImage(img, img.id, $(img).data('status'));
     }
 
     function getParameters() {
@@ -272,7 +300,7 @@
         document.getElementsByClassName('background-overlay')[0].style.minHeight = documentHeight + 'px';
     }
 
-    function setRating(entry, rating) {
+    function showRating(entry, rating) {
         star = entry.querySelector("span.glyphicon-star");
         entry.querySelector("div.mechanism-rating").textContent = rating;
         if (rating < 0) {
@@ -281,6 +309,16 @@
             star.style.color = "grey";
         } else {
             star.style.color = "orange";
+        }
+    }
+
+    function showParameters(entry, mechanism) {
+        const axes = ['R1', 'R2', 'R3', 'T1', 'T2', 'T3'];
+        for (const axis of axes) {
+            const inputImage = entry.querySelector('img.input' + axis);
+            const outputImage = entry.querySelector('img.output' + axis);
+            setImage(inputImage, 'input' + axis, mechanism.input[axis.toLowerCase()]x);
+            setImage(outputImage, 'output' + axis, mechanism.output[axis.toLowerCase()]);
         }
     }
 
@@ -308,10 +346,10 @@
                     entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
                     entry.querySelector("img").src = mechanism.image.substring(1);
                     entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
-                    setRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
+                    showRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
+                    showParameters(entry, mechanism);
                     entry.querySelector("a.mechanism-link").textContent = mechanism.link;
                     entry.querySelector("a.mechanism-link").href = mechanism.link;
-                    entry.querySelector("div.mechanism-parameters").textContent = "Transmission: " + mechanism.transmission;
                     entry.style.display = "block";
                     list.appendChild(entry);
                 }
