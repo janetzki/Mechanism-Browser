@@ -72,6 +72,11 @@ html, body {
     color: green;
 }
 
+.mechanism-rating {
+    display: inline-block;
+    font-size: 18px;
+}
+
 .mechanism-description {
     padding-right: 15px;
     white-space: nowrap;

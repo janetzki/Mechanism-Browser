@@ -119,6 +119,12 @@
                     <div class="mechanism-parameters">
                         parameters
                     </div>
+                    <div>
+                        <div class="mechanism-rating">
+                            rating
+                        </div>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </div>
                 </div>
             </div>
             <div class="content container" style="padding-bottom: 3em">
@@ -266,6 +272,18 @@
         document.getElementsByClassName('background-overlay')[0].style.minHeight = documentHeight + 'px';
     }
 
+    function setRating(entry, rating) {
+        star = entry.querySelector("span.glyphicon-star");
+        entry.querySelector("div.mechanism-rating").textContent = rating;
+        if (rating < 0) {
+            star.style.color = "red";
+        } else if (rating === 0) {
+            star.style.color = "grey";
+        } else {
+            star.style.color = "orange";
+        }
+    }
+
     function searchMechanism(baseUrl = 'http://mechanism-browser:8000/api/mechanisms/') {
         const xhttp = new XMLHttpRequest();
         const url = getUrlWithParameters(baseUrl, getParameters());
@@ -290,6 +308,7 @@
                     entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
                     entry.querySelector("img").src = mechanism.image.substring(1);
                     entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
+                    setRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
                     entry.querySelector("a.mechanism-link").textContent = mechanism.link;
                     entry.querySelector("a.mechanism-link").href = mechanism.link;
                     entry.querySelector("div.mechanism-parameters").textContent = "Transmission: " + mechanism.transmission;
