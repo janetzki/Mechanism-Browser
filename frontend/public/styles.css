@@ -57,8 +57,8 @@ html, body {
 }
 
 .preview-image {
-    height: 100px;
-    width: 100px;
+    height: 130px;
+    width: 130px;
     margin-right: 1em;
 }
 
@@ -72,7 +72,16 @@ html, body {
     color: green;
 }
 
+.mechanism-rating {
+    display: inline-block;
+    font-size: 18px;
+}
+
 .mechanism-description {
+    padding-right: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 18px;
 }
 
