@@ -182,7 +182,6 @@
         baseFileName = baseFileName
             .slice(-2)
             .toLowerCase();
-        console.log(value);
         switch (value) {
             case true:
                 img.src = 'icons/' + baseFileName + '.png';
@@ -317,7 +316,7 @@
         for (const axis of axes) {
             const inputImage = entry.querySelector('img.input' + axis);
             const outputImage = entry.querySelector('img.output' + axis);
-            setImage(inputImage, 'input' + axis, mechanism.input[axis.toLowerCase()]x);
+            setImage(inputImage, 'input' + axis, mechanism.input[axis.toLowerCase()]);
             setImage(outputImage, 'output' + axis, mechanism.output[axis.toLowerCase()]);
         }
     }
