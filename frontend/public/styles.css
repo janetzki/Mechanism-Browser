@@ -73,6 +73,10 @@ html, body {
 }
 
 .mechanism-description {
+    padding-right: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 18px;
 }
 
