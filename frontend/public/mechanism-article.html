@@ -61,23 +61,23 @@
                 <tr>
                     <th style="text-align: left">Input</th>
                     <td class="axes-line">
-                        <img class="small-icon" id="inputR1" src="icons/deselected.png" data-status={{input.r1}}>
-                        <img class="small-icon" id="inputR2" src="icons/deselected.png" data-status={{input.r2}}>
-                        <img class="small-icon" id="inputR3" src="icons/deselected.png" data-status={{input.r3}}>
-                        <img class="small-icon" id="inputT1" src="icons/deselected.png" data-status={{input.t1}}>
-                        <img class="small-icon" id="inputT2" src="icons/deselected.png" data-status={{input.t2}}>
-                        <img class="small-icon" id="inputT3" src="icons/deselected.png" data-status={{input.t3}}>
+                        <img class="small-icon" id="inputR1" data-status={{input.r1}}>
+                        <img class="small-icon" id="inputR2" data-status={{input.r2}}>
+                        <img class="small-icon" id="inputR3" data-status={{input.r3}}>
+                        <img class="small-icon" id="inputT1" data-status={{input.t1}}>
+                        <img class="small-icon" id="inputT2" data-status={{input.t2}}>
+                        <img class="small-icon" id="inputT3" data-status={{input.t3}}>
                     </td>
                 </tr>
                 <tr>
                     <th style="text-align: left">Output</th>
                     <td class="axes-line">
-                        <img class="small-icon" id="outputR1" src="icons/deselected.png" data-status={{output.r1}}>
-                        <img class="small-icon" id="outputR2" src="icons/deselected.png" data-status={{output.r2}}>
-                        <img class="small-icon" id="outputR3" src="icons/deselected.png" data-status={{output.r3}}>
-                        <img class="small-icon" id="outputT1" src="icons/deselected.png" data-status={{output.t1}}>
-                        <img class="small-icon" id="outputT2" src="icons/deselected.png" data-status={{output.t2}}>
-                        <img class="small-icon" id="outputT3" src="icons/deselected.png" data-status={{output.t3}}>
+                        <img class="small-icon" id="outputR1" data-status={{output.r1}}>
+                        <img class="small-icon" id="outputR2" data-status={{output.r2}}>
+                        <img class="small-icon" id="outputR3" data-status={{output.r3}}>
+                        <img class="small-icon" id="outputT1" data-status={{output.t1}}>
+                        <img class="small-icon" id="outputT2" data-status={{output.t2}}>
+                        <img class="small-icon" id="outputT3" data-status={{output.t3}}>
                     </td>
                 </tr>
                 <tr>
@@ -120,11 +120,11 @@
         $(img).data('status', status);
         switch (status) {
             case 1:
-                img.src = 'icons/' + baseFileName + '.png';
+                img.src = 'icons/' + baseFileName + '_selected.png';
                 break;
             default:
                 // 0
-                img.src = 'icons/deselected.png';
+                img.src = 'icons/' + baseFileName + '.png';
         }
     }
 
