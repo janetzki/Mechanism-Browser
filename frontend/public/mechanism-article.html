@@ -86,13 +86,12 @@
                         {{transmission}}
                     </td>
                 </tr>
-                <!--<tr>-->
-                <!--Feature for the future-->
-                <!--<th style="text-align: left">3D model</th>-->
-                <!--<td>-->
-                <!--<a>{{name}}.scad</a>-->
-                <!--</td>-->
-                <!--</tr>-->
+                <tr>
+                    <th style="text-align: left">3D model</th>
+                    <td id="3DModelCell">
+                        <a id="3DModelLink" href="{{model}}">{{modelName}}</a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </section>
@@ -140,6 +139,17 @@
     }
 
     initializeImages();
+
+    function initialize3DModel() {
+        const cell = $('#3DModelCell');
+        const link = $('#3DModelLink');
+        if (link.text() === '') {
+            link.hide();
+            cell.text('none');
+        }
+    }
+
+    initialize3DModel();
 
     function editArticle() {
         window.location.href += '/edit';
