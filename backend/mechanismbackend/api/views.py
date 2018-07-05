@@ -1,6 +1,11 @@
+from django.db.models import Count
+from django.db.models.expressions import RawSQL
+from django.db import connection
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .models import Mechanism
 from .serializers import MechanismSerializer
 from django_filters import rest_framework as filters
@@ -51,3 +56,20 @@ class MechanismCreate(generics.CreateAPIView):
             content = {'error': str(e)}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
+
+class MechanismMatrix(APIView):
+    def get(self, request, format=None):
+        results = {}
+        with connection.cursor() as cursor:
+            for h in ['R', 'T']:
+                for i in range(1, 4):
+                    i = str(i)
+                    for j in range(1, 4):
+                        j = str(j)
+                        cursor.execute('select input'+h+i+', output'+h+j+', Count(*) from api_mechanism group by input'+h+i+', output'+h+j)
+
+                        cols = [col[0] for col in cursor.description]
+                        name = ', '.join(cols[:-1])
+                        rows = cursor.fetchall()
+                        results[name] = rows
+        return Response(results)
