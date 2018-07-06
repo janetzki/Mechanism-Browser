@@ -57,19 +57,44 @@ class MechanismCreate(generics.CreateAPIView):
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
 
+# dirty hack, try to find better way to achieve this
 class MechanismMatrix(APIView):
     def get(self, request, format=None):
-        results = {}
+        matrix = []
+        matrix_inner = []
+
         with connection.cursor() as cursor:
-            for h in ['R', 'T']:
+            for input in ['R', 'T']:
                 for i in range(1, 4):
                     i = str(i)
-                    for j in range(1, 4):
-                        j = str(j)
-                        cursor.execute('select input'+h+i+', output'+h+j+', Count(*) from api_mechanism group by input'+h+i+', output'+h+j)
+                    for output in ['R', 'T']:
+                            for o in range(1, 4):
+                                o = str(o)
+                                cursor.execute('select input'+input+i+', output'+output+o+', Count(*) from api_mechanism group by input'+input+i+', output'+output+o)
+                                rows = cursor.fetchall()
 
-                        cols = [col[0] for col in cursor.description]
-                        name = ', '.join(cols[:-1])
-                        rows = cursor.fetchall()
-                        results[name] = rows
-        return Response(results)
+                                num_mechanisms = 0
+                                for tpl in rows:
+                                    tpl_in, tpl_out, count = tpl
+                                    if tpl_in and tpl_out:
+                                        num_mechanisms = count
+                                        break
+
+                                matrix_inner.append(num_mechanisms)
+                                if output + o == 'T3':
+                                    total_for_input = sum(matrix_inner)
+                                    matrix_inner.append(total_for_input)
+                                    matrix.append(matrix_inner)
+                                    matrix_inner = []
+
+
+            total_for_outputs = []
+            for output in range(6):
+                total_inner = 0
+                for input in range(6):
+                    total_inner += matrix[input][output]
+                total_for_outputs.append(total_inner)
+            total_for_outputs.append(0)  # pad to match dimensions
+            matrix.append(total_for_outputs)
+
+        return Response(matrix)
