@@ -60,6 +60,8 @@ class MechanismCreate(generics.CreateAPIView):
 # dirty hack, try to find better way to achieve this
 class MechanismMatrix(APIView):
     def get(self, request, format=None):
+        predicate = self.get_query_predicate()
+
         matrix = []
         matrix_inner = []
 
@@ -70,7 +72,9 @@ class MechanismMatrix(APIView):
                     for output in ['R', 'T']:
                             for o in range(1, 4):
                                 o = str(o)
-                                cursor.execute('select input'+input+i+', output'+output+o+', Count(*) from api_mechanism group by input'+input+i+', output'+output+o)
+
+                                cursor.execute('select input' + input + i + ', output' + output + o + ', Count(*) from api_mechanism ' +
+                                               predicate + ' group by input' + input + i + ', output' + output + o)
                                 rows = cursor.fetchall()
 
                                 num_mechanisms = 0
@@ -98,3 +102,23 @@ class MechanismMatrix(APIView):
             matrix.append(total_for_outputs)
 
         return Response(matrix)
+
+    def get_query_predicate(self):
+        params = list()
+        params.append( ('inputR1', self.request.query_params.get('inputR1', None)))
+        params.append(('inputR2', self.request.query_params.get('inputR2', None)))
+        params.append(('inputR3',  self.request.query_params.get('inputR3', None)))
+        params.append(('inputT1',  self.request.query_params.get('inputT1', None)))
+        params.append(('inputT2',  self.request.query_params.get('inputT2', None)))
+        params.append(('inputT3', self.request.query_params.get('inputT3', None)))
+        params.append(('outputR1', self.request.query_params.get('outputR1', None)))
+        params.append(('outputR2', self.request.query_params.get('outputR2', None)))
+        params.append(('outputR3', self.request.query_params.get('outputR3', None)))
+        params.append(('outputT1', self.request.query_params.get('outputT1', None)))
+        params.append(('outputT2', self.request.query_params.get('outputT2', None)))
+        params.append(('outputT3', self.request.query_params.get('outputT3', None)))
+        set_params = [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true')]
+        joined = ' and '.join(set_params)
+        if joined != '':
+            joined = 'where ' + joined
+        return joined
