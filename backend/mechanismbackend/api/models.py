@@ -47,3 +47,33 @@ class Mechanism(models.Model):
                 not self.outputT3):
             raise ValidationError("Mechanism needs at least one input or output to be specified.")
 
+    def get_dissimilarity_rank(self, other):
+        max_shared_attrs = 12 + 1
+        shared_attrs = 0
+
+        if self.inputR1 == other.inputR1:
+            shared_attrs += 1
+        if self.inputR2 == other.inputR2:
+            shared_attrs += 1
+        if self.inputR3 == other.inputR3:
+            shared_attrs += 1
+        if self.inputT1 == other.inputT1:
+            shared_attrs += 1
+        if self.inputT2 == other.inputT2:
+            shared_attrs += 1
+        if self.inputT3 == other.inputT3:
+            shared_attrs += 1
+        if self.outputR1 == other.outputR1:
+            shared_attrs += 1
+        if self.outputR2 == other.outputR2:
+            shared_attrs += 1
+        if self.outputR3 == other.outputR3:
+            shared_attrs += 1
+        if self.outputT1 == other.outputT1:
+            shared_attrs += 1
+        if self.outputT2 == other.outputT2:
+            shared_attrs += 1
+        if self.outputT3 == other.outputT3:
+            shared_attrs += 1
+
+        return 1 / (shared_attrs / max_shared_attrs + 0.01)
