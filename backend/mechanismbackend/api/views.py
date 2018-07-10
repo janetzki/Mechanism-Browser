@@ -31,9 +31,30 @@ class MechanismFilter(filters.FilterSet):
 
 class MechanismList(generics.ListAPIView):
     queryset = Mechanism.objects.all()
-    serializer_class = MechanismSerializer
-    filter_backends = (filters.DjangoFilterBackend,)  # enable filter-backend for this view
-    filter_class = MechanismFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super(MechanismList, self).get_queryset()
+        self.filter = MechanismFilter(self.request.GET, queryset=qs)
+        return self.filter.qs
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        result_list = list(queryset)
+        result_list = self.reorder_by_dissimilarity(result_list)
+        return Response(MechanismSerializer(result_list, many=True).data)
+
+    def reorder_by_dissimilarity(self, mechanisms):
+        for i in range(len(mechanisms)):
+            mech_a = mechanisms[i]
+            max_dissimilarity = 0
+            for k in range(i + 1, len(mechanisms)):
+                mech_b = mechanisms[k]
+                dissimilarity = mech_a.get_dissimilarity(mech_b)
+                if dissimilarity > max_dissimilarity:
+                    max_dissimilarity = dissimilarity
+                    max_dissimilarity_index = k
+                    mechanisms[i + 1], mechanisms[max_dissimilarity_index] = mechanisms[max_dissimilarity_index], mechanisms[i+1]
+        return mechanisms
 
 
 class MechanismRetrieveUpdate(generics.RetrieveUpdateAPIView):
