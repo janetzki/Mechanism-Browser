@@ -53,7 +53,6 @@ class Mechanism(models.Model):
         transmission_dissimilarity = self._get_transmission_dissimilarity(other)
         return 0.5 * axes_dissimilarity + 0.35 * name_dissimilarity + 0.15 * transmission_dissimilarity
 
-
     def _get_axes_dissimilarity(self, other):
         shared_axes = 0
         if self.inputR1 == other.inputR1:
