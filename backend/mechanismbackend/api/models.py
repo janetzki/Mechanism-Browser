@@ -48,39 +48,47 @@ class Mechanism(models.Model):
             raise ValidationError("Mechanism needs at least one input or output to be specified.")
 
     def get_dissimilarity(self, other):
-        max_shared_attrs = 14
-        shared_attrs = 0
+        axes_dissimilarity = self._get_axes_dissimilarity(other)
+        name_dissimilarity = self._get_name_dissimilarity(other)
+        transmission_dissimilarity = self._get_transmission_dissimilarity(other)
+        return 0.5 * axes_dissimilarity + 0.35 * name_dissimilarity + 0.15 * transmission_dissimilarity
 
+
+    def _get_axes_dissimilarity(self, other):
+        shared_axes = 0
         if self.inputR1 == other.inputR1:
-            shared_attrs += 1
+            shared_axes += 1
         if self.inputR2 == other.inputR2:
-            shared_attrs += 1
+            shared_axes += 1
         if self.inputR3 == other.inputR3:
-            shared_attrs += 1
+            shared_axes += 1
         if self.inputT1 == other.inputT1:
-            shared_attrs += 1
+            shared_axes += 1
         if self.inputT2 == other.inputT2:
-            shared_attrs += 1
+            shared_axes += 1
         if self.inputT3 == other.inputT3:
-            shared_attrs += 1
+            shared_axes += 1
         if self.outputR1 == other.outputR1:
-            shared_attrs += 1
+            shared_axes += 1
         if self.outputR2 == other.outputR2:
-            shared_attrs += 1
+            shared_axes += 1
         if self.outputR3 == other.outputR3:
-            shared_attrs += 1
+            shared_axes += 1
         if self.outputT1 == other.outputT1:
-            shared_attrs += 1
+            shared_axes += 1
         if self.outputT2 == other.outputT2:
-            shared_attrs += 1
+            shared_axes += 1
         if self.outputT3 == other.outputT3:
-            shared_attrs += 1
+            shared_axes += 1
+        return 1 - (shared_axes / 12)
 
+    def _get_name_dissimilarity(self, other):
         mech1_name = self.name.lower().split()
         mech2_name = other.name.lower().split()
         for word in mech1_name:
             if word in mech2_name:
-                shared_attrs += 2  # giving name slightly more importance
-                break
+                return 0
+        return 1
 
-        return 1 / (shared_attrs / max_shared_attrs + 0.01)
+    def _get_transmission_dissimilarity(self, other):
+        return 0 if self.transmission == other.transmission else 1
