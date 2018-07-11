@@ -27,3 +27,6 @@ start_chrome.sh
 
 # data
 data/
+
+# external code
+external/
