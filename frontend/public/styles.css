@@ -163,6 +163,18 @@ html, body {
     max-width: 300px;
 }
 
+.matrix {
+    border: 1px solid lightgray;
+    background-color: #eeeeee;
+    border-collapse: collapse;
+    margin-left: 1em;
+    max-width: 300px;
+}
+
+.matrix td {
+    padding: 10px;
+}
+
 .content {
     max-height: calc(100% - 4em);
     padding: 15px;
