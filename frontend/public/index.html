@@ -45,13 +45,17 @@
             </tr>
             <tr>
                 <td style='font-weight: bold'>Inputs</td>
+                <td>Any</td>
                 <td>R1</td>
                 <td>R2</td>
                 <td>R3</td>
                 <td>T1</td>
                 <td>T2</td>
                 <td>T3</td>
+            </tr>
+            <tr>
                 <td>Any</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
             <tr>
                 <td>R1</td>
@@ -75,10 +79,6 @@
             </tr>
             <tr>
                 <td>T3</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <td>Any</td>
                 <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
             </tr>
         </table>
@@ -524,7 +524,9 @@
 
                 for (let y = 0; y < 7; y++) {
                     for (let x = 0; x < 7; x++) {
-                        const cell = $('#matrix')[0].rows[y + 2].cells[x + 1];
+                        let row = (y + 1) % 7 + 2;
+                        let column = (x + 1) % 7 + 1;
+                        const cell = $('#matrix')[0].rows[row].cells[column];
                         cell.textContent = response[y][x];
                         setCellColor(cell, response[y][x], minValue, maxValue)
                     }
