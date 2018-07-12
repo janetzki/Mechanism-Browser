@@ -221,16 +221,22 @@
         switch ($(img).data('status')) {
             case true:
                 $(img).data('status', false);
+                matrixSearchParameters[img.id] = false;
                 break;
             case false:
                 $(img).data('status', '');
+                delete matrixSearchParameters[img.id];
                 break;
             default:
                 // ''
                 $(img).data('status', true);
+                matrixSearchParameters[img.id] = true;
         }
         setImage(img, img.id, $(img).data('status'), true);
+        updateMatrix();
     }
+
+    let matrixSearchParameters = {};
 
     function getParameters() {
         const parameters = {
@@ -427,7 +433,7 @@
             if (outputAxis !== undefined) {
                 matrixSearchParameters['output' + outputAxis] = true;
             }
-            cell.style.border = '5px solid rgb(30, 30, 150)';
+            cell.style.border = '5px solid rgb(0, 162, 232)';
             updateMatrix();
             searchMechanism('http://mechanism-browser:8000/api/mechanisms/', matrixSearchParameters);
         }
@@ -466,8 +472,6 @@
             $(cell).css('color', 'black');
         }
     }
-
-    let matrixSearchParameters = {};
 
     function updateMatrix() {
         const xhttp = new XMLHttpRequest();
@@ -512,6 +516,16 @@
                 const cell = $('#matrix')[0].rows[y + 2].cells[x + 1];
                 $(cell).css('border', '');
             }
+        }
+
+        const axes = ['Any', 'R1', 'R2', 'R3', 'T1', 'T2', 'T3'];
+        for (const axis of axes) {
+            const inputImage = document.getElementById('input' + axis);
+            const outputImage = document.getElementById('output' + axis);
+            setImage(inputImage, 'input' + axis, '', true);
+            setImage(outputImage, 'output' + axis, '', true);
+            inputImage.setAttribute('data-status', '');
+            outputImage.setAttribute('data-status', '');
         }
         updateMatrix();
     }
