@@ -38,90 +38,52 @@
         </div>
     </div>
     <div class="container">
-        <table id='matrix' class='matrix' cellpadding="10">
-            <tr>
-                <td></td>
-                <td colspan='7' align='center' style='font-weight: bold'>Outputs</td>
-            </tr>
-            <tr>
-                <td style='font-weight: bold'>Inputs</td>
-                <td>Any</td>
-                <td>R1</td>
-                <td>R2</td>
-                <td>R3</td>
-                <td>T1</td>
-                <td>T2</td>
-                <td>T3</td>
-            </tr>
-            <tr>
-                <td>Any</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <td>R1</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <td>R2</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <td>R3</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <td>T1</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <td>T2</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            <tr>
-                <td>T3</td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-        </table>
-        <button class="btn btn-default action"
-                type="button"
-                onclick="resetMatrix()">
-            Reset
-        </button>
-
         <div class="row">
             <div class="column">
-                <h3>Input</h3>
-                <div class="col-lg-12 text-center">
-                    <img class="icon" id="inputR1" src="icons/r1.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="inputR2" src="icons/r2.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="inputR3" src="icons/r3.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="inputT1" src="icons/t1.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="inputT2" src="icons/t2.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="inputT3" src="icons/t3.png" data-status=""
-                         onclick=toggleImage(this)>
-                </div>
-            </div>
-            <div class="column">
-                <h3>Output</h3>
-                <div class="col-lg-12 text-center">
-                    <img class="icon" id="outputR1" src="icons/r1.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="outputR2" src="icons/r2.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="outputR3" src="icons/r3.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="outputT1" src="icons/t1.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="outputT2" src="icons/t2.png" data-status=""
-                         onclick=toggleImage(this)>
-                    <img class="icon" id="outputT3" src="icons/t3.png" data-status=""
-                         onclick=toggleImage(this)>
-                </div>
+                <table id='matrix' class='matrix' cellpadding="10" align="center">
+                    <tr>
+                        <td></td>
+                        <td colspan='7' align='center' style='font-weight: bold'>Outputs</td>
+                    </tr>
+                    <tr>
+                        <td style='font-weight: bold'>Inputs</td>
+                        <td><img class="icon" id="outputAny" src="icons/any.png" data-status="" onclick=toggleImage(this)></td>
+                        <td><img class="icon" id="outputR1" src="icons/r1.png" data-status="" onclick=toggleImage(this)></td>
+                        <td><img class="icon" id="outputR2" src="icons/r2.png" data-status="" onclick=toggleImage(this)></td>
+                        <td><img class="icon" id="outputR3" src="icons/r3.png" data-status="" onclick=toggleImage(this)></td>
+                        <td><img class="icon" id="outputT1" src="icons/t1.png" data-status="" onclick=toggleImage(this)></td>
+                        <td><img class="icon" id="outputT2" src="icons/t2.png" data-status="" onclick=toggleImage(this)></td>
+                        <td><img class="icon" id="outputT3" src="icons/t3.png" data-status="" onclick=toggleImage(this)></td>
+                    </tr>
+                    <tr>
+                        <td><img class="icon" id="inputAny" src="icons/any.png" data-status="" onclick=toggleImage(this)></td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td><img class="icon" id="inputR1" src="icons/r1.png" data-status="" onclick=toggleImage(this)></td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td><img class="icon" id="inputR2" src="icons/r2.png" data-status="" onclick=toggleImage(this)></td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td><img class="icon" id="inputR3" src="icons/r3.png" data-status="" onclick=toggleImage(this)></td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td><img class="icon" id="inputT1" src="icons/t1.png" data-status="" onclick=toggleImage(this)></td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td><img class="icon" id="inputT2" src="icons/t2.png" data-status="" onclick=toggleImage(this)></td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td><img class="icon" id="inputT3" src="icons/t3.png" data-status="" onclick=toggleImage(this)></td>
+                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>
+                </table>
             </div>
             <div class="column">
                 <h3>More</h3>
@@ -145,6 +107,11 @@
                         type="button"
                         onclick="createMechanism()">
                     Create
+                </button>
+                <button class="btn btn-default action"
+                        type="button"
+                        onclick="resetMatrix()">
+                    Reset Matrix
                 </button>
             </div>
         </div>
@@ -230,7 +197,8 @@
 <script>
     function setImage(img, baseFileName, value, tristate = false) {
         baseFileName = baseFileName
-            .slice(-2)
+            .replace('input', '')
+            .replace('output', '')
             .toLowerCase();
         switch (value) {
             case true:

@@ -10,7 +10,7 @@ html, body {
 .icon {
     display: block;
     height: 50px;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 
 .small-icon {
@@ -172,7 +172,8 @@ html, body {
 }
 
 .matrix td {
-    padding: 10px;
+    padding: 2px;
+    text-align: center;
 }
 
 .content {
