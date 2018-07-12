@@ -99,7 +99,10 @@ class MechanismMatrix(APIView):
                     cursor.execute('select Count(*) from api_mechanism where output' + output + o + '=1')
                     total_for_output = cursor.fetchall()[0][0]
                     total_for_outputs.append(total_for_output)
-            total_for_outputs.append(0)  # TODO: change to total of mechanism
+
+            cursor.execute('select Count(*) from api_mechanism')
+            total_mechanisms = cursor.fetchall()[0][0]
+            total_for_outputs.append(total_mechanisms)
             matrix.append(total_for_outputs)
 
         return Response(matrix)
