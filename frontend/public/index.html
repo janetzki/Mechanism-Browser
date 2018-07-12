@@ -475,8 +475,10 @@
 
     function setCellColor(cell, value, minValue, maxValue) {
         let colorValue = 0.0;
-        if (value > 0) {
-            colorValue = Math.max(0.2, (value - minValue) / (maxValue - minValue));
+        if (value > maxValue) {
+            colorValue = 1.0;
+        } else if (value > 0) {
+            colorValue = Math.min(0.9, Math.max(0.1, (value - minValue) / (maxValue - minValue)));
         }
 
         const startR = 180;
@@ -512,6 +514,9 @@
                 let maxValue = 0;
                 for (let y = 0; y < 7; y++) {
                     for (let x = 0; x < 7; x++) {
+                        if (x === 6 && y === 6) {
+                            continue;
+                        }
                         minValue = Math.min(minValue, response[y][x]);
                         maxValue = Math.max(maxValue, response[y][x]);
                     }
@@ -519,10 +524,6 @@
 
                 for (let y = 0; y < 7; y++) {
                     for (let x = 0; x < 7; x++) {
-                        if (x === 6 && y === 6) {
-                            continue;
-                        }
-
                         const cell = $('#matrix')[0].rows[y + 2].cells[x + 1];
                         cell.textContent = response[y][x];
                         setCellColor(cell, response[y][x], minValue, maxValue)
