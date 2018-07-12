@@ -109,7 +109,7 @@ class MechanismMatrix(APIView):
 
     def get_query_predicate(self):
         params = list()
-        params.append( ('inputR1', self.request.query_params.get('inputR1', None)))
+        params.append(('inputR1', self.request.query_params.get('inputR1', None)))
         params.append(('inputR2', self.request.query_params.get('inputR2', None)))
         params.append(('inputR3',  self.request.query_params.get('inputR3', None)))
         params.append(('inputT1',  self.request.query_params.get('inputT1', None)))
