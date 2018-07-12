@@ -92,14 +92,14 @@ class MechanismMatrix(APIView):
                                     matrix.append(matrix_inner)
                                     matrix_inner = []
 
-
             total_for_outputs = []
-            for output in range(6):
-                total_inner = 0
-                for input in range(6):
-                    total_inner += matrix[input][output]
-                total_for_outputs.append(total_inner)
-            total_for_outputs.append(0)  # pad to match dimensions
+            for output in ['R', 'T']:
+                for o in range(1, 4):
+                    o = str(o)
+                    cursor.execute('select Count(*) from api_mechanism where output' + output + o + '=1')
+                    total_for_output = cursor.fetchall()[0][0]
+                    total_for_outputs.append(total_for_output)
+            total_for_outputs.append(0)  # TODO: change to total of mechanism
             matrix.append(total_for_outputs)
 
         return Response(matrix)
