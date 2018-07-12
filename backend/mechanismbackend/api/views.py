@@ -86,7 +86,8 @@ class MechanismMatrix(APIView):
 
                                 matrix_inner.append(num_mechanisms)
                                 if output + o == 'T3':
-                                    total_for_input = sum(matrix_inner)
+                                    cursor.execute('select Count(*) from api_mechanism where input' + input + i + '=1')
+                                    total_for_input = cursor.fetchall()[0][0]
                                     matrix_inner.append(total_for_input)
                                     matrix.append(matrix_inner)
                                     matrix_inner = []
