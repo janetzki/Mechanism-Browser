@@ -12,8 +12,8 @@ __pycache__/
 # database
 db.sqlite3
 
-# media
-media/
+# mechanism images
+img/
 
 # virtualenvironment
 venv/
