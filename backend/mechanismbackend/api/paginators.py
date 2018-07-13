@@ -27,11 +27,10 @@ class FirstLastPageNumberPaginator(pagination.PageNumberPagination):
 
 
 class MyFirstLastPageNumberPaginator(object):
-    page_size = 2
+    page_size = 10
     page_query_param = 'page'
 
     def paginate_list(self, l, request):
-        print(l)
         self.request = request
         self.page_num = int(request.query_params.get(self.page_query_param, 1))
         self.count = len(l)  # number of mechanisms
