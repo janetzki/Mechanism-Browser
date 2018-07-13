@@ -344,8 +344,8 @@
         for (const axis of axes) {
             const inputImage = entry.querySelector('img.input' + axis);
             const outputImage = entry.querySelector('img.output' + axis);
-            // setImage(inputImage, 'input' + axis, mechanism.input[axis.toLowerCase()]);
-            // setImage(outputImage, 'output' + axis, mechanism.output[axis.toLowerCase()]);
+            setImage(inputImage, 'input' + axis, mechanism.input[axis.toLowerCase()]);
+            setImage(outputImage, 'output' + axis, mechanism.output[axis.toLowerCase()]);
         }
     }
 
@@ -422,9 +422,9 @@
         // https://stackoverflow.com/a/12193346/8816968
         e = e || window.event;
         const cell = e.target || e.srcElement;
-        const inputIndex = cell.parentNode.rowIndex - 2;
-        const outputIndex = cell.cellIndex - 1;
-        if (inputIndex >= 0 && outputIndex >= 0) {
+        const inputIndex = cell.parentNode.rowIndex - 3;
+        const outputIndex = cell.cellIndex - 2;
+        if (inputIndex >= -1 && outputIndex >= -1) {
             const inputAxis = mapNumberToAxis(inputIndex);
             const outputAxis = mapNumberToAxis(outputIndex);
             if (inputAxis !== undefined) {
