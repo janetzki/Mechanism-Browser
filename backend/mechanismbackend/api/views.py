@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
 
-from backend.mechanismbackend.api.paginators import MyFirstLastPageNumberPaginator
+from .paginators import MyFirstLastPageNumberPaginator
 from .models import Mechanism
 from .serializers import MechanismSerializer
 from django_filters import rest_framework as filters
