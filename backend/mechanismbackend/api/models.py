@@ -27,7 +27,7 @@ class Mechanism(models.Model):
     rating = AnonymousRatingField()
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('-rating_likes', 'rating_dislikes')
 
     def __str__(self):
         return self.name
