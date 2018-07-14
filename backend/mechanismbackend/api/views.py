@@ -86,25 +86,8 @@ class MechanismMatrix(APIView):
 
                                 matrix_inner.append(num_mechanisms)
                                 if output + o == 'T3':
-                                    cursor.execute('select Count(*) from api_mechanism where input' + input + i + '=1')
-                                    total_for_input = cursor.fetchall()[0][0]
-                                    matrix_inner.append(total_for_input)
                                     matrix.append(matrix_inner)
                                     matrix_inner = []
-
-            total_for_outputs = []
-            for output in ['R', 'T']:
-                for o in range(1, 4):
-                    o = str(o)
-                    cursor.execute('select Count(*) from api_mechanism where output' + output + o + '=1')
-                    total_for_output = cursor.fetchall()[0][0]
-                    total_for_outputs.append(total_for_output)
-
-            cursor.execute('select Count(*) from api_mechanism')
-            total_mechanisms = cursor.fetchall()[0][0]
-            total_for_outputs.append(total_mechanisms)
-            matrix.append(total_for_outputs)
-
         return Response(matrix)
 
     def get_query_predicate(self):
