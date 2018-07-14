@@ -26,7 +26,8 @@ class MechanismFilter(filters.FilterSet):
                   'outputR3',
                   'outputT1',
                   'outputT2',
-                  'outputT3']
+                  'outputT3',
+                  'complete']
 
 
 class MechanismList(generics.ListAPIView):
