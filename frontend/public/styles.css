@@ -32,6 +32,11 @@ html, body {
     margin-right: 50px;
 }
 
+.vertical-button {
+    display: block;
+    overflow: auto;
+}
+
 .action {
     margin-bottom: 15px;
 }
@@ -167,6 +172,19 @@ html, body {
     border-collapse: separate;
     margin-left: 1em;
     max-width: 300px;
+}
+
+.matrix {
+    border: 1px solid lightgray;
+    background-color: #eeeeee;
+    border-collapse: separate;
+    margin-left: 1em;
+    max-width: 300px;
+}
+
+.matrix td {
+    padding: 2px;
+    text-align: center;
 }
 
 .content {

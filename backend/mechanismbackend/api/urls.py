@@ -12,5 +12,6 @@ urlpatterns = [
             'model': 'Mechanism',
             'field_name': 'rating',
     }),
+    url(r'^mechanisms/matrix/$', views.MechanismMatrix.as_view()),
 
 ]
