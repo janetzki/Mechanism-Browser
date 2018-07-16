@@ -10,7 +10,12 @@ html, body {
 .icon {
     display: block;
     height: 50px;
-    /*margin-bottom: 20px;*/
+    margin-bottom: 20px;
+}
+
+.table-icon {
+    display: block;
+    height: 50px;
 }
 
 .small-icon {
