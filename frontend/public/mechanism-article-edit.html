@@ -112,6 +112,15 @@
                         <p id="parametric_model-errors" style="color:red"></p>
                     </td>
                 </tr>
+                <tr>
+                    <th style="text-align: left">Status</th>
+                    <td>
+                        <div class="form-check">
+                            <input id="complete" class="form-check-input" type="checkbox" checked={{complete}}>
+                            <p style="display: inline-block">Complete</p>
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -220,6 +229,12 @@
         }
     }
 
+    function showCompleted() {
+        document.querySelector('#complete').checked = {{complete}};
+    }
+
+    showCompleted();
+
     function getParameters() {
         const parameters = {
             name: document.querySelector('#name').value,
@@ -239,7 +254,8 @@
             outputT3: $('#outputT3').data('status'),
             image: imageData,
             parametric_model: triDModelData,
-            link: document.querySelector('#link').value
+            link: document.querySelector('#link').value,
+            complete: document.querySelector('#complete').checked
         };
 
         // remove undefined parameters
