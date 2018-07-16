@@ -155,7 +155,7 @@ html, body {
 }
 
 .comments {
-    width: 65%;
+    width: 60%;
     float: left;
 }
 
@@ -240,4 +240,8 @@ html, body {
     border-right: 15px solid transparent;
     border-top: 15px solid gray;
     cursor: pointer;
+}
+
+.incomplete-table-row {
+    display: none;
 }

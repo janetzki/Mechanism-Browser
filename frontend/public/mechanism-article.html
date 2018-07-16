@@ -92,6 +92,12 @@
                         <a id="3DModelLink" href="{{model}}">{{modelName}}</a>
                     </td>
                 </tr>
+                <tr class="incomplete-table-row">
+                    <th style="text-align: left">Status</th>
+                    <td style="color: red">
+                        Incomplete
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </section>
@@ -150,6 +156,14 @@
     }
 
     initialize3DModel();
+
+    function showIncomplete() {
+        if (!{{complete}}) {
+            document.getElementsByClassName('incomplete-table-row')[0].style.display = 'table-row';
+        }
+    }
+
+    showIncomplete();
 
     function editArticle() {
         window.location.href += '/edit';
