@@ -88,14 +88,22 @@
                 <h3>Actions</h3>
                 <button class="btn btn-default action"
                         type="button"
-                        onclick="searchMechanism()">
+                        onclick="searchMechanism()"
+                        style="display: block">
                     Search
                 </button>
                 <button class="btn btn-default action"
                         type="button"
-                        onclick="createMechanism()">
+                        onclick="createMechanism()"
+                        style="display: block">
                     Create
                 </button>
+                <div class="form-check">
+                    <input id="checkIncomplete" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="checkIncomplete">
+                        Include incomplete mechanisms
+                    </label>
+                </div>
             </div>
         </div>
     </div>
@@ -230,8 +238,13 @@
             outputT2: $('#outputT2').data('status'),
             outputT3: $('#outputT3').data('status'),
             transmission: document.querySelector("#transmission").value,
-            name: document.querySelector("#name").value
+            name: document.querySelector("#name").value,
+            complete: !document.querySelector("#checkIncomplete").checked
         };
+
+        if (!parameters.complete) {
+            delete parameters.complete;
+        }
 
         // remove undefined parameters
         for (const key of Object.keys(parameters)) {

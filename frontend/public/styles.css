@@ -24,11 +24,11 @@ html, body {
 
 .row {
     display: flex;
-    max-width: 400px;
+    /*max-width: 400px;*/
 }
 
 .column {
-    flex: 50%;
+    /*flex: 50%;*/
     margin-right: 50px;
 }
 
