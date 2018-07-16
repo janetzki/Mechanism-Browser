@@ -35,6 +35,8 @@ class MyFirstLastPageNumberPaginator(object):
         self.page_num = int(request.query_params.get(self.page_query_param, 1))
         self.count = len(l)  # number of mechanisms
         self.paged_list = self.chunks(l, self.page_size)
+        if len(self.paged_list) == 0:
+            self.paged_list = [[]]
         requested_list = self.paged_list[self.page_num - 1]  # zero-based
         return requested_list
 
