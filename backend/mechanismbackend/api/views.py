@@ -105,7 +105,9 @@ class MechanismMatrix(APIView):
         params.append(('outputT1', self.request.query_params.get('outputT1', None)))
         params.append(('outputT2', self.request.query_params.get('outputT2', None)))
         params.append(('outputT3', self.request.query_params.get('outputT3', None)))
-        set_params = [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true')]
+        set_params_true = [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true')]
+        set_params_false = [p + '=0' for (p, v) in params if (v is not None and v.lower() == 'false')]
+        set_params = set_params_true + set_params_false
         joined = ' and '.join(set_params)
         if joined != '':
             joined = 'where ' + joined
