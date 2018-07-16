@@ -1,6 +1,8 @@
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
+
+from .paginators import MyFirstLastPageNumberPaginator
 from .models import Mechanism
 from .serializers import MechanismSerializer
 from django_filters import rest_framework as filters
@@ -41,7 +43,10 @@ class MechanismList(generics.ListAPIView):
         queryset = self.get_queryset()
         result_list = list(queryset)
         result_list = self.reorder_by_dissimilarity(result_list)
-        return Response(MechanismSerializer(result_list, many=True).data)
+        paginator = MyFirstLastPageNumberPaginator()
+        requested_list = paginator.paginate_list(result_list, request)
+        serialized = MechanismSerializer(requested_list, many=True)
+        return paginator.get_paginated_response(serialized.data)
 
     def reorder_by_dissimilarity(self, mechanisms):
         for i in range(len(mechanisms)):

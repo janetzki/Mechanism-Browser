@@ -27,7 +27,7 @@ class Mechanism(models.Model):
     rating = AnonymousRatingField()
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('-rating_likes', 'rating_dislikes')
 
     def __str__(self):
         return self.name
@@ -49,9 +49,8 @@ class Mechanism(models.Model):
 
     def get_dissimilarity(self, other):
         axes_dissimilarity = self._get_axes_dissimilarity(other)
-        name_dissimilarity = self._get_name_dissimilarity(other)
         transmission_dissimilarity = self._get_transmission_dissimilarity(other)
-        return 0.5 * axes_dissimilarity + 0.35 * name_dissimilarity + 0.15 * transmission_dissimilarity
+        return 0.8 * axes_dissimilarity + 0.2 * transmission_dissimilarity
 
     def _get_axes_dissimilarity(self, other):
         shared_axes = 0
@@ -80,14 +79,6 @@ class Mechanism(models.Model):
         if self.outputT3 == other.outputT3:
             shared_axes += 1
         return 1 - (shared_axes / 12)
-
-    def _get_name_dissimilarity(self, other):
-        mech1_name = self.name.lower().split()
-        mech2_name = other.name.lower().split()
-        for word in mech1_name:
-            if word in mech2_name:
-                return 0
-        return 1
 
     def _get_transmission_dissimilarity(self, other):
         return 0 if self.transmission == other.transmission else 1
