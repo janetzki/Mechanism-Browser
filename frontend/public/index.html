@@ -40,7 +40,25 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="column">
+            <div id="inputColumn" class="column">
+                <h3>Input</h3>
+                <img class="icon" id="inputR1" src="icons/r1.png" onclick=toggleImage(this)>
+                <img class="icon" id="inputR2" src="icons/r2.png" onclick=toggleImage(this)>
+                <img class="icon" id="inputR3" src="icons/r3.png" onclick=toggleImage(this)>
+                <img class="icon" id="inputT1" src="icons/t1.png" onclick=toggleImage(this)>
+                <img class="icon" id="inputT2" src="icons/t2.png" onclick=toggleImage(this)>
+                <img class="icon" id="inputT3" src="icons/t3.png" onclick=toggleImage(this)>
+            </div>
+            <div id="outputColumn" class="column">
+                <h3>Output</h3>
+                <img class="icon" id="outputR1" src="icons/r1.png" onclick=toggleImage(this)>
+                <img class="icon" id="outputR2" src="icons/r2.png" onclick=toggleImage(this)>
+                <img class="icon" id="outputR3" src="icons/r3.png" onclick=toggleImage(this)>
+                <img class="icon" id="outputT1" src="icons/t1.png" onclick=toggleImage(this)>
+                <img class="icon" id="outputT2" src="icons/t2.png" onclick=toggleImage(this)>
+                <img class="icon" id="outputT3" src="icons/t3.png" onclick=toggleImage(this)>
+            </div>
+            <div id="matrixColumn" class="column" style="display: none">
                 <table id='matrix' class='matrix' cellpadding="10" align="center">
                     <tr>
                         <td></td>
@@ -48,25 +66,15 @@
                     </tr>
                     <tr>
                         <td style='font-weight: bold'>Input</td>
-                        <td><img class="table-icon" id="outputR1" src="icons/r1.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputR2" src="icons/r2.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputR3" src="icons/r3.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputT1" src="icons/t1.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputT2" src="icons/t2.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputT3" src="icons/t3.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="outputR1Matrix" src="icons/r1.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="outputR2Matrix" src="icons/r2.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="outputR3Matrix" src="icons/r3.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="outputT1Matrix" src="icons/t1.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="outputT2Matrix" src="icons/t2.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="outputT3Matrix" src="icons/t3.png" onclick=toggleImage(this)></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputR1" src="icons/r1.png" onclick=toggleImage(this)></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><img class="table-icon" id="inputR2" src="icons/r2.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="inputR1Matrix" src="icons/r1.png" onclick=toggleImage(this)></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -76,7 +84,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputR3" src="icons/r3.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="inputR2Matrix" src="icons/r2.png" onclick=toggleImage(this)></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -86,7 +94,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputT1" src="icons/t1.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="inputR3Matrix" src="icons/r3.png" onclick=toggleImage(this)></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -96,7 +104,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputT2" src="icons/t2.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="inputT1Matrix" src="icons/t1.png" onclick=toggleImage(this)></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -106,7 +114,17 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputT3" src="icons/t3.png" onclick=toggleImage(this)></td>
+                        <td><img class="table-icon" id="inputT2Matrix" src="icons/t2.png" onclick=toggleImage(this)></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><img class="table-icon" id="inputT3Matrix" src="icons/t3.png" onclick=toggleImage(this)></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -145,15 +163,23 @@
                         onclick="resetMatrix()">
                     Reset Matrix
                 </button>
-                <div class="btn-group" data-toggle="buttons">
+                <div class="btn-group action vertical-button" data-toggle="buttons">
                     <label class="btn btn-primary active">
-                        <input type="radio" name="radio" autocomplete="off" value=true checked> Complete
+                        <input type="radio" name="radioMatrix" autocomplete="off" value=true checked> Complete
                     </label>
                     <label class="btn btn-primary">
-                        <input type="radio" name="radio" autocomplete="off" value=""> Any
+                        <input type="radio" name="radioMatrix" autocomplete="off" value=""> Any
                     </label>
                     <label class="btn btn-primary">
-                        <input type="radio" name="radio" value=false autocomplete="off"> Incomplete
+                        <input type="radio" name="radioMatrix" value=false autocomplete="off"> Incomplete
+                    </label>
+                </div>
+                <div class="btn-group action vertical-button" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="radioInputMode" autocomplete="off" checked> Basic
+                    </label>
+                    <label class="btn btn-primary">
+                        <input id="radioMatrixInput" type="radio" name="radioInputMode" autocomplete="off"> Matrix
                     </label>
                 </div>
             </div>
@@ -243,6 +269,7 @@
         baseFileName = baseFileName
             .replace('input', '')
             .replace('output', '')
+            .replace('Matrix', '')
             .toLowerCase();
         switch (value) {
             case true:
@@ -295,20 +322,22 @@
             outputT3: $('#outputT3').data('status'),
             transmission: document.querySelector("#transmission").value,
             name: document.querySelector("#name").value,
-            complete: document.querySelector('input[name="radio"]:checked').value
+            complete: document.querySelector('input[name="radioMatrix"]:checked').value
         };
 
         // read matrix
-        for (let x = 0; x < 6; x++) {
-            for (let y = 0; y < 6; y++) {
-                const inputAxis = 'input' + mapNumberToAxis(y);
-                const outputAxis = 'output' + mapNumberToAxis(x);
-                if (selectedMatrixCells[x][y]) {
-                    if (parameters[inputAxis] === undefined) {
-                        parameters[inputAxis] = true;
-                    }
-                    if (parameters[outputAxis] === undefined) {
-                        parameters[outputAxis] = true;
+        if (document.getElementById('radioMatrixInput').checked) {
+            for (let x = 0; x < 6; x++) {
+                for (let y = 0; y < 6; y++) {
+                    const inputAxis = 'input' + mapNumberToAxis(y);
+                    const outputAxis = 'output' + mapNumberToAxis(x);
+                    if (selectedMatrixCells[x][y]) {
+                        if (parameters[inputAxis] === undefined) {
+                            parameters[inputAxis] = true;
+                        }
+                        if (parameters[outputAxis] === undefined) {
+                            parameters[outputAxis] = true;
+                        }
                     }
                 }
             }
@@ -316,7 +345,7 @@
 
         // remove undefined parameters
         for (const key of Object.keys(parameters)) {
-            if (parameters[key] === undefined) {
+            if (parameters[key] === undefined || parameters[key] === '') {
                 delete parameters[key];
             }
         }
@@ -450,8 +479,24 @@
     }
 
     $('img[class=icon], input[type=number], input[type=search], input[type=radio]').on('change keydown paste input click', function () {
-        searchMechanism()
+        searchMechanism();
     });
+
+    $('input[name="radioInputMode"]').on('change click', function () {
+        toggleInputMode();
+    });
+
+    function toggleInputMode() {
+        if (document.getElementById('radioMatrixInput').checked) {
+            document.getElementById('inputColumn').style.display = 'none';
+            document.getElementById('outputColumn').style.display = 'none';
+            document.getElementById('matrixColumn').style.display = '';
+        } else {
+            document.getElementById('inputColumn').style.display = '';
+            document.getElementById('outputColumn').style.display = '';
+            document.getElementById('matrixColumn').style.display = 'none';
+        }
+    }
 
     window.onload = function () {
         const cells = document.getElementsByTagName('td');
@@ -534,7 +579,6 @@
     function updateMatrix() {
         const xhttp = new XMLHttpRequest();
         const url = getUrlWithParameters('http://mechanism-browser:8000/api/mechanisms/matrix/', getParameters());
-        console.log(getParameters());
         xhttp.open('GET', url.toString());
         xhttp.setRequestHeader('Content-type', 'application/json');
         xhttp.send();
