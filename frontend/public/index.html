@@ -57,27 +57,63 @@
                     </tr>
                     <tr>
                         <td><img class="icon" id="inputR1" src="icons/r1.png" onclick=toggleImage(this)></td>
-                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><img class="icon" id="inputR2" src="icons/r2.png" onclick=toggleImage(this)></td>
-                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><img class="icon" id="inputR3" src="icons/r3.png" onclick=toggleImage(this)></td>
-                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><img class="icon" id="inputT1" src="icons/t1.png" onclick=toggleImage(this)></td>
-                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><img class="icon" id="inputT2" src="icons/t2.png" onclick=toggleImage(this)></td>
-                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td><img class="icon" id="inputT3" src="icons/t3.png" onclick=toggleImage(this)></td>
-                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
@@ -229,22 +265,19 @@
         switch ($(img).data('status')) {
             case true:
                 $(img).data('status', false);
-                matrixSearchParameters[img.id] = false;
                 break;
             case false:
                 $(img).data('status', '');
-                delete matrixSearchParameters[img.id];
                 break;
             default:
                 // ''
                 $(img).data('status', true);
-                matrixSearchParameters[img.id] = true;
         }
         setImage(img, img.id, $(img).data('status'), true);
         updateMatrix();
     }
 
-    let matrixSearchParameters = {};
+    const selectedMatrixCells = [...Array(6)].map(x => Array(6).fill(false));
 
     function getParameters() {
         const parameters = {
@@ -265,9 +298,25 @@
             complete: document.querySelector('input[name="radio"]:checked').value
         };
 
+        // read matrix
+        for (let x = 0; x < 6; x++) {
+            for (let y = 0; y < 6; y++) {
+                const inputAxis = 'input' + mapNumberToAxis(y);
+                const outputAxis = 'output' + mapNumberToAxis(x);
+                if (selectedMatrixCells[x][y]) {
+                    if (parameters[inputAxis] === undefined) {
+                        parameters[inputAxis] = true;
+                    }
+                    if (parameters[outputAxis] === undefined) {
+                        parameters[outputAxis] = true;
+                    }
+                }
+            }
+        }
+
         // remove undefined parameters
         for (const key of Object.keys(parameters)) {
-            if (parameters[key] === '') {
+            if (parameters[key] === undefined) {
                 delete parameters[key];
             }
         }
@@ -358,9 +407,9 @@
         }
     }
 
-    function searchMechanism(baseUrl = 'http://mechanism-browser:8000/api/mechanisms/', parameters = getParameters()) {
+    function searchMechanism(baseUrl = 'http://mechanism-browser:8000/api/mechanisms/') {
         const xhttp = new XMLHttpRequest();
-        const url = getUrlWithParameters(baseUrl, parameters);
+        const url = getUrlWithParameters(baseUrl, getParameters());
         xhttp.open('GET', url.toString());
         xhttp.setRequestHeader('Content-type', 'application/json');
         xhttp.send();
@@ -436,18 +485,15 @@
         const cell = e.target || e.srcElement;
         const inputIndex = cell.parentNode.rowIndex - 2;
         const outputIndex = cell.cellIndex - 1;
-        if (inputIndex >= -1 && outputIndex >= -1) {
-            const inputAxis = mapNumberToAxis(inputIndex);
-            const outputAxis = mapNumberToAxis(outputIndex);
-            if (inputAxis !== undefined) {
-                matrixSearchParameters['input' + inputAxis] = true;
+        if (inputIndex >= 0 && outputIndex >= 0) {
+            selectedMatrixCells[inputIndex][outputIndex] = !selectedMatrixCells[inputIndex][outputIndex];
+            if (selectedMatrixCells[inputIndex][outputIndex]) {
+                cell.style.border = '5px solid rgb(0, 162, 232)';
+            } else {
+                cell.style.border = '0px';
             }
-            if (outputAxis !== undefined) {
-                matrixSearchParameters['output' + outputAxis] = true;
-            }
-            cell.style.border = '5px solid rgb(0, 162, 232)';
             updateMatrix();
-            searchMechanism('http://mechanism-browser:8000/api/mechanisms/', matrixSearchParameters);
+            searchMechanism('http://mechanism-browser:8000/api/mechanisms/');
         }
     }
 
@@ -487,7 +533,8 @@
 
     function updateMatrix() {
         const xhttp = new XMLHttpRequest();
-        const url = getUrlWithParameters('http://mechanism-browser:8000/api/mechanisms/matrix/', matrixSearchParameters);
+        const url = getUrlWithParameters('http://mechanism-browser:8000/api/mechanisms/matrix/', getParameters());
+        console.log(getParameters());
         xhttp.open('GET', url.toString());
         xhttp.setRequestHeader('Content-type', 'application/json');
         xhttp.send();
@@ -519,10 +566,10 @@
     updateMatrix();
 
     function resetMatrix() {
-        matrixSearchParameters = {};
         for (let y = 0; y < 6; y++) {
             for (let x = 0; x < 6; x++) {
-                const cell = $('#matrix')[0].rows[y + 1].cells[x];
+                selectedMatrixCells[x][y] = false;
+                const cell = $('#matrix')[0].rows[y + 2].cells[x + 1];
                 $(cell).css('border', '');
             }
         }
