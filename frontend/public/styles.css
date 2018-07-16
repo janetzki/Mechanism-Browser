@@ -10,7 +10,7 @@ html, body {
 .icon {
     display: block;
     height: 50px;
-    /*margin-bottom: 20px;*/
+    margin-bottom: 20px;
 }
 
 .small-icon {
@@ -34,6 +34,7 @@ html, body {
 
 .vertical-button {
     display: block;
+    overflow: auto;
 }
 
 .action {
