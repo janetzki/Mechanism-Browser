@@ -62,29 +62,19 @@
                 <table id='matrix' class='matrix' cellpadding="10" align="center">
                     <tr>
                         <td></td>
-                        <td colspan='6' align='center' style='font-weight: bold'>Output</td>
+                        <td colspan='6' align='center'><h3>Output</h3></td>
                     </tr>
                     <tr>
-                        <td style='font-weight: bold'>Input</td>
-                        <td><img class="table-icon" id="outputR1Matrix" src="icons/r1.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputR2Matrix" src="icons/r2.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputR3Matrix" src="icons/r3.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputT1Matrix" src="icons/t1.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputT2Matrix" src="icons/t2.png" onclick=toggleImage(this)></td>
-                        <td><img class="table-icon" id="outputT3Matrix" src="icons/t3.png" onclick=toggleImage(this)></td>
+                        <td><h3>Input</h3></td>
+                        <td id="outputR1Placeholder"></td>
+                        <td id="outputR2Placeholder"></td>
+                        <td id="outputR3Placeholder"></td>
+                        <td id="outputT1Placeholder"></td>
+                        <td id="outputT2Placeholder"></td>
+                        <td id="outputT3Placeholder"></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputR1Matrix" src="icons/r1.png" onclick=toggleImage(this)></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><img class="table-icon" id="inputR2Matrix" src="icons/r2.png" onclick=toggleImage(this)></td>
+                        <td id="inputR1Placeholder"></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -94,7 +84,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputR3Matrix" src="icons/r3.png" onclick=toggleImage(this)></td>
+                        <td id="inputR2Placeholder"></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -104,7 +94,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputT1Matrix" src="icons/t1.png" onclick=toggleImage(this)></td>
+                        <td id="inputR3Placeholder"></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -114,7 +104,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputT2Matrix" src="icons/t2.png" onclick=toggleImage(this)></td>
+                        <td id="inputT1Placeholder"></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -124,7 +114,17 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td><img class="table-icon" id="inputT3Matrix" src="icons/t3.png" onclick=toggleImage(this)></td>
+                        <td id="inputT2Placeholder"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td id="inputT3Placeholder"></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -269,7 +269,6 @@
         baseFileName = baseFileName
             .replace('input', '')
             .replace('output', '')
-            .replace('Matrix', '')
             .toLowerCase();
         switch (value) {
             case true:
@@ -426,8 +425,9 @@
         }
     }
 
+    const axes = ['R1', 'R2', 'R3', 'T1', 'T2', 'T3'];
+
     function showParameters(entry, mechanism) {
-        const axes = ['R1', 'R2', 'R3', 'T1', 'T2', 'T3'];
         for (const axis of axes) {
             const inputImage = entry.querySelector('img.input' + axis);
             const outputImage = entry.querySelector('img.output' + axis);
@@ -491,10 +491,28 @@
             document.getElementById('inputColumn').style.display = 'none';
             document.getElementById('outputColumn').style.display = 'none';
             document.getElementById('matrixColumn').style.display = '';
+
+            for (const io of ['input', 'output']) {
+                for (const axis of axes) {
+                    const axisSelector = '#' + io + axis;
+                    const icon = $(axisSelector);
+                    icon.appendTo($(axisSelector + 'Placeholder'));
+                    icon.css('marginBottom', '0px');
+                }
+            }
         } else {
             document.getElementById('inputColumn').style.display = '';
             document.getElementById('outputColumn').style.display = '';
             document.getElementById('matrixColumn').style.display = 'none';
+
+            for (const io of ['input', 'output']) {
+                for (const axis of axes) {
+                    const axisSelector = '#' + io + axis;
+                    const icon = $(axisSelector);
+                    icon.appendTo($('#' + io + 'Column'));
+                    icon.css('marginBottom', '20px');
+                }
+            }
         }
     }
 
@@ -618,7 +636,6 @@
             }
         }
 
-        const axes = ['R1', 'R2', 'R3', 'T1', 'T2', 'T3'];
         for (const axis of axes) {
             const inputImage = $('#input' + axis);
             const outputImage = $('#output' + axis);
