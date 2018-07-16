@@ -5,7 +5,7 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from .paginators import MyFirstLastPageNumberPaginator
 from .models import Mechanism
 from .serializers import MechanismSerializer
 from django_filters import rest_framework as filters
@@ -37,9 +37,47 @@ class MechanismFilter(filters.FilterSet):
 
 class MechanismList(generics.ListAPIView):
     queryset = Mechanism.objects.all()
-    serializer_class = MechanismSerializer
-    filter_backends = (filters.DjangoFilterBackend,)  # enable filter-backend for this view
-    filter_class = MechanismFilter
+
+    def get_queryset(self, **kwargs):
+        qs = super(MechanismList, self).get_queryset()
+        self.filter = MechanismFilter(self.request.GET, queryset=qs)
+        return self.filter.qs
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        result_list = list(queryset)
+        result_list = self.reorder_by_dissimilarity(result_list)
+        paginator = MyFirstLastPageNumberPaginator()
+        requested_list = paginator.paginate_list(result_list, request)
+        serialized = MechanismSerializer(requested_list, many=True)
+        return paginator.get_paginated_response(serialized.data)
+
+    def reorder_by_dissimilarity(self, mechanisms):
+        """ Maximize dissimilarities on each page greedily """
+        current_position_on_page = 0
+        dissimilarities = [ 0 for x in mechanisms ]
+
+        for i in range(len(mechanisms)):
+            if i % MyFirstLastPageNumberPaginator.page_size == 0:
+                # start a new page
+                dissimilarities = [ 0 for x in mechanisms ]
+                current_position_on_page = 1
+                continue
+            mech_a = mechanisms[i]
+            max_dissimilarity = 0
+
+            for k in range(i + 1, len(mechanisms)):
+                mech_b = mechanisms[k]
+                dissimilarities[k] += mech_a.get_dissimilarity(mech_b)
+                dissimilarity = dissimilarities[k] / current_position_on_page
+
+                if dissimilarity > max_dissimilarity:
+                    max_dissimilarity = dissimilarity
+                    max_dissimilarity_index = k
+                    mechanisms[i + 1], mechanisms[max_dissimilarity_index] = mechanisms[max_dissimilarity_index], \
+                                                                             mechanisms[i + 1]
+            current_position_on_page += 1
+        return mechanisms
 
 
 class MechanismRetrieveUpdate(generics.RetrieveUpdateAPIView):

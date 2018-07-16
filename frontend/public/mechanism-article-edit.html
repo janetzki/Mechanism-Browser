@@ -235,7 +235,7 @@
     showCompleted();
 
     function getParameters() {
-        const parameters = {
+        return {
             name: document.querySelector('#name').value,
             comments: document.querySelector('#comments').value,
             transmission: document.querySelector('#transmission').value,
@@ -257,13 +257,12 @@
             complete: document.querySelector('#complete').checked
         };
 
-        // remove undefined parameters
-        for (const key of Object.keys(parameters)) {
-            if (parameters[key] === '') {
-                delete parameters[key];
-            }
-        }
-        return parameters;
+//        // remove undefined parameters
+//        for (const key of Object.keys(parameters)) {
+//            if (parameters[key] === '') {
+//                delete parameters[key];
+//            }
+//        }
     }
 
     function getFormData() {
