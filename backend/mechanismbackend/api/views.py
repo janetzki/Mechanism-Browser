@@ -49,16 +49,30 @@ class MechanismList(generics.ListAPIView):
         return paginator.get_paginated_response(serialized.data)
 
     def reorder_by_dissimilarity(self, mechanisms):
+        """ Maximize dissimilarities on each page greedily """
+        current_position_on_page = 0
+        dissimilarities = [ 0 for x in mechanisms ]
+
         for i in range(len(mechanisms)):
+            if i % MyFirstLastPageNumberPaginator.page_size == 0:
+                # start a new page
+                dissimilarities = [ 0 for x in mechanisms ]
+                current_position_on_page = 1
+                continue
             mech_a = mechanisms[i]
             max_dissimilarity = 0
+
             for k in range(i + 1, len(mechanisms)):
                 mech_b = mechanisms[k]
-                dissimilarity = mech_a.get_dissimilarity(mech_b)
+                dissimilarities[k] += mech_a.get_dissimilarity(mech_b)
+                dissimilarity = dissimilarities[k] / current_position_on_page
+
                 if dissimilarity > max_dissimilarity:
                     max_dissimilarity = dissimilarity
                     max_dissimilarity_index = k
-                    mechanisms[i + 1], mechanisms[max_dissimilarity_index] = mechanisms[max_dissimilarity_index], mechanisms[i+1]
+                    mechanisms[i + 1], mechanisms[max_dissimilarity_index] = mechanisms[max_dissimilarity_index], \
+                                                                             mechanisms[i + 1]
+            current_position_on_page += 1
         return mechanisms
 
 
