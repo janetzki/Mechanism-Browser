@@ -32,6 +32,10 @@ html, body {
     margin-right: 50px;
 }
 
+.vertical-button {
+    display: block;
+}
+
 .action {
     margin-bottom: 15px;
 }
