@@ -44,21 +44,16 @@
                 <table id='matrix' class='matrix' cellpadding="10" align="center">
                     <tr>
                         <td></td>
-                        <td colspan='7' align='center' style='font-weight: bold'>Output</td>
+                        <td colspan='6' align='center' style='font-weight: bold'>Output</td>
                     </tr>
                     <tr>
                         <td style='font-weight: bold'>Input</td>
-                        <td><img class="icon" id="outputAny" src="icons/any.png" onclick=toggleImage(this)></td>
                         <td><img class="icon" id="outputR1" src="icons/r1.png" onclick=toggleImage(this)></td>
                         <td><img class="icon" id="outputR2" src="icons/r2.png" onclick=toggleImage(this)></td>
                         <td><img class="icon" id="outputR3" src="icons/r3.png" onclick=toggleImage(this)></td>
                         <td><img class="icon" id="outputT1" src="icons/t1.png" onclick=toggleImage(this)></td>
                         <td><img class="icon" id="outputT2" src="icons/t2.png" onclick=toggleImage(this)></td>
                         <td><img class="icon" id="outputT3" src="icons/t3.png" onclick=toggleImage(this)></td>
-                    </tr>
-                    <tr>
-                        <td><img class="icon" id="inputAny" src="icons/any.png" onclick=toggleImage(this)></td>
-                        <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
                     </tr>
                     <tr>
                         <td><img class="icon" id="inputR1" src="icons/r1.png" onclick=toggleImage(this)></td>
@@ -439,8 +434,8 @@
         // https://stackoverflow.com/a/12193346/8816968
         e = e || window.event;
         const cell = e.target || e.srcElement;
-        const inputIndex = cell.parentNode.rowIndex - 3;
-        const outputIndex = cell.cellIndex - 2;
+        const inputIndex = cell.parentNode.rowIndex - 2;
+        const outputIndex = cell.cellIndex - 1;
         if (inputIndex >= -1 && outputIndex >= -1) {
             const inputAxis = mapNumberToAxis(inputIndex);
             const outputAxis = mapNumberToAxis(outputIndex);
@@ -501,20 +496,17 @@
                 const response = JSON.parse(xhttp.responseText);
                 let minValue = 0;
                 let maxValue = 0;
-                for (let y = 0; y < 7; y++) {
-                    for (let x = 0; x < 7; x++) {
-                        if (x === 6 && y === 6) {
-                            continue;
-                        }
+                for (let y = 0; y < 6; y++) {
+                    for (let x = 0; x < 6; x++) {
                         minValue = Math.min(minValue, response[y][x]);
                         maxValue = Math.max(maxValue, response[y][x]);
                     }
                 }
 
-                for (let y = 0; y < 7; y++) {
-                    for (let x = 0; x < 7; x++) {
-                        let row = (y + 1) % 7 + 2;
-                        let column = (x + 1) % 7 + 1;
+                for (let y = 0; y < 6; y++) {
+                    for (let x = 0; x < 6; x++) {
+                        const row = y + 2;
+                        const column = x + 1;
                         const cell = $('#matrix')[0].rows[row].cells[column];
                         cell.textContent = response[y][x];
                         setCellColor(cell, response[y][x], minValue, maxValue)
@@ -528,14 +520,14 @@
 
     function resetMatrix() {
         matrixSearchParameters = {};
-        for (let y = 0; y < 7; y++) {
-            for (let x = 0; x < 7; x++) {
-                const cell = $('#matrix')[0].rows[y + 2].cells[x + 1];
+        for (let y = 0; y < 6; y++) {
+            for (let x = 0; x < 6; x++) {
+                const cell = $('#matrix')[0].rows[y + 1].cells[x];
                 $(cell).css('border', '');
             }
         }
 
-        const axes = ['Any', 'R1', 'R2', 'R3', 'T1', 'T2', 'T3'];
+        const axes = ['R1', 'R2', 'R3', 'T1', 'T2', 'T3'];
         for (const axis of axes) {
             const inputImage = $('#input' + axis);
             const outputImage = $('#output' + axis);
