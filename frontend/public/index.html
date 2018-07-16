@@ -139,6 +139,7 @@
                             rating
                         </div>
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <p class="mechanism-incomplete-note">incomplete</p>
                     </div>
                 </div>
             </div>
@@ -304,7 +305,7 @@
     }
 
     function showRating(entry, rating) {
-        star = entry.querySelector("span.glyphicon-star");
+        const star = entry.querySelector("span.glyphicon-star");
         entry.querySelector("div.mechanism-rating").textContent = rating;
         if (rating < 0) {
             star.style.color = "red";
@@ -351,6 +352,9 @@
                     entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
                     showRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
                     showParameters(entry, mechanism);
+                    if (mechanism.complete === false) {
+                        entry.querySelector("p.mechanism-incomplete-note").style.display = 'inline-block';
+                    }
                     entry.querySelector("a.mechanism-link").textContent = mechanism.link;
                     entry.querySelector("a.mechanism-link").href = mechanism.link;
                     entry.style.display = "block";

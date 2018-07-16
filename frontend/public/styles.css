@@ -77,6 +77,12 @@ html, body {
     font-size: 18px;
 }
 
+.mechanism-incomplete-note {
+    display: none;
+    margin-left: 1em;
+    color: red;
+}
+
 .mechanism-description {
     padding-right: 15px;
     white-space: nowrap;
