@@ -6,12 +6,13 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1">
 
     <title>Mechanism Browser</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <div class="top-nav-wrapper">
     <div class="top-nav-fixed">
@@ -98,21 +99,34 @@
             </div>
             <div class="column">
                 <h3>Actions</h3>
-                <button class="btn btn-default action"
+                <button class="btn btn-primary action"
                         type="button"
-                        onclick="searchMechanism()">
+                        onclick="searchMechanism()"
+                        style="display: block">
                     Search
                 </button>
-                <button class="btn btn-default action"
+                <button class="btn btn-primary action"
                         type="button"
-                        onclick="createMechanism()">
+                        onclick="createMechanism()"
+                        style="display: block">
                     Create
                 </button>
-                <button class="btn btn-default action"
+                <button class="btn btn-primary action"
                         type="button"
                         onclick="resetMatrix()">
                     Reset Matrix
                 </button>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="radio" autocomplete="off" value=true checked> Complete
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="radio" autocomplete="off" value=""> Any
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="radio" value=false autocomplete="off"> Incomplete
+                    </label>
+                </div>
             </div>
         </div>
     </div>
@@ -156,6 +170,7 @@
                             rating
                         </div>
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <p class="mechanism-incomplete-note">incomplete</p>
                     </div>
                 </div>
             </div>
@@ -253,7 +268,8 @@
             outputT2: $('#outputT2').data('status'),
             outputT3: $('#outputT3').data('status'),
             transmission: document.querySelector("#transmission").value,
-            name: document.querySelector("#name").value
+            name: document.querySelector("#name").value,
+            complete: document.querySelector('input[name="radio"]:checked').value
         };
 
         // remove undefined parameters
@@ -328,7 +344,7 @@
     }
 
     function showRating(entry, rating) {
-        star = entry.querySelector("span.glyphicon-star");
+        const star = entry.querySelector("span.glyphicon-star");
         entry.querySelector("div.mechanism-rating").textContent = rating;
         if (rating < 0) {
             star.style.color = "red";
@@ -375,6 +391,9 @@
                     entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
                     showRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
                     showParameters(entry, mechanism);
+                    if (mechanism.complete === false) {
+                        entry.querySelector("p.mechanism-incomplete-note").style.display = 'inline-block';
+                    }
                     entry.querySelector("a.mechanism-link").textContent = mechanism.link;
                     entry.querySelector("a.mechanism-link").href = mechanism.link;
                     entry.style.display = "block";
@@ -388,7 +407,7 @@
         window.location.href = getUrlWithParameters('http://mechanism-browser/create/', getParameters());
     }
 
-    $('img[class=icon], input[type=number], input[type=search]').on('change keydown paste input click', function () {
+    $('img[class=icon], input[type=number], input[type=search], input[type=radio]').on('change keydown paste input click', function () {
         searchMechanism()
     });
 

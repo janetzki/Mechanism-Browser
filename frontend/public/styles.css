@@ -24,11 +24,11 @@ html, body {
 
 .row {
     display: flex;
-    max-width: 400px;
+    /*max-width: 400px;*/
 }
 
 .column {
-    flex: 50%;
+    /*flex: 50%;*/
     margin-right: 50px;
 }
 
@@ -75,6 +75,12 @@ html, body {
 .mechanism-rating {
     display: inline-block;
     font-size: 18px;
+}
+
+.mechanism-incomplete-note {
+    display: none;
+    margin-left: 1em;
+    color: red;
 }
 
 .mechanism-description {
@@ -149,7 +155,7 @@ html, body {
 }
 
 .comments {
-    width: 65%;
+    width: 60%;
     float: left;
 }
 
@@ -247,4 +253,8 @@ html, body {
     border-right: 15px solid transparent;
     border-top: 15px solid gray;
     cursor: pointer;
+}
+
+.incomplete-table-row {
+    display: none;
 }

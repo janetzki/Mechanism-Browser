@@ -85,13 +85,19 @@
                         {{transmission}}
                     </td>
                 </tr>
-                <!--<tr>-->
-                <!--Feature for the future-->
-                <!--<th style="text-align: left">3D model</th>-->
-                <!--<td>-->
-                <!--<a>{{name}}.scad</a>-->
-                <!--</td>-->
-                <!--</tr>-->
+                <tr>
+                    <th style="text-align: left">3D model</th>
+                    <td id="3DModelCell">
+                        <a id="3DModelLink" href="{{model}}">{{modelName}}</a>
+                    </td>
+                </tr>
+                <tr class="incomplete-table-row">
+                    <th style="text-align: left">Status</th>
+                    <td style="color: red">
+                        Incomplete
+                    </td>
+                </tr>
+                </tbody>
             </table>
         </section>
     </div>
@@ -138,6 +144,25 @@
     }
 
     initializeImages();
+
+    function initialize3DModel() {
+        const cell = $('#3DModelCell');
+        const link = $('#3DModelLink');
+        if (link.text() === '') {
+            link.hide();
+            cell.text('none');
+        }
+    }
+
+    initialize3DModel();
+
+    function showIncomplete() {
+        if (!{{complete}}) {
+            document.getElementsByClassName('incomplete-table-row')[0].style.display = 'table-row';
+        }
+    }
+
+    showIncomplete();
 
     function editArticle() {
         window.location.href += '/edit';

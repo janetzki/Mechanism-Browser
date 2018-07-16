@@ -28,7 +28,7 @@
 
 <div class="container-for-footer background">
     <div class="background-overlay">
-        <form class="content content-box container">
+        <div class="content content-box container">
             <div class="page-header" style="margin-top: 0">
                 <input id="name" type="text" class="form-control large-input page-header-title" placeholder="enter text"
                        value="{{name}}">
@@ -104,8 +104,25 @@
                         <p id="transmission-errors" style="color:red"></p>
                     </td>
                 </tr>
+                <tr>
+                    <th style="text-align: left">3D model</th>
+                    <td>
+                        <input id="3DModel" type="file" onchange="change3DModel()">
+                        <p id="parametric_model-errors" style="color:red"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Status</th>
+                    <td>
+                        <div class="form-check">
+                            <input id="complete" class="form-check-input" type="checkbox" checked={{complete}}>
+                            <p style="display: inline-block">Complete</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
             </table>
-        </form>
+        </div>
     </div>
 
     <footer class="bottom-nav">
@@ -200,6 +217,23 @@
 
     previewImage();
 
+    let triDModelData = '';
+
+    function change3DModel() {
+        const triDModel = $('#3DModel')[0];
+        if (triDModel.files && triDModel.files[0]) {
+            const reader = new FileReader();
+            reader.readAsDataURL(triDModel.files[0]);
+            triDModelData = triDModel.files[0];
+        }
+    }
+
+    function showCompleted() {
+        document.querySelector('#complete').checked = {{complete}};
+    }
+
+    showCompleted();
+
     function getParameters() {
         const parameters = {
             name: document.querySelector('#name').value,
@@ -218,7 +252,9 @@
             outputT2: $('#outputT2').data('status'),
             outputT3: $('#outputT3').data('status'),
             image: imageData,
-            link: document.querySelector('#link').value
+            parametric_model: triDModelData,
+            link: document.querySelector('#link').value,
+            complete: document.querySelector('#complete').checked
         };
 
         // remove undefined parameters

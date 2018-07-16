@@ -25,6 +25,8 @@ class Mechanism(models.Model):
     transmission = models.IntegerField(blank=True, null=True)
     comments = models.TextField(blank=True)
     rating = AnonymousRatingField()
+    complete = models.BooleanField(default=False)
+    parametric_model = models.FileField(upload_to='parametric_models', blank=True, null=True)
 
     class Meta:
         ordering = ('created',)

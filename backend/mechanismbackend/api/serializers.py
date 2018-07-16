@@ -41,6 +41,8 @@ class MechanismSerializer(serializers.ModelSerializer):
         details['created'] = instance.created
         details['rating_likes'] = instance.rating_likes
         details['rating_dislikes'] = instance.rating_dislikes
-
+        details['complete'] = instance.complete
+        if instance.parametric_model:
+            details['parametric_model'] = instance.parametric_model.url
 
         return details
