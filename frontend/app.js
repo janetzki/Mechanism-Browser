@@ -11,12 +11,17 @@ function getMechanismAndRenderPage(req, res, page) {
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             const response = JSON.parse(xhttp.responseText).results[0];
-            response.rating = response.rating_likes - response.rating_dislikes;
-            response.model = response.parametric_model;
-            if (response.model !== undefined) {
-                response.modelName = response.model.substring(response.model.lastIndexOf('/') + 1, response.model.length);
+            if (response !== undefined) {
+                response.rating = response.rating_likes - response.rating_dislikes;
+                response.model = response.parametric_model;
+                if (response.model !== undefined) {
+                    response.modelName = response.model.substring(response.model.lastIndexOf('/') + 1, response.model.length);
+                }
+                res.render(page, response)
+            } else {
+                res.writeHead(302, {'Location': '/'});
+                res.end();
             }
-            res.render(page, response)
         }
     };
 }
