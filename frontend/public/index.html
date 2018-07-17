@@ -174,11 +174,6 @@
                         onclick="createMechanism()">
                     Create
                 </button>
-                <button class="btn btn-primary action vertical-button"
-                        type="button"
-                        onclick="resetMatrix()">
-                    Reset Matrix
-                </button>
             </div>
         </div>
     </div>
@@ -624,25 +619,5 @@
     }
 
     updateMatrix();
-
-    function resetMatrix() {
-        for (let y = 0; y < 6; y++) {
-            for (let x = 0; x < 6; x++) {
-                selectedMatrixCells[x][y] = false;
-                const cell = $('#matrix')[0].rows[y + 2].cells[x + 1];
-                $(cell).css('border', '');
-            }
-        }
-
-        for (const axis of axes) {
-            const inputImage = $('#input' + axis);
-            const outputImage = $('#output' + axis);
-            inputImage.removeData('status');
-            outputImage.removeData('status');
-            setImage(inputImage.get(0), 'input' + axis, '', true);
-            setImage(outputImage.get(0), 'output' + axis, '', true);
-        }
-        updateMatrix();
-    }
 </script>
 </html>
