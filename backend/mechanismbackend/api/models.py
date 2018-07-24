@@ -1,8 +1,6 @@
 from django.db import models
 from rest_framework.exceptions import ValidationError
-from updown.fields import RatingField, AnonymousRatingField
-
-# Create your models here.
+from updown.fields import AnonymousRatingField
 
 
 class Mechanism(models.Model):
@@ -29,7 +27,7 @@ class Mechanism(models.Model):
     parametric_model = models.FileField(upload_to='parametric_models', blank=True, null=True)
 
     class Meta:
-        ordering = ('-rating_likes', 'rating_dislikes')
+        ordering = ('-rating_likes', 'rating_dislikes')  # sort descending by likes, then ascending by dislikes
 
     def __str__(self):
         return self.name
