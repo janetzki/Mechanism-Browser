@@ -10,34 +10,35 @@ For any system that should have access to the Mechanism Browser, add the IP of t
 ### Setup the Django server
 Install the requirements:
 ```
-pip install -r backend/requirements.txt
+sudo pip install -r backend/requirements.txt
 ```
 
-Navigate to `backend/mechanismbackend/`.
+Navigate to `Mechanism-Browser/backend/mechanismbackend/`.
 Migrate the schemas:
 ```
-python manage.py migrate
+python3 manage.py migrate
 
 ```
 Create a superuser and choose a username and a password:
 ```
-python manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
 
 Finally, start the Django server:
 ```
-python backend/mechanismbackend/manage.py runserver 0.0.0.0:8000
+python3 manage.py runserver 0.0.0.0:8000
 ```
 
 ### Setup the Node.js server
+Navigate to `Mechanism-Browser/frontend/`.
 Install the dependencies:
 ```
-sudo npm install --prefix frontend
+sudo npm install
 ```
 
 Then, start the Node.js server:
 ```
-sudo npm start --prefix frontend
+sudo npm start
 ```
 
 
