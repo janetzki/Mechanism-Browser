@@ -8,7 +8,7 @@ function getMechanismAndRenderPage(req, res, page) {
     xhttp.open('GET', 'http://mechanism-browser:8000/api/mechanisms/?id=' + req.params['id']);
     xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             const response = JSON.parse(xhttp.responseText).results[0];
             if (response !== undefined) {
@@ -26,7 +26,7 @@ function getMechanismAndRenderPage(req, res, page) {
     };
 }
 
-function renderEmtpyPage(req, res, page) {
+function renderEmptyPage(req, res, page) {
     const emptyMechanism = {
         name: '',
         comments: '',
@@ -73,7 +73,7 @@ app.get('/mechanism/:id/edit', function (req, res) {
 });
 
 app.get('/create', function (req, res) {
-    renderEmtpyPage(req, res, 'mechanism-article-edit.html');
+    renderEmptyPage(req, res, 'mechanism-article-edit.html');
 });
 
 app.get('*icons/:name', function (req, res) {
