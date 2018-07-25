@@ -8,25 +8,27 @@ You do not know engineering terminology but want to 3D print machines? This proj
 For any system that should have access to the Mechanism Browser, add the IP of the server and the hostname "mechanism-browser" to its hosts file.
 
 ### Setup the Django server
+Make sure that you are using Python 3.
+
 Install the requirements:
 ```
-sudo pip install -r backend/requirements.txt
+sudo pip install -r Mechanism-Browser/backend/requirements.txt
 ```
 
 Navigate to `Mechanism-Browser/backend/mechanismbackend/`.
 Migrate the schemas:
 ```
-python3 manage.py migrate
+python manage.py migrate
 
 ```
 Create a superuser and choose a username and a password:
 ```
-python3 manage.py createsuperuser
+python manage.py createsuperuser
 ```
 
 Finally, start the Django server:
 ```
-python3 manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:8000
 ```
 
 ### Setup the Node.js server
