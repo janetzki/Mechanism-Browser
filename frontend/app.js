@@ -61,19 +61,19 @@ app.set('views', path.join(__dirname + '/public'));
 app.set('view engine', 'html');
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/public/search.html');
+    res.sendFile(__dirname + '/public/pages/search/search.html');
 });
 
 app.get('/mechanism/:id', function (req, res) {
-    getMechanismAndRenderPage(req, res, 'mechanism-article');
+    getMechanismAndRenderPage(req, res, 'pages/mechanism-article/mechanism-article');
 });
 
 app.get('/mechanism/:id/edit', function (req, res) {
-    getMechanismAndRenderPage(req, res, 'mechanism-article-edit');
+    getMechanismAndRenderPage(req, res, 'pages/mechanism-article-edit/mechanism-article-edit');
 });
 
 app.get('/create', function (req, res) {
-    renderEmptyPage(req, res, 'mechanism-article-edit.html');
+    renderEmptyPage(req, res, 'pages/mechanism-article-edit/mechanism-article-edit');
 });
 
 app.get('*icons/:name', function (req, res) {
