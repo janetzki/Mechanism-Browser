@@ -61,7 +61,7 @@ app.set('views', path.join(__dirname + '/public'));
 app.set('view engine', 'html');
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/search.html');
 });
 
 app.get('/mechanism/:id', function (req, res) {
