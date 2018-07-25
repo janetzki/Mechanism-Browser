@@ -65,15 +65,15 @@ app.get('/', function (req, res) {
 });
 
 app.get('/mechanism/:id', function (req, res) {
-    getMechanismAndRenderPage(req, res, 'pages/mechanism-article/mechanism-article');
+    getMechanismAndRenderPage(req, res, 'pages/mechanism/mechanism-article/mechanism-article');
 });
 
 app.get('/mechanism/:id/edit', function (req, res) {
-    getMechanismAndRenderPage(req, res, 'pages/mechanism-article-edit/mechanism-article-edit');
+    getMechanismAndRenderPage(req, res, 'pages/mechanism/mechanism-article-edit/mechanism-article-edit');
 });
 
 app.get('/create', function (req, res) {
-    renderEmptyPage(req, res, 'pages/mechanism-article-edit/mechanism-article-edit');
+    renderEmptyPage(req, res, 'pages/mechanism/mechanism-article-edit/mechanism-article-edit');
 });
 
 app.get('*icons/:name', function (req, res) {
