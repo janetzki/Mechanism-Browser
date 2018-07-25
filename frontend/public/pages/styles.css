@@ -8,7 +8,7 @@ html, body {
 }
 
 .background {
-    background-image: url('/media/blueprint.jpg'); /*http://www.bestpsdfreebies.com/freebie/10-seamless-blueprint-patterns/*/
+    background-image: url("/media/blueprint.jpg"); /*http://www.bestpsdfreebies.com/freebie/10-seamless-blueprint-patterns/*/
     height: calc(100% - 5em);
 }
 
