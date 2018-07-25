@@ -3,16 +3,6 @@ html, body {
     height: 100%;
 }
 
-.page-header-title {
-    font-weight: bold;
-}
-
-.icon {
-    display: block;
-    height: 50px;
-    margin-bottom: 20px;
-}
-
 .small-icon {
     display: inline-block;
     height: 25px;
@@ -26,77 +16,26 @@ html, body {
     display: flex;
 }
 
-.column {
-    margin-right: 50px;
-}
+/*.btn.btn-secondary {*/
+    /*background-color: lightgray;*/
+/*}*/
 
-.vertical-button {
-    display: block;
-    overflow: auto;
-}
+/*.btn.btn-secondary.positive.active {*/
+    /*background-color: green;*/
+/*}*/
 
-.action {
-    margin-bottom: 15px;
-}
+/*.btn.btn-secondary.neutral.active {*/
+    /*background-color: gray;*/
+/*}*/
 
-.btn.btn-secondary {
-    background-color: lightgray;
-}
-
-.btn.btn-secondary.positive.active {
-    background-color: green;
-}
-
-.btn.btn-secondary.neutral.active {
-    background-color: gray;
-}
-
-.btn.btn-secondary.negative.active {
-    background-color: red;
-}
-
-.search-result {
-    margin-bottom: 80px;
-}
+/*.btn.btn-secondary.negative.active {*/
+    /*background-color: red;*/
+/*}*/
 
 .preview-image {
     height: 130px;
     width: 130px;
     margin-right: 1em;
-}
-
-.mechanism-name {
-    font-size: 26px;
-    color: #0000cc;
-}
-
-.mechanism-link {
-    font-size: 18px;
-    color: green;
-}
-
-.mechanism-rating {
-    display: inline-block;
-    font-size: 18px;
-}
-
-.mechanism-incomplete-note {
-    display: none;
-    margin-left: 1em;
-    color: red;
-}
-
-.mechanism-description {
-    padding-right: 15px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 18px;
-}
-
-.mechanism-parameters {
-    font-size: 18px;
-    margin-top: 5px;
 }
 
 .top-nav {
@@ -157,34 +96,6 @@ html, body {
     height: 100%;
 }
 
-.comments {
-    width: 60%;
-    float: left;
-}
-
-.infobox {
-    float: right;
-    border: 1px solid lightgray;
-    background-color: #f8f8f8;
-    border-spacing: 1em;
-    border-collapse: separate;
-    margin-left: 1em;
-    max-width: 300px;
-}
-
-.matrix {
-    border: 1px solid lightgray;
-    background-color: #eeeeee;
-    border-collapse: separate;
-    margin-left: 1em;
-    max-width: 300px;
-}
-
-.matrix td {
-    padding: 2px;
-    text-align: center;
-}
-
 .content {
     max-height: calc(100% - 4em);
     padding: 15px;
@@ -194,74 +105,4 @@ html, body {
     background-color: white;
     border: 1px solid lightgray;
     border-top: 0;
-}
-
-.image {
-    max-width: 300px;
-    max-height: 300px;
-}
-
-.upload-preview-image {
-    max-width: 300px;
-    max-height: 300px;
-    margin-bottom: 10px;
-}
-
-.large-input {
-    width: 100%;
-    height: 40px;
-    font-size: 30px
-}
-
-.footer-button {
-    margin: 0 10px 0 10px;
-}
-
-.error-message {
-    color: red;
-    word-wrap: break-word;
-    white-space: -moz-pre-wrap;
-  white-space: pre-wrap;
-}
-
-.voting-arrows {
-    width: 30px;
-    height: auto;
-    display: inline-block;
-    margin: 0 1em 0 1em;
-}
-
-.arrow-up {
-    width: 0;
-    height: 0;
-    display: block;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 15px solid gray;
-    cursor: pointer;
-}
-
-.rating {
-    margin: 5px 0 5px 0;
-    font-family: "Times New Roman", Times, serif;
-    font-size: large;
-    color: gray;
-}
-
-.arrow-down {
-    width: 0;
-    height: 0;
-    display: block;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-top: 15px solid gray;
-    cursor: pointer;
-}
-
-.incomplete-table-row {
-    display: none;
-}
-
-.data {
-    display: none;
 }
