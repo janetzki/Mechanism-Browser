@@ -131,8 +131,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '..', '..', 'frontend', 'public', 'media')
 # CORS Settings
 CORS_ORIGIN_ALLOW_ALL = True
 
-# DRF Pagination Settings
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'api.paginators.FirstLastPageNumberPaginator',
-    'PAGE_SIZE': 10
-}

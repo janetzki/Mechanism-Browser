@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Mechanism
 
-# Register your models here.
-
+# Registering mechanism model
 admin.site.register(Mechanism)

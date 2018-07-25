@@ -1,11 +1,9 @@
-from django.db.models import Count
-from django.db.models.expressions import RawSQL
 from django.db import connection
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .paginators import MyFirstLastPageNumberPaginator
+from .paginators import FirstLastPageNumberPaginator
 from .models import Mechanism
 from .serializers import MechanismSerializer
 from django_filters import rest_framework as filters
@@ -47,7 +45,7 @@ class MechanismList(generics.ListAPIView):
         queryset = self.get_queryset()
         result_list = list(queryset)
         result_list = self.reorder_by_dissimilarity(result_list)
-        paginator = MyFirstLastPageNumberPaginator()
+        paginator = FirstLastPageNumberPaginator()
         requested_list = paginator.paginate_list(result_list, request)
         serialized = MechanismSerializer(requested_list, many=True)
         return paginator.get_paginated_response(serialized.data)
@@ -55,12 +53,12 @@ class MechanismList(generics.ListAPIView):
     def reorder_by_dissimilarity(self, mechanisms):
         """ Maximize dissimilarities on each page greedily """
         current_position_on_page = 0
-        dissimilarities = [ 0 for x in mechanisms ]
+        dissimilarities = [0 for m in mechanisms]
 
         for i in range(len(mechanisms)):
-            if i % MyFirstLastPageNumberPaginator.page_size == 0:
+            if i % FirstLastPageNumberPaginator.page_size == 0:
                 # start a new page
-                dissimilarities = [ 0 for x in mechanisms ]
+                dissimilarities = [0 for m in mechanisms]
                 current_position_on_page = 1
                 continue
             mech_a = mechanisms[i]
@@ -130,12 +128,13 @@ class MechanismMatrix(APIView):
         return Response(matrix)
 
     def get_query_predicate(self):
+        """ Create SQL predicate clause for the query. """
         params = list()
         params.append(('inputR1', self.request.query_params.get('inputR1', None)))
         params.append(('inputR2', self.request.query_params.get('inputR2', None)))
-        params.append(('inputR3',  self.request.query_params.get('inputR3', None)))
-        params.append(('inputT1',  self.request.query_params.get('inputT1', None)))
-        params.append(('inputT2',  self.request.query_params.get('inputT2', None)))
+        params.append(('inputR3', self.request.query_params.get('inputR3', None)))
+        params.append(('inputT1', self.request.query_params.get('inputT1', None)))
+        params.append(('inputT2', self.request.query_params.get('inputT2', None)))
         params.append(('inputT3', self.request.query_params.get('inputT3', None)))
         params.append(('outputR1', self.request.query_params.get('outputR1', None)))
         params.append(('outputR2', self.request.query_params.get('outputR2', None)))
