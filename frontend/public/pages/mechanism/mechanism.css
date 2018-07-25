@@ -1,10 +1,14 @@
-.page-header-title {
-    font-weight: bold;
-}
-
 .comments {
     width: 60%;
     float: left;
+}
+
+.data {
+    display: none;
+}
+
+.footer-button {
+    margin: 0 10px 0 10px;
 }
 
 .infobox {
@@ -17,10 +21,6 @@
     max-width: 300px;
 }
 
-.footer-button {
-    margin: 0 10px 0 10px;
-}
-
-.data {
-    display: none;
+.page-header-title {
+    font-weight: bold;
 }
