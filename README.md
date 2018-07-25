@@ -3,6 +3,17 @@ You do not know engineering terminology but want to 3D print machines? This proj
 
 
 <br></br>
+## Requirements
+Make sure that you have the following software with the corresponding versions installed:
+- Python >= 3.5.3
+- Pip >= 10.0.1
+- Node >= 8.11.3
+- NPM >= 5.6.0
+
+The Mechanism Browser works best with Mozilla Firefox.
+
+
+<br></br>
 ## Setup
 ### Add server to hosts file
 For any system that should have access to the Mechanism Browser, add the IP of the server and the hostname "mechanism-browser" to its hosts file.
