@@ -6,22 +6,27 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1">
 
     <title>{{name}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/pages/mechanism/mechanism-article/mechanism-article.js"></script>
+    <script src="/external/OpenJSCAD/min.js"></script>
+    <link rel="stylesheet" href="/external/OpenJSCAD/min.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../styles.css">
-    <link rel="stylesheet" href="../OpenJSCAD/min.css" type="text/css">
+    <link rel="stylesheet" href="/pages/styles.css">
+    <link rel="stylesheet" href="/pages/mechanism/mechanism.css">
+    <link rel="stylesheet" href="/pages/mechanism/mechanism-article/mechanism-article.css">
 </head>
 
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<div class="data" data-id="{{id}}" data-complete="{{complete}}"></div>
 
 <div class="top-nav-wrapper">
     <div class="top-nav-fixed">
         <div class="container">
             <a href="http://mechanism-browser">
-                <img src="../../media/logo%20vertical%20white.svg">
+                <img src="/media/logo%20vertical%20white.svg">
             </a>
             <a href="https://github.com/janetzki/Mechanism-Browser">
-                <img src="../../media/octocat%20white.svg">
+                <img src="/media/octocat%20white.svg">
             </a>
         </div>
     </div>
@@ -32,9 +37,11 @@
         <section class="content content-box container">
             <div>
                 <div class="voting-arrows">
-                    <a class="arrow-up" onclick="sendVoting(true)" onmousedown="highlight(this, true)" onmouseup="highlight(this, false)"></a>
+                    <a class="arrow-up" onclick="sendVoting(true)" onmousedown="highlight(this, true)"
+                       onmouseup="highlight(this, false)"></a>
                     <div class="rating" align="center">{{rating}}</div>
-                    <a class="arrow-down" onclick="sendVoting(false)" onmousedown="highlight(this, true)" onmouseup="highlight(this, false)"></a>
+                    <a class="arrow-down" onclick="sendVoting(false)" onmousedown="highlight(this, true)"
+                       onmouseup="highlight(this, false)"></a>
                 </div>
                 <div class="page-header" style="display: inline-block; margin-top: 0">
                     <h1 class="page-header-title">{{name}}</h1>
@@ -89,18 +96,12 @@
                 <tr>
                     <th style="text-align: left">3D model</th>
                     <td id="3DModelCell">
-                        <script src="../OpenJSCAD/dist/min.js"></script>
-                        <!-- setup display of the errors as required by OpenJSCAD.js -->
                         <div class="jscad-container" style="border: 0; padding: 0">
                             <div id="header">
                                 <div id="errordiv">hello</div>
                             </div>
-
-                            <!-- setup display of the viewer, i.e. canvas -->
-                            <div oncontextmenu="return false;" id="viewerContext" design-url="../..{{parametric_model}}"></div>
-
-                            <!-- setup display of the status, as required by OpenJSCAD.js -->
-                            <!-- set display: block to display this -->
+                            <div oncontextmenu="return false;" id="viewerContext"
+                                 design-url="{{parametric_model}}"></div>
                             <div id="tail" style="display: none;">
                                 <div id="statusdiv"></div>
                             </div>
@@ -129,96 +130,4 @@
     </footer>
 </div>
 </body>
-<script>
-    axes = ['inputR1', 'inputR2', 'inputR3', 'inputT1', 'inputT2', 'inputT3', 'outputR1', 'outputR2', 'outputR3', 'outputT1', 'outputT2', 'outputT3'];
-
-    function updateImageInput(img, status) {
-        const baseFileName = img.id
-            .slice(-2)
-            .toLowerCase();
-
-        $(img).data('status', status);
-        switch (status) {
-            case 1:
-                img.src = 'icons/' + baseFileName + '_selected.png';
-                break;
-            default:
-                // 0
-                img.src = 'icons/' + baseFileName + '.png';
-        }
-    }
-
-    function initializeImages() {
-        for (const axis of axes) {
-            const image = document.getElementById(axis);
-            if (image.dataset.status === 'true') {
-                updateImageInput(image, 1)
-            } else {
-                updateImageInput(image, 0)
-            }
-        }
-    }
-
-    initializeImages();
-
-    function initialize3DModel() {
-        const cell = $('#3DModelCell');
-        const link = $('#3DModelLink');
-        if (link.text() === '') {
-            link.hide();
-            cell.text('none');
-        }
-    }
-
-    initialize3DModel();
-
-    function showIncomplete() {
-        if (!{{complete}}) {
-            document.getElementsByClassName('incomplete-table-row')[0].style.display = 'table-row';
-        }
-    }
-
-    showIncomplete();
-
-    function editArticle() {
-        window.location.href += '/edit';
-    }
-
-    const mechanismUrl = 'http://mechanism-browser:8000/api/mechanisms/' + {{id}} + '/';
-
-    function sendVoting(voteUp) {
-        let xhttp = new XMLHttpRequest();
-        let url;
-        if (voteUp) {
-            url = mechanismUrl + 'rate/1';
-        } else {
-            url = mechanismUrl + 'rate/-1';
-        }
-        xhttp.open('GET', url);
-        xhttp.send();
-        xhttp.onreadystatechange = function () {
-            if (xhttp.readyState === 4 && xhttp.status === 200) {
-                xhttp = new XMLHttpRequest();
-                xhttp.open('GET', mechanismUrl);
-                xhttp.send();
-                xhttp.onreadystatechange = function () {
-                    if (xhttp.readyState === 4 && xhttp.status === 200) {
-                        const response = JSON.parse(xhttp.responseText);
-                        document.getElementsByClassName('rating')[0].textContent = response.rating_likes - response.rating_dislikes;
-                    }
-                };
-            }
-        };
-    }
-
-    function highlight(element, on) {
-        if (on) {
-            $(element).css('borderTopColor', 'lightblue');
-            $(element).css('borderBottomColor', 'lightblue');
-        } else {
-            $(element).css('borderTopColor', 'gray');
-            $(element).css('borderBottomColor', 'gray');
-        }
-    }
-</script>
 </html>

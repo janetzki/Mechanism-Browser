@@ -1,0 +1,69 @@
+.action {
+    margin-bottom: 15px;
+}
+
+.column {
+    margin-right: 50px;
+}
+
+.icon {
+    display: block;
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+.matrix {
+    border: 1px solid lightgray;
+    background-color: #eeeeee;
+    border-collapse: separate;
+    margin-left: 1em;
+    max-width: 300px;
+}
+
+.matrix td {
+    padding: 2px;
+    text-align: center;
+}
+
+.mechanism-description {
+    padding-right: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 18px;
+}
+
+.mechanism-incomplete-note {
+    display: none;
+    margin-left: 1em;
+    color: red;
+}
+
+.mechanism-link {
+    font-size: 18px;
+    color: green;
+}
+
+.mechanism-name {
+    font-size: 26px;
+    color: #0000cc;
+}
+
+.mechanism-parameters {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.mechanism-rating {
+    display: inline-block;
+    font-size: 18px;
+}
+
+.search-result {
+    margin-bottom: 80px;
+}
+
+.vertical-button {
+    display: block;
+    overflow: auto;
+}

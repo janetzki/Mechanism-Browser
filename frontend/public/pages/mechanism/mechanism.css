@@ -1,0 +1,26 @@
+.comments {
+    width: 60%;
+    float: left;
+}
+
+.data {
+    display: none;
+}
+
+.footer-button {
+    margin: 0 10px 0 10px;
+}
+
+.infobox {
+    float: right;
+    border: 1px solid lightgray;
+    background-color: #f8f8f8;
+    border-spacing: 1em;
+    border-collapse: separate;
+    margin-left: 1em;
+    max-width: 300px;
+}
+
+.page-header-title {
+    font-weight: bold;
+}

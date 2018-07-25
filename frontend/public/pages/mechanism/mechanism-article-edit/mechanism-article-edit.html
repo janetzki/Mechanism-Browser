@@ -6,21 +6,27 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1">
 
     <title>{{name}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/pages/mechanism/mechanism-article-edit/mechanism-article-edit.js"></script>
+
+
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="/pages/styles.css">
+    <link rel="stylesheet" href="/pages/mechanism/mechanism.css">
+    <link rel="stylesheet" href="/pages/mechanism/mechanism-article-edit/mechanism-article-edit.css">
 </head>
 
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<div class="data" data-id="{{id}}" data-complete="{{complete}}"></div>
 
 <div class="top-nav-wrapper">
     <div class="top-nav-fixed">
         <div class="container">
             <a href="http://mechanism-browser">
-                <img src="../../media/logo%20vertical%20white.svg">
+                <img src="/media/logo%20vertical%20white.svg">
             </a>
             <a href="https://github.com/janetzki/Mechanism-Browser">
-                <img src="../../media/octocat%20white.svg">
+                <img src="/media/octocat%20white.svg">
             </a>
         </div>
     </div>
@@ -142,173 +148,4 @@
     </footer>
 </div>
 </body>
-<script>
-    inputFields = {
-        axes: ['inputR1', 'inputR2', 'inputR3', 'inputT1', 'inputT2', 'inputT3', 'outputR1', 'outputR2', 'outputR3', 'outputT1', 'outputT2', 'outputT3'],
-        notAxes: ['name', 'link', 'transmission', 'image', 'comments']
-    };
-
-    function updateImageInput(img, status) {
-        const baseFileName = img.id
-            .slice(-2)
-            .toLowerCase();
-
-        $(img).data('status', status);
-        switch (status) {
-            case 1:
-                img.src = 'icons/' + baseFileName + '_selected.png';
-                break;
-            default:
-                // 0
-                img.src = 'icons/' + baseFileName + '.png';
-        }
-    }
-
-    function initializeInputs() {
-        const url = new URL(window.location.href);
-        for (const axis of inputFields.axes) {
-            const image = document.getElementById(axis);
-            let status = image.dataset.status;
-            if (url.searchParams.get(axis) === '1') {
-                updateImageInput(image, 1);
-            } else if (status === 'true') {
-                updateImageInput(image, 1)
-            } else if (status === 'false') {
-                updateImageInput(image, 0)
-            }
-        }
-
-        for (const inputField of inputFields.notAxes) {
-            if (url.searchParams.get(inputField) !== null) {
-                document.getElementById(inputField).value = url.searchParams.get(inputField);
-            }
-        }
-    }
-
-    initializeInputs();
-
-    function toggleImage(img) {
-        switch ($(img).data('status')) {
-            case 1:
-                updateImageInput(img, 0);
-                break;
-            default:
-                // 0
-                updateImageInput(img, 1);
-        }
-    }
-
-    let imageData = '';
-
-    function previewImage() {
-        const image = $('#image')[0];
-        if (image.files && image.files[0]) {
-            const reader = new FileReader();
-
-            reader.onload = function (file) {
-                $('#preview').attr('src', file.target.result);
-            };
-
-            reader.readAsDataURL(image.files[0]);
-            imageData = image.files[0];
-        }
-    }
-
-    previewImage();
-
-    let triDModelData = '';
-
-    function change3DModel() {
-        const triDModel = $('#3DModel')[0];
-        if (triDModel.files && triDModel.files[0]) {
-            const reader = new FileReader();
-            reader.readAsDataURL(triDModel.files[0]);
-            triDModelData = triDModel.files[0];
-        }
-    }
-
-    function showCompleted() {
-        document.querySelector('#complete').checked = {{complete}};
-    }
-
-    showCompleted();
-
-    function getParameters() {
-        return {
-            name: document.querySelector('#name').value,
-            comments: document.querySelector('#comments').value,
-            transmission: document.querySelector('#transmission').value,
-            inputR1: $('#inputR1').data('status'),
-            inputR2: $('#inputR2').data('status'),
-            inputR3: $('#inputR3').data('status'),
-            inputT1: $('#inputT1').data('status'),
-            inputT2: $('#inputT2').data('status'),
-            inputT3: $('#inputT3').data('status'),
-            outputR1: $('#outputR1').data('status'),
-            outputR2: $('#outputR2').data('status'),
-            outputR3: $('#outputR3').data('status'),
-            outputT1: $('#outputT1').data('status'),
-            outputT2: $('#outputT2').data('status'),
-            outputT3: $('#outputT3').data('status'),
-            image: imageData,
-            parametric_model: triDModelData,
-            link: document.querySelector('#link').value,
-            complete: document.querySelector('#complete').checked
-        };
-    }
-
-    function getFormData() {
-        const formData = new FormData();
-
-        const parameters = getParameters();
-        for (const key in parameters) {
-            formData.append(key, parameters[key]);
-        }
-
-        return formData;
-    }
-
-    function showErrors(errors) {
-        for (const inputField of inputFields.notAxes) {
-            $('#' + inputField + '-errors').text('');
-        }
-        $('#non_field_errors-errors').text('');
-
-        for (const inputField in errors) {
-            $('#' + inputField + '-errors').text(errors[inputField]);
-        }
-    }
-
-    function goBack() {
-        window.location.href = '/mechanism/{{id}}';
-    }
-
-    function isNewArticle() {
-        const urlParts = window.location.href.split('/').filter((string) => string);
-        return urlParts[2] === 'create'
-    }
-
-    function createOrUpdateArticle() {
-        let url = 'http://mechanism-browser:8000/api/mechanisms/{{id}}/';
-        let method = 'PATCH';
-        if (isNewArticle()) {
-            url = 'http://mechanism-browser:8000/api/mechanisms/create/';
-            method = 'POST';
-        }
-
-        $.ajax({
-            url: url,
-            type: method,
-            data: getFormData(),
-            processData: false,
-            contentType: false,
-            success: function (data, textStatus, jqXHR1) {
-                window.location.href = '/mechanism/' + data.id;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                showErrors(jqXHR.responseJSON);
-            }
-        })
-    }
-</script>
 </html>
