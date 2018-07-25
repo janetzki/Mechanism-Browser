@@ -261,3 +261,7 @@ html, body {
 .incomplete-table-row {
     display: none;
 }
+
+.data {
+    display: none;
+}
