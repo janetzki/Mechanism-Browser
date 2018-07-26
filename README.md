@@ -1,6 +1,7 @@
 # Mechanism Browser
 ![](screenshots/matrix_input.png)
-You do not know engineering terminology but want to 3D print machines? This project lets you browse and find mechanisms that you need by describing their functionality.
+The mechanism browser allows you to search for mechanisms without knowing their name or a textual description. Instead, you specify mechanical features (rotation and translation axes, and transmission) to find what you are looking for.
+Along with the search functionality, you can also add new mechanisms and edit existing articles.
 
 
 <br></br>
@@ -58,12 +59,12 @@ sudo npm start
 
 <br></br>
 ## Usage
-### Create a mechanism
-In your browser, open `http://mechainsm-browser:8000/admin`.
-At "Mechanisms", click "Add", fill in the form, and confirm.
+### Browse mechanisms
+In your browser, open `http://mechanism-browser/`.
 
-### List mechanisms
+### List mechanisms in the backend
 In your browser, open `http://mechanism-browser:8000/api/mechanisms`.
 
-### Search mechanisms
-In your browser, open `http://mechanism-browser/`.
+### Edit mechanism in the backend
+In your browser, open `http://mechainsm-browser:8000/admin`.
+At "Mechanisms", click "Add", fill in the form, and confirm.
