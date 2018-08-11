@@ -20,7 +20,7 @@ class Mechanism(models.Model):
     outputT1 = models.BooleanField()
     outputT2 = models.BooleanField()
     outputT3 = models.BooleanField()
-    transmission = models.IntegerField(blank=True, null=True)
+    transmission = models.TextField(blank=True)
     comments = models.TextField(blank=True)
     rating = AnonymousRatingField()
     complete = models.BooleanField(default=False)
