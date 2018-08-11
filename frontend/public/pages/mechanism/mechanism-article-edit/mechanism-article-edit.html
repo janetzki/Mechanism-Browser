@@ -17,7 +17,12 @@
 </head>
 
 <body>
-<div class="data" data-id="{{id}}" data-complete="{{complete}}"></div>
+<div class="data"
+     data-id="{{id}}"
+     data-transmission-inverted="{{transmission_inverted}}"
+     data-transmission-guessed="{{transmission_guessed}}"
+     data-complete="{{complete}}">
+</div>
 
 <div class="top-nav-wrapper">
     <div class="top-nav-fixed">
@@ -107,7 +112,25 @@
                     <th style="text-align: left">Transmission</th>
                     <td>
                         <input id="transmission" type="text" value="{{transmission}}" placeholder="enter number">
-                        <p id="transmission-errors" style="color:red"></p>
+                        <div id="transmission-errors" style="color:red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <div class="form-check">
+                            <input id="transmissionInverted" class="form-check-input" type="checkbox">
+                            <div style="display: inline-block">Inverted</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <div class="form-check">
+                            <input id="transmissionGuessed" class="form-check-input" type="checkbox">
+                            <p style="display: inline-block">Guessed</p>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -121,7 +144,7 @@
                     <th style="text-align: left">Status</th>
                     <td>
                         <div class="form-check">
-                            <input id="complete" class="form-check-input" type="checkbox" checked={{complete}}>
+                            <input id="complete" class="form-check-input" type="checkbox">
                             <p style="display: inline-block">Complete</p>
                         </div>
                     </td>

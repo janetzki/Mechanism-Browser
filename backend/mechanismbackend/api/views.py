@@ -18,6 +18,8 @@ class MechanismFilter(filters.FilterSet):
         fields = ['id',
                   'name',
                   'transmission',
+                  'transmission_inverted',
+                  'transmission_guessed',
                   'inputR1',
                   'inputR2',
                   'inputR3',
@@ -144,6 +146,8 @@ class MechanismMatrix(APIView):
         params.append(('outputT3', self.request.query_params.get('outputT3', None)))
         params.append(('complete', self.request.query_params.get('complete', None)))
         params.append(('transmission', self.request.query_params.get('transmission', None)))
+        params.append(('transmission_inverted', self.request.query_params.get('transmission_inverted', None)))
+        params.append(('transmission_guessed', self.request.query_params.get('transmission_guessed', None)))
         params.append(('name', self.request.query_params.get('name', None)))
         
         set_params = [p + '=' + v for (p, v) in params if (v is not None and p == 'transmission')]

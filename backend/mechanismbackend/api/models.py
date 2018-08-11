@@ -25,6 +25,8 @@ class Mechanism(models.Model):
         regex=r'^((\d+(-\d+)?)|(\d+:\d+(-\d+:\d+)?))$',
         message='Invalid format. Valid formats are: 1, 1-2, 1:2, 1:2-1:3'
     )])
+    transmission_inverted = models.BooleanField(default=False)
+    transmission_guessed = models.BooleanField(default=False)
     comments = models.TextField(blank=True)
     rating = AnonymousRatingField()
     complete = models.BooleanField(default=False)

@@ -17,7 +17,12 @@
 </head>
 
 <body>
-<div class="data" data-id="{{id}}" data-complete="{{complete}}"></div>
+<div class="data"
+     data-id="{{id}}"
+     data-transmission-inverted="{{transmission_inverted}}"
+     data-transmission-guessed="{{transmission_guessed}}"
+     data-complete="{{complete}}">
+</div>
 
 <div class="top-nav-wrapper">
     <div class="top-nav-fixed">
@@ -90,7 +95,8 @@
                 <tr>
                     <th style="text-align: left">Transmission</th>
                     <td>
-                        {{transmission}}
+                        <div style="display: inline-block">{{transmission}}</div>
+                        <div id="transmissionInfo" style="display: inline-block; margin-left: 1em; color: orange"></div>
                     </td>
                 </tr>
                 <tr>
@@ -109,7 +115,7 @@
                         <a id="3DModelLink" href="{{model}}">{{modelName}}</a>
                     </td>
                 </tr>
-                <tr class="incomplete-table-row">
+                <tr id="incompleteRow" class="hidden-table-row">
                     <th style="text-align: left">Status</th>
                     <td style="color: red">
                         Incomplete
