@@ -1,10 +1,11 @@
 # project files
 .idea/
-frontend/node_modules/
-frontend/package-lock.json
 
-# test code
-frontend/bootstraptut.html
+# external dependencies
+node_modules/
+
+# reference code
+bootstrap_tutorial.html
 
 # compiled code
 __pycache__/
@@ -15,18 +16,8 @@ db.sqlite3
 # mechanism images
 img/
 
-# virtualenvironment
+# virtual environment
 venv/
-
-# Chrome
-CChrome/
-start_chrome.sh
-
-# logs
-*.log
-
-# data
-data/
 
 # external code
 external/
