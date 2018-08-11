@@ -1,6 +1,6 @@
 # Mechanism Browser
 ![](screenshots/matrix_input.png)
-The mechanism browser allows you to search for mechanisms without knowing their name or a textual description. Instead, you specify mechanical features (rotation and translation axes, and transmission) to find what you are looking for.
+The mechanism browser allows you to search for mechanisms without knowing their name or a textual description. Instead, you specify mechanical features, like rotation and translation axes, to find what you seek.
 Along with the search functionality, you can also add new mechanisms and edit existing articles.
 
 
@@ -32,8 +32,8 @@ Navigate to `Mechanism-Browser/backend/mechanismbackend/`.
 Migrate the schemas:
 ```
 python manage.py migrate
-
 ```
+
 Create a superuser and choose a username and a password:
 ```
 python manage.py createsuperuser
