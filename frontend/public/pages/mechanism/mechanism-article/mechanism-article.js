@@ -1,17 +1,20 @@
 const axes = ["inputR1", "inputR2", "inputR3", "inputT1", "inputT2", "inputT3", "outputR1", "outputR2", "outputR3", "outputT1", "outputT2", "outputT3"];
-let id, complete;
+let id, transmissionInverted, transmissionGuessed, complete;
 
 
 window.onload = function () {
     initData();
     initImages();
     init3DModel();
-    initIncompleteNote();
+    initTransmissionInfo();
+    initIncompleteRow();
 };
 
 function initData() {
     const dataElement = $($(".data")[0]);
     id = dataElement.data("id");
+    transmissionInverted = dataElement.data("transmission-inverted");
+    transmissionGuessed = dataElement.data("transmission-guessed");
     complete = dataElement.data("complete");
 }
 
@@ -35,9 +38,27 @@ function init3DModel() {
     }
 }
 
-function initIncompleteNote() {
+function initTransmissionInfo() {
+    if (transmissionInverted || transmissionGuessed) {
+        const info = $("#transmissionInfo");
+        if (transmissionInverted) {
+            info.text("Inverted");
+        }
+        if (transmissionGuessed) {
+            let text = info.text();
+            if (text === "") {
+                text = "Guessed";
+            } else {
+                text += ", guessed";
+            }
+            info.text(text);
+        }
+    }
+}
+
+function initIncompleteRow() {
     if (!complete) {
-        document.getElementsByClassName("incomplete-table-row")[0].style.display = "table-row";
+        $("#incompleteRow").css("display", "table-row");
     }
 }
 

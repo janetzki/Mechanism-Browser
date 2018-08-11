@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from rest_framework.exceptions import ValidationError
 from updown.fields import AnonymousRatingField
@@ -20,7 +21,12 @@ class Mechanism(models.Model):
     outputT1 = models.BooleanField()
     outputT2 = models.BooleanField()
     outputT3 = models.BooleanField()
-    transmission = models.IntegerField(blank=True, null=True)
+    transmission = models.TextField(blank=True, validators=[RegexValidator(
+        regex=r'^((\d+( - \d+)?)|(\d+:\d+( - \d+:\d+)?))$',
+        message='Invalid format. Valid formats are: 1, 1 - 2, 1:2, 1:2 - 1:3'
+    )])
+    transmission_inverted = models.BooleanField(default=False)
+    transmission_guessed = models.BooleanField(default=False)
     comments = models.TextField(blank=True)
     rating = AnonymousRatingField()
     complete = models.BooleanField(default=False)

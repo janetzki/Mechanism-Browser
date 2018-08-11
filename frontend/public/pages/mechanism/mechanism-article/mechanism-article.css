@@ -18,13 +18,13 @@
     cursor: pointer;
 }
 
+.hidden-table-row {
+    display: none;
+}
+
 .image {
     max-width: 300px;
     max-height: 300px;
-}
-
-.incomplete-table-row {
-    display: none;
 }
 
 .rating {

@@ -37,6 +37,8 @@ class MechanismSerializer(serializers.ModelSerializer):
         details['input'] = input_dict
         details['output'] = output_dict
         details['transmission'] = instance.transmission
+        details['transmission_inverted'] = instance.transmission_inverted
+        details['transmission_guessed'] = instance.transmission_guessed
         details['comments'] = instance.comments
         details['created'] = instance.created
         details['rating_likes'] = instance.rating_likes

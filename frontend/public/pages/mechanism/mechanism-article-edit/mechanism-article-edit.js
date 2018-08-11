@@ -4,18 +4,21 @@ const inputFields = {
 };
 let imageData = "";
 let modelData = "";
-let id, complete;
+let id, transmissionInverted, transmissionGuessed, complete;
 
 window.onload = function () {
     initData();
     initInputs();
-    initCompletedNote();
+    initTransmissionInfo();
+    initCompletedRow();
     previewImage();
 };
 
 function initData() {
     const dataElement = $($(".data")[0]);
     id = dataElement.data("id");
+    transmissionInverted = dataElement.data("transmission-inverted");
+    transmissionGuessed = dataElement.data("transmission-guessed");
     complete = dataElement.data("complete");
 }
 
@@ -40,8 +43,19 @@ function initInputs() {
     }
 }
 
-function initCompletedNote() {
-    document.querySelector("#complete").checked = complete;
+function initTransmissionInfo() {
+    if (transmissionInverted) {
+        $("#transmissionInverted").prop("checked", " ");
+    }
+    if (transmissionGuessed) {
+        $("#transmissionGuessed").prop("checked", " ");
+    }
+}
+
+function initCompletedRow() {
+    if (complete) {
+        $("#complete").prop("checked", " ");
+    }
 }
 
 
@@ -97,9 +111,11 @@ function change3DModel() {
 
 function getParameters() {
     return {
-        name: document.querySelector("#name").value,
-        comments: document.querySelector("#comments").value,
-        transmission: document.querySelector("#transmission").value,
+        name: $("#name").val(),
+        comments: $("#comments").val(),
+        transmission: $("#transmission").val(),
+        transmission_inverted: $("#transmissionInverted").prop("checked"),
+        transmission_guessed: $("#transmissionGuessed").prop("checked"),
         inputR1: $("#inputR1").data("status"),
         inputR2: $("#inputR2").data("status"),
         inputR3: $("#inputR3").data("status"),
@@ -114,8 +130,8 @@ function getParameters() {
         outputT3: $("#outputT3").data("status"),
         image: imageData,
         parametric_model: modelData,
-        link: document.querySelector("#link").value,
-        complete: document.querySelector("#complete").checked
+        link: $("#link").val(),
+        complete: $("#complete").prop("checked")
     };
 }
 
