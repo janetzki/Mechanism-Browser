@@ -7,10 +7,9 @@ Along with the search functionality, you can also add new mechanisms and edit ex
 <br></br>
 ## Requirements
 Make sure that you have the following software with the corresponding versions installed:
-- Python >= 3.5.3
-- Pip >= 10.0.1
-- Node >= 8.11.3
-- NPM >= 5.6.0
+- [Python](https://www.python.org/downloads/) >= 3.5.3
+- [NPM](https://www.npmjs.com/get-npm) >= 5.6.0
+- [Virtualenv](https://virtualenv.pypa.io/en/stable/installation/) >= 15.2.0 (optional)
 
 The Mechanism Browser works best with Mozilla Firefox.
 
@@ -22,6 +21,7 @@ For any system that should have access to the Mechanism Browser, add the IP of t
 
 ### Setup the Django server
 Make sure that you are using Python 3.
+You might want to create a virtual environment to prevent interfering libraries.
 
 Install the requirements:
 ```
