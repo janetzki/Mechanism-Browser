@@ -88,9 +88,14 @@ function getParameters() {
         outputT2: $("#outputT2").data("status"),
         outputT3: $("#outputT3").data("status"),
         transmission: document.querySelector("#transmission-value").value,
+        transmission_inverted: document.querySelector("input[name='radioInverted']:checked").value,
+        transmission_guessed: document.querySelector("input[name='radioGuessed']:checked").value,
         name: document.querySelector("#name").value,
         complete: document.querySelector("input[name='radioMatrix']:checked").value
     };
+
+    console.log(parameters);
+    console.log(parameters.transmission_guessed);
 
     // read matrix
     if (document.getElementById("radioMatrixInput").checked) {
@@ -116,6 +121,10 @@ function getParameters() {
             delete parameters[key];
         }
     }
+
+
+    console.log(parameters);
+    console.log(parameters.transmission_guessed);
     return parameters;
 }
 
