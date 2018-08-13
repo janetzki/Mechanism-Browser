@@ -87,7 +87,7 @@ function getParameters() {
         outputT1: $("#outputT1").data("status"),
         outputT2: $("#outputT2").data("status"),
         outputT3: $("#outputT3").data("status"),
-        transmission: document.querySelector("#transmission").value,
+        transmission: document.querySelector("#transmission-value").value,
         name: document.querySelector("#name").value,
         complete: document.querySelector("input[name='radioMatrix']:checked").value
     };
