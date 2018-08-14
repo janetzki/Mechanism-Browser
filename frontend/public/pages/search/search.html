@@ -134,33 +134,89 @@
                 </table>
             </div>
             <div class="column">
-                <h3>More</h3>
+                <h3>Transmission</h3>
                 <div class="form-group">
-                    <label for="transmission">Transmission</label>
-                    <input type="number" class="form-control" id="transmission" placeholder="number">
+                    <label for="transmission-value">Value</label>
+                    <input type="search" class="form-control" id="transmission-value" placeholder="text">
                 </div>
+
+                <div class="form-group">
+                    <label for="transmission-inverted">Direction</label>
+                    <div id="transmission-inverted" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioInverted" autocomplete="off" value=false> Same
+                        </label>
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radioInverted" autocomplete="off" value="" checked> Any
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioInverted" autocomplete="off" value=true> Inverted
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transmission-guessed">Source</label>
+                    <div id="transmission-guessed" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioGuessed" autocomplete="off" value=false> Measured
+                        </label>
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radioGuessed" autocomplete="off" value="" checked> Any
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioGuessed" autocomplete="off" value=true> Guessed
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <h3>More</h3>
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="search" class="form-control" id="name" placeholder="text">
                 </div>
-                <div class="btn-group action vertical-button" data-toggle="buttons">
-                    <label class="btn btn-primary active" style="z-index: auto">
-                        <input type="radio" name="radioMatrix" autocomplete="off" value=true checked> Complete
-                    </label>
-                    <label class="btn btn-primary" style="z-index: auto">
-                        <input type="radio" name="radioMatrix" autocomplete="off" value=""> Any
-                    </label>
-                    <label class="btn btn-primary" style="z-index: auto">
-                        <input type="radio" name="radioMatrix" value=false autocomplete="off"> Incomplete
-                    </label>
+
+                <div class="form-group">
+                    <label for="3d-model">3D Model</label>
+                    <div id="3d-model" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radio3DModel" autocomplete="off" value=true> Set
+                        </label>
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radio3DModel" autocomplete="off" value="" checked> Any
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radio3DModel" autocomplete="off" value=false> Not set
+                        </label>
+                    </div>
                 </div>
-                <div class="btn-group action vertical-button" data-toggle="buttons">
-                    <label class="btn btn-primary active" style="z-index: auto">
-                        <input type="radio" name="radioInputMode" autocomplete="off" checked> Basic
-                    </label>
-                    <label class="btn btn-primary" style="z-index: auto">
-                        <input id="radioMatrixInput" type="radio" name="radioInputMode" autocomplete="off"> Matrix
-                    </label>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <div id="status" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radioMatrix" autocomplete="off" value=true checked> Complete
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioMatrix" autocomplete="off" value=""> Any
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioMatrix" autocomplete="off" value=false> Incomplete
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="view">View</label>
+                    <div id="view" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radioInputMode" autocomplete="off" checked> Basic
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input id="radioMatrixInput" type="radio" name="radioInputMode" autocomplete="off"> Matrix
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="column">

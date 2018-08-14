@@ -12,6 +12,7 @@ from django.db.utils import IntegrityError
 
 class MechanismFilter(filters.FilterSet):
     name = filters.CharFilter(name='name', lookup_expr='icontains')
+    parametric_model = filters.BooleanFilter(method='parametric_model_defined')
 
     class Meta:
         model = Mechanism
@@ -32,7 +33,15 @@ class MechanismFilter(filters.FilterSet):
                   'outputT1',
                   'outputT2',
                   'outputT3',
+                  'parametric_model',
                   'complete']
+
+    def parametric_model_defined(self, queryset, name, defined):
+        # https://django-filter.readthedocs.io/en/master/ref/filters.html
+        if defined:
+            return queryset.exclude(parametric_model='')
+        else:
+            return queryset.filter(parametric_model='')
 
 
 class MechanismList(generics.ListAPIView):
@@ -109,24 +118,25 @@ class MechanismMatrix(APIView):
                 for i in range(1, 4):
                     i = str(i)
                     for output in ['R', 'T']:
-                            for o in range(1, 4):
-                                o = str(o)
+                        for o in range(1, 4):
+                            o = str(o)
 
-                                cursor.execute('select input' + input + i + ', output' + output + o + ', Count(*) from api_mechanism ' +
-                                               predicate + ' group by input' + input + i + ', output' + output + o)
-                                rows = cursor.fetchall()
+                            cursor.execute(
+                                'select input' + input + i + ', output' + output + o + ', Count(*) from api_mechanism ' +
+                                predicate + ' group by input' + input + i + ', output' + output + o)
+                            rows = cursor.fetchall()
 
-                                num_mechanisms = 0
-                                for tpl in rows:
-                                    tpl_in, tpl_out, count = tpl
-                                    if tpl_in and tpl_out:
-                                        num_mechanisms = count
-                                        break
+                            num_mechanisms = 0
+                            for tpl in rows:
+                                tpl_in, tpl_out, count = tpl
+                                if tpl_in and tpl_out:
+                                    num_mechanisms = count
+                                    break
 
-                                matrix_inner.append(num_mechanisms)
-                                if output + o == 'T3':
-                                    matrix.append(matrix_inner)
-                                    matrix_inner = []
+                            matrix_inner.append(num_mechanisms)
+                            if output + o == 'T3':
+                                matrix.append(matrix_inner)
+                                matrix_inner = []
         return Response(matrix)
 
     def get_query_predicate(self):
@@ -149,7 +159,7 @@ class MechanismMatrix(APIView):
         params.append(('transmission_inverted', self.request.query_params.get('transmission_inverted', None)))
         params.append(('transmission_guessed', self.request.query_params.get('transmission_guessed', None)))
         params.append(('name', self.request.query_params.get('name', None)))
-        
+
         set_params = [p + '=' + v for (p, v) in params if (v is not None and p == 'transmission')]
         set_params += [p + " like '%" + v + "%'" for (p, v) in params if (v is not None and p == 'name')]
         set_params_true = [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true')]

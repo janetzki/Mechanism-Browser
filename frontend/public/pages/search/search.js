@@ -87,9 +87,12 @@ function getParameters() {
         outputT1: $("#outputT1").data("status"),
         outputT2: $("#outputT2").data("status"),
         outputT3: $("#outputT3").data("status"),
-        transmission: document.querySelector("#transmission").value,
-        name: document.querySelector("#name").value,
-        complete: document.querySelector("input[name='radioMatrix']:checked").value
+        transmission: $("#transmission-value").val(),
+        transmission_inverted: $("input[name='radioInverted']:checked").val(),
+        transmission_guessed: $("input[name='radioGuessed']:checked").val(),
+        name: $("#name").val(),
+        parametric_model: $("input[name='radio3DModel']:checked").val(),
+        complete: $("input[name='radioMatrix']:checked").val()
     };
 
     // read matrix
@@ -116,6 +119,7 @@ function getParameters() {
             delete parameters[key];
         }
     }
+
     return parameters;
 }
 
@@ -135,7 +139,7 @@ function showResultInfo(responseLength) {
         resultInfo.innerText = responseLength + " results";
         if (responseLength === 0) {
             const url = getUrlWithParameters("http://mechanism-browser/create/", getParameters());
-            resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '>create</a> it?';
+            resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
         }
     }
 }

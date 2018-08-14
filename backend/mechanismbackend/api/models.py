@@ -30,7 +30,7 @@ class Mechanism(models.Model):
     comments = models.TextField(blank=True)
     rating = AnonymousRatingField()
     complete = models.BooleanField(default=False)
-    parametric_model = models.FileField(upload_to='parametric_models', blank=True, null=True)
+    parametric_model = models.FileField(upload_to='parametric_models', blank=True)
 
     class Meta:
         ordering = ('-rating_likes', 'rating_dislikes')  # sort descending by likes, then ascending by dislikes
