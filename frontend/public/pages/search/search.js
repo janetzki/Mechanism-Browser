@@ -91,11 +91,9 @@ function getParameters() {
         transmission_inverted: document.querySelector("input[name='radioInverted']:checked").value,
         transmission_guessed: document.querySelector("input[name='radioGuessed']:checked").value,
         name: document.querySelector("#name").value,
+        parametric_model: document.querySelector("input[name='radio3DModel']:checked").value,
         complete: document.querySelector("input[name='radioMatrix']:checked").value
     };
-
-    console.log(parameters);
-    console.log(parameters.transmission_guessed);
 
     // read matrix
     if (document.getElementById("radioMatrixInput").checked) {
@@ -122,9 +120,6 @@ function getParameters() {
         }
     }
 
-
-    console.log(parameters);
-    console.log(parameters.transmission_guessed);
     return parameters;
 }
 
