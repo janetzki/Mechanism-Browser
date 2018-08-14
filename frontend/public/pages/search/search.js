@@ -139,7 +139,7 @@ function showResultInfo(responseLength) {
         resultInfo.innerText = responseLength + " results";
         if (responseLength === 0) {
             const url = getUrlWithParameters("http://mechanism-browser/create/", getParameters());
-            resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '>create</a> it?';
+            resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
         }
     }
 }
