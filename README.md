@@ -1,6 +1,6 @@
 # Mechanism Browser
 ![](screenshots/matrix_input.png)
-The mechanism browser allows you to search for mechanisms without knowing their name or a textual description. Instead, you specify mechanical features, like rotation and translation axes, to find what you seek.
+The mechanism browser allows searching for mechanisms without knowing their name or a textual description. Instead, you specify mechanical features, like rotation and translation axes, to find what you seek.
 Along with the search functionality, you can also add new mechanisms and edit existing articles.
 
 
