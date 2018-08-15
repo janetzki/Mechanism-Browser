@@ -34,7 +34,7 @@ function changeFileExtension(fileName, newExtension, expectedOldExtension) {
         fileExtension = fileName.substring(lastDotIndex + 1);
     }
     if (expectedOldExtension !== undefined && expectedOldExtension !== fileExtension) {
-        console.warn("Expected file extension '" + expectedOldExtension + "' does not equal actual extension '" + fileExtension);
+        console.warn("Expected file extension '" + expectedOldExtension + "' does not equal actual extension '" + fileExtension + "'");
     }
 
     return baseName + "." + newExtension;
