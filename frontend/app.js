@@ -34,7 +34,8 @@ function changeFileExtension(fileName, newExtension, expectedOldExtension) {
         fileExtension = fileName.substring(lastDotIndex + 1);
     }
     if (expectedOldExtension !== undefined && expectedOldExtension !== fileExtension) {
-        console.warn("Expected file extension '" + expectedOldExtension + "' does not equal actual extension '" + fileExtension + "'");
+        console.warn("WARN: Expected file extension '" + expectedOldExtension + "' does not equal actual extension '" + fileExtension + "'");
+        console.warn("WARN: for '" + fileName + "'");
     }
 
     return baseName + "." + newExtension;
@@ -121,7 +122,7 @@ function convertScadToJscad(res, response, data) {
                 console.error(stdErr);
                 return;
             }
-            console.log("Done\n");
+            console.log("Done: " + jscadFileName + " created\n");
         });
     }
 }
@@ -131,7 +132,7 @@ const io = require("socket.io").listen(8080); // initiate socket.io server
 io.sockets.on("connection", function (socket) {
     socket.on("convert", function (id) {
         socket.emit("received");
-        console.log("Convert 3D model of mechanism #" + id + " from scad to jscad...");
+        console.log("\nConvert 3D model of mechanism #" + id + " from scad to jscad...");
         getMechanism(id, undefined, convertScadToJscad);
     });
 });
