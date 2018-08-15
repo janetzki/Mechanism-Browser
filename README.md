@@ -7,6 +7,8 @@ Along with the search functionality, you can also add new mechanisms and edit ex
 <br></br>
 ## Requirements
 Make sure that you have the following software with the corresponding versions installed:
+- [OpenJSCAD CLI](https://github.com/jscad/OpenJSCAD.org/tree/master/packages/cli)
+- [OpenSCAD](http://www.openscad.org/) >= 2015.03-2
 - [Python](https://www.python.org/downloads/) >= 3.5.3
 - [NPM](https://www.npmjs.com/get-npm) >= 5.6.0
 - [Virtualenv](https://virtualenv.pypa.io/en/stable/installation/) >= 15.2.0 (optional)
