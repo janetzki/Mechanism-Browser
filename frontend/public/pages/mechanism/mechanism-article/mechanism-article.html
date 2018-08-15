@@ -104,15 +104,15 @@
                     <td id="3DModelCell">
                         <div class="jscad-container" style="border: 0; padding: 0">
                             <div id="header">
-                                <div id="errordiv">hello</div>
+                                <div id="errordiv" style="color:orange">The 3D model is being converted for display. This may take a couple of minutes.</div>
                             </div>
                             <div oncontextmenu="return false;" id="viewerContext"
-                                 design-url="{{parametric_model}}"></div>
+                                 design-url="{{jscadModel}}"></div>
                             <div id="tail" style="display: none;">
                                 <div id="statusdiv"></div>
                             </div>
                         </div>
-                        <a id="3DModelLink" href="{{model}}">{{modelName}}</a>
+                        <a id="3DModelLink" href="{{parametric_model}}">{{modelName}}</a>
                     </td>
                 </tr>
                 <tr id="incompleteRow" class="hidden-table-row">
