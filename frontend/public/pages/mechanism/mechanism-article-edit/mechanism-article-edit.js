@@ -166,6 +166,14 @@ function isNewArticle() {
     return urlParts[2] === "create"
 }
 
+function startConversionAndGoBack(id) {
+    const socket = io.connect("http://mechanism-browser:8080");
+    socket.emit("convert", id);
+    socket.on("received", function () {
+        window.location.href = "/mechanism/" + id;
+    });
+}
+
 function createOrUpdateArticle() {
     let url = "http://mechanism-browser:8000/api/mechanisms/" + id + "/";
     let method = "PATCH";
@@ -181,7 +189,7 @@ function createOrUpdateArticle() {
         processData: false,
         contentType: false,
         success: function (data, textStatus, jqXHR1) {
-            window.location.href = "/mechanism/" + data.id;
+            startConversionAndGoBack(data.id);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showErrors(jqXHR.responseJSON);
