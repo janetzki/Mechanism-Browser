@@ -73,6 +73,10 @@ function toggleImage(img) {
     updateMatrix();
 }
 
+function isUndefinedOrBlank(value) {
+    return value === undefined || value === "";
+}
+
 function getParameters() {
     const parameters = {
         inputR1: $("#inputR1").data("status"),
@@ -102,10 +106,10 @@ function getParameters() {
                 const inputAxis = "input" + mapNumberToAxis(y);
                 const outputAxis = "output" + mapNumberToAxis(x);
                 if (selectedMatrixCells[y][x]) {
-                    if (parameters[inputAxis] === undefined) {
+                    if (isUndefinedOrBlank(parameters[inputAxis])) {
                         parameters[inputAxis] = true;
                     }
-                    if (parameters[outputAxis] === undefined) {
+                    if (isUndefinedOrBlank(parameters[outputAxis])) {
                         parameters[outputAxis] = true;
                     }
                 }
@@ -115,7 +119,7 @@ function getParameters() {
 
     // remove undefined parameters
     for (const key of Object.keys(parameters)) {
-        if (parameters[key] === undefined || parameters[key] === "") {
+        if (isUndefinedOrBlank(parameters[key])) {
             delete parameters[key];
         }
     }
