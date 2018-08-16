@@ -18,6 +18,12 @@
     cursor: pointer;
 }
 
+.multiline {
+    word-wrap: break-word;
+    white-space: -moz-pre-wrap;
+    white-space: pre-wrap;
+}
+
 .hidden-table-row {
     display: none;
 }

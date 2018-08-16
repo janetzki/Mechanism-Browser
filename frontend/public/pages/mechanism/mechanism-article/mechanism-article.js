@@ -30,11 +30,8 @@ function initImages() {
 }
 
 function init3DModel() {
-    const cell = $("#3DModelCell");
-    const link = $("#3DModelLink");
-    if (link.text() === "") {
-        link.hide();
-        cell.text("none");
+    if ($("#3DModelLink").text() === "") {
+        $(".model").hide();
     }
 }
 

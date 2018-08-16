@@ -48,9 +48,19 @@
                        value="{{name}}">
                 <p id="name-errors" style="color:red"></p>
             </div>
-            <textarea id="comments" class="comments form-control" placeholder="enter comments"
-                      rows="20">{{comments}}</textarea>
-            <p id="comments-errors" style="color:red"></p>
+
+            <div class="page-left">
+                <textarea id="comments" class="form-control" placeholder="enter description"
+                          rows="20">{{comments}}</textarea>
+                <p id="comments-errors" style="color:red"></p>
+
+                <div class="model">
+                    <h2>3D Model</h2>
+                    <input id="3DModel" type="file" onchange="change3DModel()">
+                    <p id="parametric_model-errors" style="color:red"></p>
+                </div>
+            </div>
+
             <table class="infobox">
                 <tr>
                     <td style="text-align: center" colspan="2">
@@ -134,13 +144,6 @@
                             <input id="transmissionGuessed" class="form-check-input" type="checkbox">
                             <p style="display: inline-block">Guessed</p>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th style="text-align: left">3D model</th>
-                    <td>
-                        <input id="3DModel" type="file" onchange="change3DModel()">
-                        <p id="parametric_model-errors" style="color:red"></p>
                     </td>
                 </tr>
                 <tr>
