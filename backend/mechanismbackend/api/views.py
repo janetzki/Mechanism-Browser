@@ -163,9 +163,11 @@ class MechanismMatrix(APIView):
 
         set_params = [p + '="' + v + '"' for (p, v) in params if (v is not None and p == 'transmission')]
         set_params += [p + " like '%" + v + "%'" for (p, v) in params if (v is not None and p == 'name')]
-        set_params_true = [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true')]
-        set_params_false = [p + '=0' for (p, v) in params if (v is not None and v.lower() == 'false')]
-        set_params += set_params_true + set_params_false
+        set_params += [p + '<>""' for (p, v) in params if (v is not None and v.lower() == 'true' and p == 'parametric_model')]
+        set_params += [p + '=""' for (p, v) in params if (v is not None and v.lower() == 'false' and p == 'parametric_model')]
+        set_params += [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true' and p != 'parametric_model')]
+        set_params += [p + '=0' for (p, v) in params if (v is not None and v.lower() == 'false' and p != 'parametric_model')]
+
         joined = ' and '.join(set_params)
         if joined != '':
             joined = 'where ' + joined
