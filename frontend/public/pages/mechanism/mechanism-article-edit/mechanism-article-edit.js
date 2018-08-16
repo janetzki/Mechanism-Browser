@@ -11,6 +11,7 @@ window.onload = function () {
     initInputs();
     initTransmissionInfo();
     initCompletedRow();
+    initDeleteButton();
     previewImage();
 };
 
@@ -55,6 +56,12 @@ function initTransmissionInfo() {
 function initCompletedRow() {
     if (complete) {
         $("#complete").prop("checked", " ");
+    }
+}
+
+function initDeleteButton() {
+    if (!isNewArticle()) {
+        $("#delete").show();
     }
 }
 
