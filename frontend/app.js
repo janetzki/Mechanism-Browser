@@ -1,13 +1,15 @@
 const cons = require("consolidate");
 const exec = require("child_process").exec;
 const express = require("express");
-const path = require("path");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 const app = express();
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname + "/public"));
+app.use("/bootstrap", express.static(__dirname + "/node_modules/bootstrap/dist/"));
+app.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist/"));
+app.use("/socket.io", express.static(__dirname + "/node_modules/socket.io-client/dist/"));
 app.engine("html", cons.mustache);
-app.set("views", path.join(__dirname + "/public"));
+app.set("views", __dirname + "/public");
 app.set("view engine", "html");
 
 
