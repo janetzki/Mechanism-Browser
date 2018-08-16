@@ -92,7 +92,7 @@ function previewImage() {
         const reader = new FileReader();
 
         reader.onload = function (file) {
-            $("#preview").attr("src", file.target.result);
+            $("#preview").prop("src", file.target.result);
         };
 
         reader.readAsDataURL(image.files[0]);
