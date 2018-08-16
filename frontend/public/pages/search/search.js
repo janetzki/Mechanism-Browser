@@ -1,4 +1,5 @@
-const selectedMatrixCells = [...Array(6)].map(x => Array(6).fill(false));
+const matrixSize = 6;
+const selectedMatrixCells = [...Array(matrixSize)].map(x => Array(matrixSize).fill(false));
 const axes = ["R1", "R2", "R3", "T1", "T2", "T3"];
 
 
@@ -16,9 +17,10 @@ function initMatrix() {
 }
 
 function initInputEvents() {
-    $("img[class=icon], input[type=number], input[type=search], input[type=radio]").on("change keydown paste input click", function () {
-        searchMechanism();
-        updateMatrix()
+    $("img[class=icon], input[type=number], input[type=search], input[type=radio]").on(
+        "change keydown paste input click", function () {
+        searchMechanisms();
+        updateMatrix();
     });
 
     $("input[name='radioInputMode']").on("change click", function () {
@@ -40,6 +42,7 @@ function setImage(img, baseFileName, value, tristate = false) {
         .replace("input", "")
         .replace("output", "")
         .toLowerCase();
+
     switch (value) {
         case true:
             img.src = "icons/" + baseFileName + "_selected.png";
@@ -51,8 +54,7 @@ function setImage(img, baseFileName, value, tristate = false) {
                 img.src = "icons/" + baseFileName + ".png";
             }
             break;
-        default:
-            // ""
+        default: // ""
             img.src = "icons/" + baseFileName + ".png";
     }
 }
@@ -65,8 +67,7 @@ function toggleImage(img) {
         case false:
             $(img).data("status", "");
             break;
-        default:
-            // ""
+        default: // ""
             $(img).data("status", true);
     }
     setImage(img, img.id, $(img).data("status"), true);
@@ -75,6 +76,31 @@ function toggleImage(img) {
 
 function isUndefinedOrBlank(value) {
     return value === undefined || value === "";
+}
+
+function readMatrix(parameters) {
+    for (let x = 0; x < matrixSize; x++) {
+        for (let y = 0; y < matrixSize; y++) {
+            const inputAxis = "input" + mapNumberToAxis(y);
+            const outputAxis = "output" + mapNumberToAxis(x);
+            if (selectedMatrixCells[y][x]) {
+                if (isUndefinedOrBlank(parameters[inputAxis])) {
+                    parameters[inputAxis] = true;
+                }
+                if (isUndefinedOrBlank(parameters[outputAxis])) {
+                    parameters[outputAxis] = true;
+                }
+            }
+        }
+    }
+}
+
+function removeUndefinedParameters(parameters) {
+    for (const key of Object.keys(parameters)) {
+        if (isUndefinedOrBlank(parameters[key])) {
+            delete parameters[key];
+        }
+    }
 }
 
 function getParameters() {
@@ -96,34 +122,13 @@ function getParameters() {
         transmission_guessed: $("input[name='radioGuessed']:checked").val(),
         name: $("#name").val(),
         parametric_model: $("input[name='radio3DModel']:checked").val(),
-        complete: $("input[name='radioMatrix']:checked").val()
+        complete: $("input[name='radioComplete']:checked").val()
     };
 
-    // read matrix
     if (document.getElementById("radioMatrixInput").checked) {
-        for (let x = 0; x < 6; x++) {
-            for (let y = 0; y < 6; y++) {
-                const inputAxis = "input" + mapNumberToAxis(y);
-                const outputAxis = "output" + mapNumberToAxis(x);
-                if (selectedMatrixCells[y][x]) {
-                    if (isUndefinedOrBlank(parameters[inputAxis])) {
-                        parameters[inputAxis] = true;
-                    }
-                    if (isUndefinedOrBlank(parameters[outputAxis])) {
-                        parameters[outputAxis] = true;
-                    }
-                }
-            }
-        }
+        readMatrix(parameters);
     }
-
-    // remove undefined parameters
-    for (const key of Object.keys(parameters)) {
-        if (isUndefinedOrBlank(parameters[key])) {
-            delete parameters[key];
-        }
-    }
-
+    removeUndefinedParameters(parameters);
     return parameters;
 }
 
@@ -133,6 +138,19 @@ function getUrlWithParameters(baseUrl, parameters) {
         url.searchParams.append(key, parameters[key]);
     }
     return url;
+}
+
+function setButtonStatus(button, activated, searchUrl) {
+    button.disabled = !activated;
+    button.setAttribute("onclick", "searchMechanisms('" + searchUrl + "')");
+}
+
+function adjustBackground() {
+    const documentHeight = document.getElementsByTagName("html")[0].offsetHeight;
+    document.getElementById("content").style.display = "";
+    document.getElementsByTagName("body")[0].style.height = "auto";
+    document.getElementsByClassName("background")[0].style.minHeight = documentHeight + "px";
+    document.getElementsByClassName("background-overlay")[0].style.minHeight = documentHeight + "px";
 }
 
 function showResultInfo(responseLength) {
@@ -148,11 +166,6 @@ function showResultInfo(responseLength) {
     }
 }
 
-function setButtonStatus(button, activated, searchUrl) {
-    button.disabled = !activated;
-    button.setAttribute("onclick", "searchMechanism('" + searchUrl + "')");
-}
-
 function showPageInfo(first, previous, current, next, last) {
     const pageInfo = document.getElementById("pageInfo");
     if (first === last) {
@@ -166,19 +179,10 @@ function showPageInfo(first, previous, current, next, last) {
     const currentPage = current;
 
     document.getElementById("pageInfoText").textContent = "{0}/{1}".format(currentPage, pages);
-
     setButtonStatus(document.getElementById("firstPage"), currentPage !== 1, first);
     setButtonStatus(document.getElementById("previousPage"), previous !== null, previous);
     setButtonStatus(document.getElementById("nextPage"), next !== null, next);
     setButtonStatus(document.getElementById("lastPage"), currentPage !== pages, last);
-}
-
-function updateStyles() {
-    const documentHeight = document.getElementsByTagName("html")[0].offsetHeight;
-    document.getElementById("content").style.display = "";
-    document.getElementsByTagName("body")[0].style.height = "auto";
-    document.getElementsByClassName("background")[0].style.minHeight = documentHeight + "px";
-    document.getElementsByClassName("background-overlay")[0].style.minHeight = documentHeight + "px";
 }
 
 function showRating(entry, rating) {
@@ -202,7 +206,39 @@ function showParameters(entry, mechanism) {
     }
 }
 
-function searchMechanism(baseUrl = "http://mechanism-browser:8000/api/mechanisms/") {
+function appendSearchResult(mechanism, list) {
+    // https://stackoverflow.com/a/41447500/8816968
+    const entry = document.querySelector("div[data-type='template']").cloneNode(true);
+    entry.querySelector("a.mechanism-name").textContent = mechanism.name;
+    entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
+    entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
+    entry.querySelector("img").src = mechanism.image.substring(1);
+    entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
+    showRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
+    showParameters(entry, mechanism);
+    if (mechanism.complete === false) {
+        entry.querySelector("p.mechanism-incomplete-note").style.display = "inline-block";
+    }
+    entry.querySelector("a.mechanism-link").textContent = mechanism.link;
+    entry.querySelector("a.mechanism-link").href = mechanism.link;
+    entry.style.display = "block";
+    list.appendChild(entry);
+}
+
+function listSearchResults(searchResults) {
+    adjustBackground();
+    showResultInfo(searchResults.count);
+    showPageInfo(searchResults.first, searchResults.previous, searchResults.current, searchResults.next, searchResults.last);
+
+    const list = document.getElementById("mechanisms");
+    list.innerHTML = "";
+    for (const mechanismId of Object.keys(searchResults.results)) {
+        const mechanism = searchResults.results[mechanismId];
+        appendSearchResult(mechanism, list);
+    }
+}
+
+function searchMechanisms(baseUrl = "http://mechanism-browser:8000/api/mechanisms/") {
     const xhttp = new XMLHttpRequest();
     const url = getUrlWithParameters(baseUrl, getParameters());
     xhttp.open("GET", url.toString());
@@ -211,31 +247,7 @@ function searchMechanism(baseUrl = "http://mechanism-browser:8000/api/mechanisms
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             const response = JSON.parse(xhttp.responseText);
-            updateStyles();
-            showResultInfo(response.count);
-            showPageInfo(response.first, response.previous, response.current, response.next, response.last);
-            const list = document.getElementById("mechanisms");
-            list.innerHTML = "";
-
-            // https://stackoverflow.com/a/41447500/8816968
-            for (const mechanismId of Object.keys(response.results)) {
-                const mechanism = response.results[mechanismId];
-                const entry = document.querySelector("div[data-type='template']").cloneNode(true);
-                entry.querySelector("a.mechanism-name").textContent = mechanism.name;
-                entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
-                entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
-                entry.querySelector("img").src = mechanism.image.substring(1);
-                entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
-                showRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
-                showParameters(entry, mechanism);
-                if (mechanism.complete === false) {
-                    entry.querySelector("p.mechanism-incomplete-note").style.display = "inline-block";
-                }
-                entry.querySelector("a.mechanism-link").textContent = mechanism.link;
-                entry.querySelector("a.mechanism-link").href = mechanism.link;
-                entry.style.display = "block";
-                list.appendChild(entry);
-            }
+            listSearchResults(response);
         }
     };
 }
@@ -293,10 +305,10 @@ function mapNumberToAxis(number) {
     }
 }
 
-function matrixClickHandler(e) {
+function matrixClickHandler(event) {
     // https://stackoverflow.com/a/12193346/8816968
-    e = e || window.event;
-    const cell = e.target || e.srcElement;
+    event = event || window.event;
+    const cell = event.target || event.srcElement;
     const inputIndex = cell.parentNode.rowIndex - 2;
     const outputIndex = cell.cellIndex - 1;
     if (inputIndex >= 0 && outputIndex >= 0) {
@@ -307,7 +319,7 @@ function matrixClickHandler(e) {
             cell.style.border = "0px";
         }
         updateMatrix();
-        searchMechanism("http://mechanism-browser:8000/api/mechanisms/");
+        searchMechanisms("http://mechanism-browser:8000/api/mechanisms/");
     }
 }
 
@@ -319,12 +331,12 @@ function isDark(r, g, b) {
     return (r + g + b) / 3 < 130;
 }
 
-function setCellColor(cell, value, minValue, maxValue) {
+function setCellColor(cell, value, maxValue) {
     let colorValue = 0.0;
     if (value > maxValue) {
         colorValue = 1.0;
     } else if (value > 0) {
-        colorValue = Math.min(0.9, Math.max(0.1, (value - minValue) / (maxValue - minValue)));
+        colorValue = Math.min(0.9, Math.max(0.1, value / maxValue));
     }
 
     const startR = 180;
@@ -345,6 +357,28 @@ function setCellColor(cell, value, minValue, maxValue) {
     }
 }
 
+function findMaxValueInMatrix(matrix) {
+    let maxValue = 0;
+    for (let x = 0; x < matrixSize; x++) {
+        for (let y = 0; y < matrixSize; y++) {
+            maxValue = Math.max(maxValue, matrix[y][x]);
+        }
+    }
+    return maxValue;
+}
+
+function setMatrixCells(matrix, minValue, maxValue) {
+    for (let x = 0; x < matrixSize; x++) {
+        for (let y = 0; y < matrixSize; y++) {
+            const column = x + 1;
+            const row = y + 2;
+            const cell = $("#matrix")[0].rows[row].cells[column];
+            cell.textContent = matrix[y][x];
+            setCellColor(cell, matrix[y][x], minValue, maxValue)
+        }
+    }
+}
+
 function updateMatrix() {
     const xhttp = new XMLHttpRequest();
     const url = getUrlWithParameters("http://mechanism-browser:8000/api/mechanisms/matrix/", getParameters());
@@ -353,25 +387,9 @@ function updateMatrix() {
     xhttp.send();
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            const response = JSON.parse(xhttp.responseText);
-            let minValue = 0;
-            let maxValue = 0;
-            for (let y = 0; y < 6; y++) {
-                for (let x = 0; x < 6; x++) {
-                    minValue = Math.min(minValue, response[y][x]);
-                    maxValue = Math.max(maxValue, response[y][x]);
-                }
-            }
-
-            for (let y = 0; y < 6; y++) {
-                for (let x = 0; x < 6; x++) {
-                    const row = y + 2;
-                    const column = x + 1;
-                    const cell = $("#matrix")[0].rows[row].cells[column];
-                    cell.textContent = response[y][x];
-                    setCellColor(cell, response[y][x], minValue, maxValue)
-                }
-            }
+            const matrix = JSON.parse(xhttp.responseText);
+            const maxValue = findMaxValueInMatrix(matrix);
+            setMatrixCells(matrix, maxValue);
         }
     };
 }
