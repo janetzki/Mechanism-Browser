@@ -115,3 +115,7 @@ function highlight(element, on) {
         $(element).css("borderBottomColor", "gray");
     }
 }
+
+function goBack() {
+    window.location.href = "/";
+}
