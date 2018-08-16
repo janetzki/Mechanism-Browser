@@ -7,6 +7,7 @@ const app = express();
 app.use(express.static(__dirname + "/public"));
 app.use("/bootstrap", express.static(__dirname + "/node_modules/bootstrap/dist/"));
 app.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist/"));
+app.use("/jscad", express.static(__dirname + "/external/OpenJSCAD.org/packages/web/"));
 app.use("/socket.io", express.static(__dirname + "/node_modules/socket.io-client/dist/"));
 app.engine("html", cons.mustache);
 app.set("views", __dirname + "/public");

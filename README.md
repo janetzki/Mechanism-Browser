@@ -53,6 +53,13 @@ Install the dependencies:
 sudo npm install
 ```
 
+Setup OpenJSCAD:
+```
+git clone https://github.com/jscad/OpenJSCAD.org.git
+mkdir external
+mv OpenJSCA.org/ external/
+```
+
 Then, start the Node.js server:
 ```
 sudo npm start
