@@ -157,20 +157,24 @@ function showErrors(errors) {
     }
 }
 
-function goBack() {
-    window.location.href = "/mechanism/" + id;
-}
-
 function isNewArticle() {
     const urlParts = window.location.href.split("/").filter((string) => string);
     return urlParts[2] === "create"
+}
+
+function goBack(toMainPage = false) {
+    if (toMainPage || isNewArticle()) {
+        window.location.href = "/";
+    } else {
+        window.location.href = "/mechanism/" + id;
+    }
 }
 
 function startConversionAndGoBack(id) {
     const socket = io.connect("http://mechanism-browser:8080");
     socket.emit("convert", id);
     socket.on("received", function () {
-        window.location.href = "/mechanism/" + id;
+        goBack();
     });
 }
 
@@ -193,6 +197,19 @@ function createOrUpdateArticle() {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showErrors(jqXHR.responseJSON);
+        }
+    })
+}
+
+function deleteArticle() {
+    $.ajax({
+        url: "http://mechanism-browser:8000/api/mechanisms/" + id + "/",
+        type: "DELETE",
+        success: function (data, textStatus, jqXHR1) {
+            goBack(true);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error(textStatus);
         }
     })
 }

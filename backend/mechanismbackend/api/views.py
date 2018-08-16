@@ -89,7 +89,7 @@ class MechanismList(generics.ListAPIView):
         return mechanisms
 
 
-class MechanismRetrieveUpdate(generics.RetrieveUpdateAPIView):
+class MechanismRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Mechanism.objects.all()
     serializer_class = MechanismSerializer
 
