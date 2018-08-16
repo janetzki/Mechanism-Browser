@@ -121,9 +121,9 @@ class MechanismMatrix(APIView):
                         for o in range(1, 4):
                             o = str(o)
 
-                            cursor.execute(
-                                'select input' + input + i + ', output' + output + o + ', Count(*) from api_mechanism ' +
-                                predicate + ' group by input' + input + i + ', output' + output + o)
+                            query = 'SELECT input' + input + i + ', output' + output + o +\
+                                ', COUNT(*) FROM api_mechanism ' + predicate + ' group by input' + input + i + ', output' + output + o
+                            cursor.execute(query)
                             rows = cursor.fetchall()
 
                             num_mechanisms = 0
@@ -170,5 +170,5 @@ class MechanismMatrix(APIView):
 
         joined = ' and '.join(set_params)
         if joined != '':
-            joined = 'where ' + joined
+            joined = 'WHERE ' + joined
         return joined
