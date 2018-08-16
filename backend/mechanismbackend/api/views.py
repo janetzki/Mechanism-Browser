@@ -158,9 +158,10 @@ class MechanismMatrix(APIView):
         params.append(('transmission', self.request.query_params.get('transmission', None)))
         params.append(('transmission_inverted', self.request.query_params.get('transmission_inverted', None)))
         params.append(('transmission_guessed', self.request.query_params.get('transmission_guessed', None)))
+        params.append(('parametric_model', self.request.query_params.get('parametric_model', None)))
         params.append(('name', self.request.query_params.get('name', None)))
 
-        set_params = [p + '=' + v for (p, v) in params if (v is not None and p == 'transmission')]
+        set_params = [p + '="' + v + '"' for (p, v) in params if (v is not None and p == 'transmission')]
         set_params += [p + " like '%" + v + "%'" for (p, v) in params if (v is not None and p == 'name')]
         set_params_true = [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true')]
         set_params_false = [p + '=0' for (p, v) in params if (v is not None and v.lower() == 'false')]
