@@ -93,7 +93,7 @@ function initSocketIoServer(port) {
     io.sockets.on("connection", function (socket) {
         socket.on("convert", function (id) {
             socket.emit("received");
-            retrieveMechanism(id, undefined, convertScadToJscad);
+            retrieveMechanism(id, undefined, convertToJscad);
         });
     });
 }
@@ -122,6 +122,34 @@ function retrieveMechanism(id, response, callback, callbackData) {
 }
 
 /**
+ * Retrieves the extension of a file
+ *
+ * @param {string} fileName The full name of the file (may include path)
+ * @returns {string} The file extension
+ */
+function getFileExtension(fileName) {
+    const lastDotIndex = fileName.lastIndexOf(".");
+    if (lastDotIndex === -1) {
+        return "";
+    }
+    return fileName.substring(lastDotIndex + 1);
+}
+
+/**
+ * Removes the file extension from a file name
+ *
+ * @param {string} fileName The full name of the file (may include path)
+ * @returns {string} The name of the file without its file extension
+ */
+function removeFileExtension(fileName) {
+    const lastDotIndex = fileName.lastIndexOf(".");
+    if (lastDotIndex === -1) {
+        return fileName;
+    }
+    return fileName.substring(0, lastDotIndex);
+}
+
+/**
  * Changes the extension of a file
  *
  * @param {string} fileName The name or path of the file
@@ -130,21 +158,13 @@ function retrieveMechanism(id, response, callback, callbackData) {
  * @returns {string} The new file name
  */
 function changeFileExtension(fileName, newExtension, expectedOldExtension = undefined) {
-    let baseName = fileName;
-    let fileExtension = "";
-    const lastDotIndex = fileName.lastIndexOf(".");
-
-    if (lastDotIndex > -1) {
-        baseName = fileName.substring(0, lastDotIndex);
-        fileExtension = fileName.substring(lastDotIndex + 1);
-    }
+    const fileExtension = getFileExtension(fileName);
     if (expectedOldExtension !== undefined &amp;&amp; expectedOldExtension !== fileExtension) {
         console.warn("WARN: Expected file extension '" + expectedOldExtension +
-            "' does not equal actual extension '" + fileExtension + "'");
-        console.warn("WARN: for '" + fileName + "'");
+            "' does not equal actual extension '" + fileExtension + "'\n" +
+            "      for '" + fileName + "'");
     }
-
-    return baseName + "." + newExtension;
+    return removeFileExtension(fileName) + "." + newExtension;
 }
 
 /**
@@ -158,7 +178,7 @@ function renderPage(response, mechanism, page) {
     if (mechanism !== undefined) {
         mechanism.rating = mechanism.rating_likes - mechanism.rating_dislikes;
         if (mechanism.parametric_model !== undefined) {
-            mechanism.jscadModel = changeFileExtension(mechanism.parametric_model, "jscad", "scad");
+            mechanism.jscadModel = changeFileExtension(mechanism.parametric_model, "jscad");
             mechanism.modelName = mechanism.parametric_model.substring(
                 mechanism.parametric_model.lastIndexOf("/") + 1,
                 mechanism.parametric_model.length);
@@ -204,33 +224,58 @@ function renderEmptyPage(response, page) {
 }
 
 /**
- * Converts a scad file to a jscad file
+ * Constructs a command for converting a 3D model file to .jscad
  *
- * @param {object} response The reponse to the browser
+ * @param {string} modelName The path to the 3D model
+ * @param {boolean} convertFromScad A value whether the conversion takes a .scad or an .stl file
+ * @returns {string} The command for the conversion
+ */
+function buildCommandForConversion(modelName, convertFromScad) {
+    modelName = "src/public" + modelName;
+    let stlFileName = modelName;
+    let command = "";
+    if (convertFromScad) {
+        stlFileName = changeFileExtension(modelName, "stl", "scad");
+        command = "openscad " + modelName + " -o " + stlFileName + " &amp;&amp; ";
+    }
+    const jscadFileName = changeFileExtension(stlFileName, "jscad", "stl");
+    command += "openjscad " + stlFileName + " -o " + jscadFileName;
+    if (convertFromScad) {
+        command += " &amp;&amp; rm " + stlFileName;
+    }
+    return command;
+}
+
+/**
+ * Converts a .scad or .stl file to a .jscad file
+ *
+ * @param {object} response The response to the browser
  * @param {object} mechanism The mechanism
  */
-function convertScadToJscad(response, mechanism) {
-    if (mechanism.parametric_model !== undefined) {
-        console.log("\nConvert 3D model of '" + mechanism.name + "' from scad to jscad...");
-
-        mechanism.parametric_model = "public" + mechanism.parametric_model;
-        const stlFileName = changeFileExtension(mechanism.parametric_model, "stl", "scad");
-        const jscadFileName = changeFileExtension(stlFileName, "jscad", "stl");
-
-        let command = "openscad " + mechanism.parametric_model + " -o " + stlFileName +
-            " &amp;&amp; openjscad " + stlFileName + " -o " + jscadFileName +
-            " &amp;&amp; rm " + stlFileName;
-        console.log(command);
-
-        exec(command, function (error, stdOut, stdErr) {
-            if (error) {
-                console.error(error);
-                console.error(stdErr);
-                return;
-            }
-            console.log("Done: " + jscadFileName + " created\n");
-        });
+function convertToJscad(response, mechanism) {
+    if (mechanism.parametric_model === undefined) {
+        return;
     }
+    const fileExtension = getFileExtension(mechanism.parametric_model);
+    if (fileExtension === "jscad") {
+        return;
+    } else if (fileExtension !== "scad" &amp;&amp; fileExtension !== "stl") {
+        console.error("ERROR: File extension " + fileExtension + " not supported. Supported extensions for 3D models " +
+            "are: .scad, .stl, .jscad.");
+        return;
+    }
+
+    console.log("\nConverting 3D model of '" + mechanism.name + "' from ." + fileExtension + " to .jscad...");
+    const command = buildCommandForConversion(mechanism.parametric_model, fileExtension === "scad");
+    console.log(command);
+    exec(command, function (error, stdOut, stdErr) {
+        if (error) {
+            console.error(error);
+            console.error(stdErr);
+            return;
+        }
+        console.log("Done: .jscad 3D model for '" + mechanism.name + "' created\n");
+    });
 }
 </code></pre>
         </article>
@@ -248,7 +293,7 @@ function convertScadToJscad(response, mechanism) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Aug 17 2018 14:58:26 GMT+0200 (W. Europe Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Aug 17 2018 16:44:14 GMT+0200 (W. Europe Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
