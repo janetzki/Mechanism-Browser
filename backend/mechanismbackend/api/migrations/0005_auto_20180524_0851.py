@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='mechanism',
             name='image',
-            field=models.ImageField(default='img/mechanism-placeholder.png', upload_to='img/'),
+            field=models.ImageField(default='mechanism-placeholder.png', upload_to='img/'),
         ),
     ]
