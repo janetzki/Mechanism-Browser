@@ -1,4 +1,4 @@
-/**
+/*
  * @file The node server. Provides web pages and converts 3D model files.
  * @author Jonathan Janetzki
  */
@@ -38,10 +38,10 @@ function initExpressApp(port) {
         res.sendFile(__dirname + "/public/pages/search/search.html");
     });
     app.get("/mechanism/:id", function (req, res) {
-        getMechanism(req.params["id"], res, renderPage, "pages/mechanism/mechanism-article/mechanism-article");
+        retrieveMechanism(req.params["id"], res, renderPage, "pages/mechanism/mechanism-article/mechanism-article");
     });
     app.get("/mechanism/:id/edit", function (req, res) {
-        getMechanism(req.params["id"], res, renderPage, "pages/mechanism/mechanism-article-edit/mechanism-article-edit");
+        retrieveMechanism(req.params["id"], res, renderPage, "pages/mechanism/mechanism-article-edit/mechanism-article-edit");
     });
     app.get("/create", function (req, res) {
         renderEmptyPage(res, "pages/mechanism/mechanism-article-edit/mechanism-article-edit");
@@ -63,7 +63,7 @@ function initSocketIoServer(port) {
     io.sockets.on("connection", function (socket) {
         socket.on("convert", function (id) {
             socket.emit("received");
-            getMechanism(id, undefined, convertScadToJscad);
+            retrieveMechanism(id, undefined, convertScadToJscad);
         });
     });
 }
@@ -71,14 +71,14 @@ function initSocketIoServer(port) {
 
 
 /**
- * Gets a mechanism from the Django backend by its id
+ * Retrieves a mechanism from the Django backend by its id
  *
  * @param {number} id The id of the mechanism
  * @param {object} response The response to the browser
- * @param {function} callback The function to call with the retrieved mechanism
+ * @param {function} callback The function to call with the mechanism
  * @param {object} callbackData Additional data that is passed to the callback function
  */
-function getMechanism(id, response, callback, callbackData) {
+function retrieveMechanism(id, response, callback, callbackData) {
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", "http://mechanism-browser:8000/api/mechanisms/?id=" + id);
     xhttp.setRequestHeader("Content-type", "application/json");
