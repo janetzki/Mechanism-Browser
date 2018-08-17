@@ -28,8 +28,8 @@ function setAxisIcon(image, status) {
 
     $(image).data("status", status);
     if (status) {
-        image.src = "icons/" + baseFileName + "_selected.png";
+        image.src = "/media/icons/" + baseFileName + "_selected.png";
     } else {
-        image.src = "icons/" + baseFileName + ".png";
+        image.src = "/media/icons/" + baseFileName + ".png";
     }
 }

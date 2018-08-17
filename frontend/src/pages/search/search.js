@@ -97,17 +97,17 @@ function setImage(image, filePrefix, status, triState = false) {
 
     switch (status) {
         case true:
-            image.src = "icons/" + filePrefix + "_selected.png";
+            image.src = "/media/icons/" + filePrefix + "_selected.png";
             break;
         case false:
             if (triState) {
-                image.src = "icons/" + filePrefix + "_deselected.png";
+                image.src = "/media/icons/" + filePrefix + "_deselected.png";
             } else {
-                image.src = "icons/" + filePrefix + ".png";
+                image.src = "media/icons/" + filePrefix + ".png";
             }
             break;
         default: // ""
-            image.src = "icons/" + filePrefix + ".png";
+            image.src = "media/icons/" + filePrefix + ".png";
     }
 }
 
