@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <title>{{name}}</title>
+
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <script src="/jscad/dist/min.js"></script>
+    <script src="/pages/mechanism/mechanism.js"></script>
+    <script src="/pages/mechanism/mechanism-article/mechanism-article.js"></script>
+
+    <link rel="stylesheet" href="/jscad/min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/pages/styles.css">
+    <link rel="stylesheet" href="/pages/mechanism/mechanism.css">
+    <link rel="stylesheet" href="/pages/mechanism/mechanism-article/mechanism-article.css">
+</head>
+
+<body>
+<div class="data"
+     data-id="{{id}}"
+     data-transmission-inverted="{{transmission_inverted}}"
+     data-transmission-guessed="{{transmission_guessed}}"
+     data-complete="{{complete}}">
+</div>
+
+<div class="top-nav-wrapper">
+    <div class="top-nav-fixed">
+        <div class="container">
+            <a href="http://mechanism-browser">
+                <img src="/media/logo%20vertical%20white.svg">
+            </a>
+            <a href="https://github.com/janetzki/Mechanism-Browser">
+                <img src="/media/octocat%20white.svg">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-for-footer background">
+    <div class="background-overlay">
+        <section class="content content-box container">
+            <div>
+                <div class="voting-arrows">
+                    <a class="arrow-up" onclick="vote(true)" onmousedown="highlight(this, true)"
+                       onmouseup="highlight(this, false)"></a>
+                    <div class="rating" align="center">{{rating}}</div>
+                    <a class="arrow-down" onclick="vote(false)" onmousedown="highlight(this, true)"
+                       onmouseup="highlight(this, false)"></a>
+                </div>
+                <div class="page-header" style="display: inline-block; margin-top: 0">
+                    <h1 class="page-header-title">{{name}}</h1>
+                </div>
+            </div>
+
+            <div class="page-left">
+                <div class="multiline">{{comments}}</div>
+
+                <div class="model">
+                    <h2>3D Model</h2>
+                    <div class="jscad-container" style="border: 0; padding: 0">
+                        <div id="header">
+                            <div id="errordiv" style="color:orange">
+                                The 3D model is being converted for display. This may take a couple of minutes.
+                            </div>
+                        </div>
+                        <div oncontextmenu="return false;" id="viewerContext" design-url="{{jscadModel}}"></div>
+                        <div id="tail" style="display: none;">
+                            <div id="statusdiv"></div>
+                        </div>
+                    </div>
+                    <a id="3DModelLink" href="{{parametric_model}}">{{modelName}}</a>
+                </div>
+            </div>
+
+            <table class="infobox">
+                <tr>
+                    <td style="text-align: center" colspan="2">
+                        <img class="image" src="{{image}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align: center; background: lightblue;">
+                        Parameters
+                    </th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Link</th>
+                    <td style="word-break: break-all">
+                        <a href="{{link}}">{{link}}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Input</th>
+                    <td class="axes-line">
+                        <img class="small-icon" id="inputR1" data-status={{input.r1}}>
+                        <img class="small-icon" id="inputR2" data-status={{input.r2}}>
+                        <img class="small-icon" id="inputR3" data-status={{input.r3}}>
+                        <img class="small-icon" id="inputT1" data-status={{input.t1}}>
+                        <img class="small-icon" id="inputT2" data-status={{input.t2}}>
+                        <img class="small-icon" id="inputT3" data-status={{input.t3}}>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Output</th>
+                    <td class="axes-line">
+                        <img class="small-icon" id="outputR1" data-status={{output.r1}}>
+                        <img class="small-icon" id="outputR2" data-status={{output.r2}}>
+                        <img class="small-icon" id="outputR3" data-status={{output.r3}}>
+                        <img class="small-icon" id="outputT1" data-status={{output.t1}}>
+                        <img class="small-icon" id="outputT2" data-status={{output.t2}}>
+                        <img class="small-icon" id="outputT3" data-status={{output.t3}}>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Transmission</th>
+                    <td>
+                        <div style="display: inline-block">{{transmission}}</div>
+                        <div id="transmissionInfo" style="display: inline-block; margin-left: 1em; color: orange"></div>
+                    </td>
+                </tr>
+                <tr id="incompleteRow" class="hidden-table-row">
+                    <th style="text-align: left">Status</th>
+                    <td style="color: red">
+                        Incomplete
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+
+    <footer class="bottom-nav">
+        <p class="bottom-nav-text">Created: {{created}}</p>
+
+        <div style="float: right">
+            <button class="btn btn-default btn-sm footer-button"
+                    onclick="goBack()">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                Back
+            </button>
+            <button class="btn btn-default btn-sm footer-button"
+                    onclick="editArticle()"
+                    style="float: right">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                Edit
+            </button>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

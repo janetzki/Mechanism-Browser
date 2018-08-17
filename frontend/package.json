@@ -1,10 +1,14 @@
 {
   "scripts": {
-    "start": "node app.js"
+    "start": "node src/app.js",
+    "docs:build": "jsdoc -r src -d docs"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "consolidate": "^0.15.1",
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "jsdoc": "^3.5.5",
     "mustache": "^2.3.1",
     "socket.io": "^2.1.1",
     "xmlhttprequest": "^1.8.0"

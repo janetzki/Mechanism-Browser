@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <title>{{name}}</title>
+
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/pages/mechanism/mechanism.js"></script>
+    <script src="/pages/mechanism/mechanism-article-edit/mechanism-article-edit.js"></script>
+
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/pages/styles.css">
+    <link rel="stylesheet" href="/pages/mechanism/mechanism.css">
+    <link rel="stylesheet" href="/pages/mechanism/mechanism-article-edit/mechanism-article-edit.css">
+</head>
+
+<body>
+<div class="data"
+     data-id="{{id}}"
+     data-transmission-inverted="{{transmission_inverted}}"
+     data-transmission-guessed="{{transmission_guessed}}"
+     data-complete="{{complete}}">
+</div>
+
+<div class="top-nav-wrapper">
+    <div class="top-nav-fixed">
+        <div class="container">
+            <a href="http://mechanism-browser">
+                <img src="/media/logo%20vertical%20white.svg">
+            </a>
+            <a href="https://github.com/janetzki/Mechanism-Browser">
+                <img src="/media/octocat%20white.svg">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-for-footer background">
+    <div class="background-overlay">
+        <div class="content content-box container">
+            <div class="page-header" style="margin-top: 0">
+                <input id="name" type="text" class="form-control large-input page-header-title" placeholder="enter text"
+                       value="{{name}}">
+                <p id="name-errors" style="color:red"></p>
+            </div>
+
+            <div class="page-left">
+                <textarea id="comments" class="form-control" placeholder="enter description"
+                          rows="20">{{comments}}</textarea>
+                <p id="comments-errors" style="color:red"></p>
+
+                <div class="model">
+                    <h2>3D Model</h2>
+                    <input id="3DModel" type="file" onchange="change3DModel()">
+                    <p id="parametric_model-errors" style="color:red"></p>
+                </div>
+            </div>
+
+            <table class="infobox">
+                <tr>
+                    <td style="text-align: center" colspan="2">
+                        <img id="preview" class="upload-preview-image" src="{{image}}">
+                        <input id="image" type="file" onchange="previewImage()">
+                        <p id="image-errors" style="color:red"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align: center; background: lightblue;">
+                        Parameters
+                    </th>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Link</th>
+                    <td style="word-break: break-all">
+                        <input id="link" type="text" value="{{link}}" placeholder="enter link">
+                        <p id="link-errors" style="color:red"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Input</th>
+                    <td class="axes-line">
+                        <img class="small-icon" id="inputR1" data-status="{{input.r1}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="inputR2" data-status="{{input.r2}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="inputR3" data-status="{{input.r3}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="inputT1" data-status="{{input.t1}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="inputT2" data-status="{{input.t2}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="inputT3" data-status="{{input.t3}}"
+                             onclick=toggleAxisIcon(this)>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Output</th>
+                    <td class="axes-line">
+                        <img class="small-icon" id="outputR1" data-status="{{output.r1}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="outputR2" data-status="{{output.r2}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="outputR3" data-status="{{output.r3}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="outputT1" data-status="{{output.t1}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="outputT2" data-status="{{output.t2}}"
+                             onclick=toggleAxisIcon(this)>
+                        <img class="small-icon" id="outputT3" data-status="{{output.t3}}"
+                             onclick=toggleAxisIcon(this)>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <p id="non_field_errors-errors" class="error-message"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Transmission</th>
+                    <td>
+                        <input id="transmission" type="text" value="{{transmission}}" placeholder="enter number">
+                        <div id="transmission-errors" style="color:red"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <div class="form-check">
+                            <input id="transmissionInverted" class="form-check-input" type="checkbox">
+                            <div style="display: inline-block">Inverted</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <div class="form-check">
+                            <input id="transmissionGuessed" class="form-check-input" type="checkbox">
+                            <p style="display: inline-block">Guessed</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left">Status</th>
+                    <td>
+                        <div class="form-check">
+                            <input id="complete" class="form-check-input" type="checkbox">
+                            <p style="display: inline-block">Complete</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <footer class="bottom-nav">
+        <p class="bottom-nav-text">Created: {{created}}</p>
+
+        <div style="float: right">
+            <button class="btn btn-default btn-sm footer-button"
+                    onclick="goBack()">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                Back
+            </button>
+            <button class="btn btn-success btn-sm footer-button"
+                    onclick="createOrUpdateArticle()">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                Save
+            </button>
+            <button id="delete"
+                    class="btn btn-danger btn-sm footer-button"
+                    onclick="deleteArticle()"
+                    style="display: none;">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                Delete
+            </button>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

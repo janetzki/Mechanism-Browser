@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+    <title>Mechanism Browser</title>
+
+    <script src="/jquery/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    <script src="/pages/search/search.js"></script>
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/pages/styles.css">
+    <link rel="stylesheet" href="/pages/search/search.css">
+</head>
+
+<body>
+<div class="top-nav-wrapper">
+    <div class="top-nav-fixed">
+        <div class="container">
+            <a href="https://github.com/janetzki/Mechanism-Browser">
+                <img src="/media/octocat%20white.svg">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="top-nav">
+    <div class="container">
+        <div class="page-header">
+            <img src="/media/logo%20horizontal.svg">
+            <div style="display: none">
+                Gear icon made by
+                <a href="http://www.freepik.com" title="Freepik">Freepik</a> from
+                <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
+                <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">
+                    CC 3.0 BY</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div id="inputColumn" class="column">
+                <h3>Input</h3>
+                <img class="icon" id="inputR1" src="icons/r1.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="inputR2" src="icons/r2.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="inputR3" src="icons/r3.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="inputT1" src="icons/t1.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="inputT2" src="icons/t2.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="inputT3" src="icons/t3.png" onclick=toggleAxisIcon(this)>
+            </div>
+            <div id="outputColumn" class="column">
+                <h3>Output</h3>
+                <img class="icon" id="outputR1" src="icons/r1.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="outputR2" src="icons/r2.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="outputR3" src="icons/r3.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="outputT1" src="icons/t1.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="outputT2" src="icons/t2.png" onclick=toggleAxisIcon(this)>
+                <img class="icon" id="outputT3" src="icons/t3.png" onclick=toggleAxisIcon(this)>
+            </div>
+            <div id="matrixColumn" class="column" style="display: none">
+                <table id="matrix" class="matrix" cellpadding="10" align="center">
+                    <tr>
+                        <td></td>
+                        <td colspan="6" align="center"><h3>Output</h3></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Input</h3></td>
+                        <td id="outputR1Placeholder"></td>
+                        <td id="outputR2Placeholder"></td>
+                        <td id="outputR3Placeholder"></td>
+                        <td id="outputT1Placeholder"></td>
+                        <td id="outputT2Placeholder"></td>
+                        <td id="outputT3Placeholder"></td>
+                    </tr>
+                    <tr>
+                        <td id="inputR1Placeholder"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td id="inputR2Placeholder"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td id="inputR3Placeholder"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td id="inputT1Placeholder"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td id="inputT2Placeholder"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td id="inputT3Placeholder"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="column">
+                <h3>Transmission</h3>
+                <div class="form-group">
+                    <label for="transmission-value">Value</label>
+                    <input type="search" class="form-control" id="transmission-value" placeholder="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="transmission-inverted">Direction</label>
+                    <div id="transmission-inverted" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioInverted" autocomplete="off" value=false> Same
+                        </label>
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radioInverted" autocomplete="off" value="" checked> Any
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioInverted" autocomplete="off" value=true> Inverted
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transmission-guessed">Source</label>
+                    <div id="transmission-guessed" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioGuessed" autocomplete="off" value=false> Measured
+                        </label>
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radioGuessed" autocomplete="off" value="" checked> Any
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioGuessed" autocomplete="off" value=true> Guessed
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <h3>More</h3>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="search" class="form-control" id="name" placeholder="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="3d-model">3D Model</label>
+                    <div id="3d-model" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radio3DModel" autocomplete="off" value=true> Set
+                        </label>
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radio3DModel" autocomplete="off" value="" checked> Any
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radio3DModel" autocomplete="off" value=false> Not set
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <div id="status" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radioComplete" autocomplete="off" value=true checked> Complete
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioComplete" autocomplete="off" value=""> Any
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input type="radio" name="radioComplete" autocomplete="off" value=false> Incomplete
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="view">View</label>
+                    <div id="view" class="btn-group action vertical-button" data-toggle="buttons">
+                        <label class="btn btn-primary active" style="z-index: auto">
+                            <input type="radio" name="radioInputMode" autocomplete="off" checked> Basic
+                        </label>
+                        <label class="btn btn-primary" style="z-index: auto">
+                            <input id="radioMatrixInput" type="radio" name="radioInputMode" autocomplete="off"> Matrix
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <h3>Actions</h3>
+                <button class="btn btn-success action vertical-button"
+                        type="button"
+                        onclick="searchMechanisms()">
+                    Search
+                </button>
+                <button class="btn btn-success action vertical-button"
+                        type="button"
+                        onclick="createMechanism()">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-for-footer background">
+    <div class="background-overlay">
+        <div id="content" class="content content-box container" style="display: none;">
+            <div class="search-result" data-type="template" style="display: none">
+                <a class="mechanism-name">
+                    title
+                </a>
+                <div>
+                    <a class="image-link">
+                        <img class="preview-image" align="left">
+                    </a>
+                    <a class="mechanism-link">
+                        link
+                    </a>
+                    <div class="mechanism-description">
+                        description
+                    </div>
+                    <div class="mechanism-parameters">
+                        <div class="axes-line">
+                            <img class="small-icon inputR1">
+                            <img class="small-icon inputR2">
+                            <img class="small-icon inputR3">
+                            <img class="small-icon inputT1">
+                            <img class="small-icon inputT2">
+                            <img class="small-icon inputT3">
+                        </div>
+                        <div class="axes-line">
+                            <img class="small-icon outputR1">
+                            <img class="small-icon outputR2">
+                            <img class="small-icon outputR3">
+                            <img class="small-icon outputT1">
+                            <img class="small-icon outputT2">
+                            <img class="small-icon outputT3">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mechanism-rating">
+                            rating
+                        </div>
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        <p class="mechanism-incomplete-note">incomplete</p>
+                    </div>
+                </div>
+            </div>
+            <div class="content container" style="padding-bottom: 3em">
+                <p id="resultInfo" style="color: gray"></p>
+                <div id="mechanisms">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="pageInfo" class="bottom-nav" style="display: none; position: fixed">
+        <div align="center">
+            <button id="firstPage"
+                    class="btn btn-default action"
+                    type="button">
+                <<
+            </button>
+            <button id="previousPage"
+                    class="btn btn-default action"
+                    type="button">
+                <
+            </button>
+            <p id="pageInfoText" class="bottom-nav-text"></p>
+            <button id="nextPage"
+                    class="btn btn-default action"
+                    type="button">
+                >
+            </button>
+            <button id="lastPage"
+                    class="btn btn-default action"
+                    type="button">
+                >>
+            </button>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

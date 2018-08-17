@@ -89,7 +89,7 @@ class MechanismList(generics.ListAPIView):
         return mechanisms
 
 
-class MechanismRetrieveUpdate(generics.RetrieveUpdateAPIView):
+class MechanismRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Mechanism.objects.all()
     serializer_class = MechanismSerializer
 
@@ -121,9 +121,9 @@ class MechanismMatrix(APIView):
                         for o in range(1, 4):
                             o = str(o)
 
-                            cursor.execute(
-                                'select input' + input + i + ', output' + output + o + ', Count(*) from api_mechanism ' +
-                                predicate + ' group by input' + input + i + ', output' + output + o)
+                            query = 'SELECT input' + input + i + ', output' + output + o +\
+                                ', COUNT(*) FROM api_mechanism ' + predicate + ' group by input' + input + i + ', output' + output + o
+                            cursor.execute(query)
                             rows = cursor.fetchall()
 
                             num_mechanisms = 0
@@ -158,14 +158,17 @@ class MechanismMatrix(APIView):
         params.append(('transmission', self.request.query_params.get('transmission', None)))
         params.append(('transmission_inverted', self.request.query_params.get('transmission_inverted', None)))
         params.append(('transmission_guessed', self.request.query_params.get('transmission_guessed', None)))
+        params.append(('parametric_model', self.request.query_params.get('parametric_model', None)))
         params.append(('name', self.request.query_params.get('name', None)))
 
-        set_params = [p + '=' + v for (p, v) in params if (v is not None and p == 'transmission')]
+        set_params = [p + '="' + v + '"' for (p, v) in params if (v is not None and p == 'transmission')]
         set_params += [p + " like '%" + v + "%'" for (p, v) in params if (v is not None and p == 'name')]
-        set_params_true = [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true')]
-        set_params_false = [p + '=0' for (p, v) in params if (v is not None and v.lower() == 'false')]
-        set_params += set_params_true + set_params_false
+        set_params += [p + '<>""' for (p, v) in params if (v is not None and v.lower() == 'true' and p == 'parametric_model')]
+        set_params += [p + '=""' for (p, v) in params if (v is not None and v.lower() == 'false' and p == 'parametric_model')]
+        set_params += [p + '=1' for (p, v) in params if (v is not None and v.lower() == 'true' and p != 'parametric_model')]
+        set_params += [p + '=0' for (p, v) in params if (v is not None and v.lower() == 'false' and p != 'parametric_model')]
+
         joined = ' and '.join(set_params)
         if joined != '':
-            joined = 'where ' + joined
+            joined = 'WHERE ' + joined
         return joined
