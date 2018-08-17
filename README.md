@@ -77,3 +77,12 @@ In your browser, open `http://mechanism-browser:8000/api/mechanisms`.
 ### Edit mechanism in the backend
 In your browser, open `http://mechainsm-browser:8000/admin`.
 At "Mechanisms", click "Add", fill in the form, and confirm.
+
+
+<br></br>
+## Documentation
+The documentation of the frontend can be found at `frontend/docs/index.html`. To re-generate it, run:
+```
+cd frontend
+npm run docs:build
+```

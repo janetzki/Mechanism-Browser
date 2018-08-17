@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "docs:build": "jsdoc -r src -d docs"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
