@@ -63,7 +63,6 @@ function initSocketIoServer(port) {
     io.sockets.on("connection", function (socket) {
         socket.on("convert", function (id) {
             socket.emit("received");
-            console.log("\nConvert 3D model of mechanism #" + id + " from scad to jscad...");
             getMechanism(id, undefined, convertScadToJscad);
         });
     });
@@ -182,6 +181,8 @@ function renderEmptyPage(response, page) {
  */
 function convertScadToJscad(response, mechanism) {
     if (mechanism.parametric_model !== undefined) {
+        console.log("\nConvert 3D model of '" + mechanism.name + "' from scad to jscad...");
+
         mechanism.parametric_model = "public" + mechanism.parametric_model;
         const stlFileName = changeFileExtension(mechanism.parametric_model, "stl", "scad");
         const jscadFileName = changeFileExtension(stlFileName, "jscad", "stl");
