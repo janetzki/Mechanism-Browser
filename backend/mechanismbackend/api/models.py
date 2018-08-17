@@ -50,8 +50,9 @@ class Mechanism(models.Model):
                 not self.outputR3 and
                 not self.outputT1 and
                 not self.outputT2 and
-                not self.outputT3):
-            raise ValidationError("Mechanism needs at least one input or output to be specified.")
+                not self.outputT3 and
+                self.complete):
+            raise ValidationError("A complete mechanism needs at least one specified in- or output axis.")
 
     def get_dissimilarity(self, other):
         axes_dissimilarity = self._get_axes_dissimilarity(other)
