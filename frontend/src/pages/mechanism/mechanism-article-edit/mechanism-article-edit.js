@@ -235,7 +235,11 @@ function createOrUpdateArticle() {
         contentType: false,
         success: function (data, textStatus, jqXHR1) {
             id = data.id;
-            startConversionAndGoBack();
+            if (modelData === "") {
+                goBack();
+            } else {
+                startConversionAndGoBack();
+            }
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showErrors(jqXHR.responseJSON);
