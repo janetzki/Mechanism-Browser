@@ -1,13 +1,23 @@
-const matrixSize = 6;
-const selectedMatrixCells = [...Array(matrixSize)].map(x => Array(matrixSize).fill(false));
+/*
+ * @file JS code for the search page
+ * @author Jonathan Janetzki
+ */
+
 const axes = ["R1", "R2", "R3", "T1", "T2", "T3"];
+const matrixSize = axes.length;
+const selectedMatrixCells = [...Array(matrixSize)].map(x => Array(matrixSize).fill(false));
 
-
+/**
+ * Initializes the matrix and the input events
+ */
 window.onload = function () {
     initMatrix();
     initInputEvents();
 };
 
+/**
+ * Initializes the matrix by setting events when clicking on its cells. Also fills the matrix with data.
+ */
 function initMatrix() {
     const cells = document.getElementsByTagName("td");
     for (let i = 0; i < cells.length; i++) {
@@ -16,6 +26,9 @@ function initMatrix() {
     updateMatrix();
 }
 
+/**
+ * Initializes events when interacting with the input buttons/images/forms
+ */
 function initInputEvents() {
     $("img[class=icon], input[type=number], input[type=search], input[type=radio]").on(
         "change keydown paste input click", function () {
@@ -29,6 +42,14 @@ function initInputEvents() {
 }
 
 
+/**
+ * Inserts arguments into a string at given placeholders
+ * @example
+ * // returns "3/10"
+ * "{0}/{1}".format(3, 10)
+ *
+ * @returns {string} The formatted string
+ */
 String.prototype.format = function () {
     let string = this;
     for (const i in arguments) {
@@ -37,52 +58,98 @@ String.prototype.format = function () {
     return string
 };
 
-function setImage(img, baseFileName, value, tristate = false) {
-    baseFileName = baseFileName
+/**
+ * Handles clicks on a matrix cell. See this [Stack Overflow post]{@link https://stackoverflow.com/a/12193346/8816968}.
+ *
+ * @param {object} event The click event
+ */
+function matrixClickHandler(event) {
+    event = event || window.event;
+    const cell = event.target || event.srcElement;
+    const inputIndex = cell.parentNode.rowIndex - 2;
+    const outputIndex = cell.cellIndex - 1;
+    if (inputIndex >= 0 && outputIndex >= 0) {
+        selectedMatrixCells[inputIndex][outputIndex] = !selectedMatrixCells[inputIndex][outputIndex];
+        if (selectedMatrixCells[inputIndex][outputIndex]) {
+            cell.style.border = "5px solid rgb(0, 162, 232)";
+        } else {
+            cell.style.border = "0px";
+        }
+        updateMatrix();
+        searchMechanisms("http://mechanism-browser:8000/api/mechanisms/");
+    }
+}
+
+/**
+ * Sets an image for an axis
+ *
+ * @param {object} image The image as a DOM object
+ * @param {string} filePrefix The prefix of image files for a specific axis
+ * @param {(boolean|string)} status The new status of this axis (true: set, false: not set, "": not specified)
+ * @param {boolean} triState A value that specifies whether the status parameter can be blank or not
+ */
+function setImage(image, filePrefix, status, triState = false) {
+    filePrefix = filePrefix
         .replace("input", "")
         .replace("output", "")
         .toLowerCase();
 
-    switch (value) {
+    switch (status) {
         case true:
-            img.src = "icons/" + baseFileName + "_selected.png";
+            image.src = "icons/" + filePrefix + "_selected.png";
             break;
         case false:
-            if (tristate) {
-                img.src = "icons/" + baseFileName + "_deselected.png";
+            if (triState) {
+                image.src = "icons/" + filePrefix + "_deselected.png";
             } else {
-                img.src = "icons/" + baseFileName + ".png";
+                image.src = "icons/" + filePrefix + ".png";
             }
             break;
         default: // ""
-            img.src = "icons/" + baseFileName + ".png";
+            image.src = "icons/" + filePrefix + ".png";
     }
 }
 
-function toggleImage(img) {
-    switch ($(img).data("status")) {
+/**
+ * Toggles an image of an axis between three states (set, not set, not specified)
+ *
+ * @param {object} image The image as a DOM object
+ */
+function toggleImage(image) {
+    switch ($(image).data("status")) {
         case true:
-            $(img).data("status", false);
+            $(image).data("status", false);
             break;
         case false:
-            $(img).data("status", "");
+            $(image).data("status", "");
             break;
         default: // ""
-            $(img).data("status", true);
+            $(image).data("status", true);
     }
-    setImage(img, img.id, $(img).data("status"), true);
+    setImage(image, image.id, $(image).data("status"), true);
     updateMatrix();
 }
 
+/**
+ * Tells whether a value is undefined or a blank string
+ *
+ * @param {(boolean|string)} value The value to be checked
+ * @returns {boolean}
+ */
 function isUndefinedOrBlank(value) {
     return value === undefined || value === "";
 }
 
+/**
+ * Fills the values of the matrix into a given dictionary
+ *
+ * @param {object} parameters A dictionary that holds search parameters
+ */
 function readMatrix(parameters) {
     for (let x = 0; x < matrixSize; x++) {
         for (let y = 0; y < matrixSize; y++) {
-            const inputAxis = "input" + mapNumberToAxis(y);
-            const outputAxis = "output" + mapNumberToAxis(x);
+            const inputAxis = "input" + axes[y];
+            const outputAxis = "output" + axes[x];
             if (selectedMatrixCells[y][x]) {
                 if (isUndefinedOrBlank(parameters[inputAxis])) {
                     parameters[inputAxis] = true;
@@ -95,6 +162,11 @@ function readMatrix(parameters) {
     }
 }
 
+/**
+ * Removes all parameters that are undefined or blank
+ *
+ * @param {object} parameters A dictionary that holds search parameters
+ */
 function removeUndefinedParameters(parameters) {
     for (const key of Object.keys(parameters)) {
         if (isUndefinedOrBlank(parameters[key])) {
@@ -103,6 +175,11 @@ function removeUndefinedParameters(parameters) {
     }
 }
 
+/**
+ * Reads the search parameters from the input buttons/images/forms and matrix
+ *
+ * @returns {object} The search parameters as a dictionary
+ */
 function getParameters() {
     const parameters = {
         inputR1: $("#inputR1").data("status"),
@@ -132,19 +209,36 @@ function getParameters() {
     return parameters;
 }
 
-function getUrlWithParameters(baseUrl, parameters) {
+/**
+ * Builds an URL with given search parameters
+ *
+ * @param {string} baseUrl The URL without parameters
+ * @param {object} parameters The search parameters as a dictionary
+ * @returns {string} The URL with parameters
+ */
+function buildUrlWithParameters(baseUrl, parameters) {
     let url = new URL(baseUrl);
     for (const key of Object.keys(parameters)) {
         url.searchParams.append(key, parameters[key]);
     }
-    return url;
+    return url.toString();
 }
 
+/**
+ * Sets properties of a button that links to page listing search results
+ *
+ * @param {object} button The button as a DOM object
+ * @param {boolean} activated A value that specifies whether the button can be clicked or not
+ * @param {string} searchUrl The URL that is requested when clicking the button
+ */
 function setButtonStatus(button, activated, searchUrl) {
     button.disabled = !activated;
     button.setAttribute("onclick", "searchMechanisms('" + searchUrl + "')");
 }
 
+/**
+ * Adjusts the size of the background when listing new search results
+ */
 function adjustBackground() {
     const documentHeight = document.getElementsByTagName("html")[0].offsetHeight;
     document.getElementById("content").style.display = "";
@@ -153,19 +247,33 @@ function adjustBackground() {
     document.getElementsByClassName("background-overlay")[0].style.minHeight = documentHeight + "px";
 }
 
-function showResultInfo(responseLength) {
+/**
+ * Shows how many mechanisms have been found or offer to create one if there are no search results
+ *
+ * @param {number} searchResults The number of search results
+ */
+function showResultInfo(searchResults) {
     const resultInfo = document.getElementById("resultInfo");
-    if (responseLength === 1) {
+    if (searchResults === 1) {
         resultInfo.innerText = "1 result";
     } else {
-        resultInfo.innerText = responseLength + " results";
-        if (responseLength === 0) {
-            const url = getUrlWithParameters("http://mechanism-browser/create/", getParameters());
+        resultInfo.innerText = searchResults + " results";
+        if (searchResults === 0) {
+            const url = buildUrlWithParameters("http://mechanism-browser/create/", getParameters());
             resultInfo.innerHTML = 'No results found. Do you want to <a href="' + url + '">create</a> it?';
         }
     }
 }
 
+/**
+ * Shows the indices of the search result pages if there is more than one
+ *
+ * @param {string} first The link to the first page
+ * @param {string} previous The link to the previous page
+ * @param {string} current The link to the current page
+ * @param {string} next The link to the next page
+ * @param {string} last The link to the last page
+ */
 function showPageInfo(first, previous, current, next, last) {
     const pageInfo = document.getElementById("pageInfo");
     if (first === last) {
@@ -185,6 +293,12 @@ function showPageInfo(first, previous, current, next, last) {
     setButtonStatus(document.getElementById("lastPage"), currentPage !== pages, last);
 }
 
+/**
+ * Shows the rating of a mechanism
+ *
+ * @param {object} entry A search result as a DOM object
+ * @param {number} rating The rating of the mechanism
+ */
 function showRating(entry, rating) {
     const star = entry.querySelector("span.glyphicon-star");
     entry.querySelector("div.mechanism-rating").textContent = rating;
@@ -197,7 +311,13 @@ function showRating(entry, rating) {
     }
 }
 
-function showParameters(entry, mechanism) {
+/**
+ * Shows the axes of a mechanism
+ *
+ * @param {object} entry A search result as a DOM object
+ * @param {object} mechanism The mechanism
+ */
+function showAxes(entry, mechanism) {
     for (const axis of axes) {
         const inputImage = entry.querySelector("img.input" + axis);
         const outputImage = entry.querySelector("img.output" + axis);
@@ -206,25 +326,48 @@ function showParameters(entry, mechanism) {
     }
 }
 
-function appendSearchResult(mechanism, list) {
-    // https://stackoverflow.com/a/41447500/8816968
-    const entry = document.querySelector("div[data-type='template']").cloneNode(true);
-    entry.querySelector("a.mechanism-name").textContent = mechanism.name;
-    entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
-    entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
-    entry.querySelector("img").src = mechanism.image.substring(1);
-    entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
-    showRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
-    showParameters(entry, mechanism);
-    if (mechanism.complete === false) {
+/**
+ * Show a note that a mechanism is not complete if it is not
+ *
+ * @param {object} entry A search result as a DOM object
+ * @param {boolean} complete A value whether the mechanism is complete or not
+ */
+function showCompleted(entry, complete) {
+    if (complete === false) {
         entry.querySelector("p.mechanism-incomplete-note").style.display = "inline-block";
     }
+}
+
+/**
+ * Appends a mechanism to the list of search results.
+ * See this [Stack Overflow post]{@tutorial https://stackoverflow.com/a/41447500/8816968}.
+ *
+ * @param {object} mechanism The mechanism
+ * @param {object} list The list of search results as a DOM object
+ */
+function appendSearchResult(mechanism, list) {
+    const entry = document.querySelector("div[data-type='template']").cloneNode(true);
+
+    entry.querySelector("a.mechanism-name").textContent = mechanism.name;
+    entry.querySelector("a.mechanism-name").href = "mechanism/" + mechanism.id;
     entry.querySelector("a.mechanism-link").textContent = mechanism.link;
     entry.querySelector("a.mechanism-link").href = mechanism.link;
+    entry.querySelector("div.mechanism-description").textContent = mechanism.comments;
+    entry.querySelector("a.image-link").href = "mechanism/" + mechanism.id;
+    entry.querySelector("img").src = mechanism.image.substring(1);
+    showRating(entry, mechanism.rating_likes - mechanism.rating_dislikes);
+    showAxes(entry, mechanism);
+    showCompleted(entry, mechanism.complete);
+
     entry.style.display = "block";
     list.appendChild(entry);
 }
 
+/**
+ * Lists all search results for one page
+ *
+ * @param {object} searchResults The search results as a dictionary
+ */
 function listSearchResults(searchResults) {
     adjustBackground();
     showResultInfo(searchResults.count);
@@ -238,10 +381,15 @@ function listSearchResults(searchResults) {
     }
 }
 
+/**
+ * Retrieves search results from the Django backend
+ *
+ * @param baseUrl The backend URL without search parameters
+ */
 function searchMechanisms(baseUrl = "http://mechanism-browser:8000/api/mechanisms/") {
     const xhttp = new XMLHttpRequest();
-    const url = getUrlWithParameters(baseUrl, getParameters());
-    xhttp.open("GET", url.toString());
+    const url = buildUrlWithParameters(baseUrl, getParameters());
+    xhttp.open("GET", url);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     xhttp.onreadystatechange = function () {
@@ -252,10 +400,16 @@ function searchMechanisms(baseUrl = "http://mechanism-browser:8000/api/mechanism
     };
 }
 
+/**
+ * Opens a page to create a new mechanism
+ */
 function createMechanism() {
-    window.location.href = getUrlWithParameters("http://mechanism-browser/create/", getParameters());
+    window.location.href = buildUrlWithParameters("http://mechanism-browser/create/", getParameters());
 }
 
+/**
+ * Toggles between basic and matrix input for axes
+ */
 function toggleInputMode() {
     if (document.getElementById("radioMatrixInput").checked) {
         document.getElementById("inputColumn").style.display = "none";
@@ -286,51 +440,37 @@ function toggleInputMode() {
     }
 }
 
-function mapNumberToAxis(number) {
-    switch (number) {
-        case 0:
-            return "R1";
-        case 1:
-            return "R2";
-        case 2:
-            return "R3";
-        case 3:
-            return "T1";
-        case 4:
-            return "T2";
-        case 5:
-            return "T3";
-        default:
-            return undefined;
-    }
-}
-
-function matrixClickHandler(event) {
-    // https://stackoverflow.com/a/12193346/8816968
-    event = event || window.event;
-    const cell = event.target || event.srcElement;
-    const inputIndex = cell.parentNode.rowIndex - 2;
-    const outputIndex = cell.cellIndex - 1;
-    if (inputIndex >= 0 && outputIndex >= 0) {
-        selectedMatrixCells[inputIndex][outputIndex] = !selectedMatrixCells[inputIndex][outputIndex];
-        if (selectedMatrixCells[inputIndex][outputIndex]) {
-            cell.style.border = "5px solid rgb(0, 162, 232)";
-        } else {
-            cell.style.border = "0px";
-        }
-        updateMatrix();
-        searchMechanisms("http://mechanism-browser:8000/api/mechanisms/");
-    }
-}
-
+/**
+ * Linearly interpolates between two values
+ *
+ * @param {number} value A value between 0 (inclusive) and 1 (inclusive)
+ * @param {number} min The minimum value
+ * @param {number} max The maximum value
+ * @returns {number} The interpolated value
+ */
 function lerp(value, min, max) {
     return min + (max - min) * value;
 }
 
+/**
+ * Tells whether a color is dark or not
+ *
+ * @param {number} r The red value
+ * @param {number} g The green value
+ * @param {number} b The blue value
+ * @returns {boolean}
+ */
 function isDark(r, g, b) {
     return (r + g + b) / 3 < 130;
 }
 
+/**
+ * Sets the color of a matrix cell
+ *
+ * @param {jQuery} cell The matrix cell
+ * @param {number} value The value for the matrix cell
+ * @param {number} maxValue The maximum value in the matrix
+ */
 function setCellColor(cell, value, maxValue) {
     let colorValue = 0.0;
     if (value > maxValue) {
@@ -357,6 +497,12 @@ function setCellColor(cell, value, maxValue) {
     }
 }
 
+/**
+ * Finds the maximum value in the matrix
+ *
+ * @param {Array.<Array.<number>>} matrix The matrix
+ * @returns {number} The maximum value
+ */
 function findMaxValueInMatrix(matrix) {
     let maxValue = 0;
     for (let x = 0; x < matrixSize; x++) {
@@ -367,22 +513,31 @@ function findMaxValueInMatrix(matrix) {
     return maxValue;
 }
 
-function setMatrixCells(matrix, minValue, maxValue) {
+/**
+ * Sets the value and color for each matrix cell
+ *
+ * @param {Array.<Array.<number>>} matrix The matrix
+ * @param {number} maxValue The maximum value in the matrix
+ */
+function setMatrixCells(matrix, maxValue) {
     for (let x = 0; x < matrixSize; x++) {
         for (let y = 0; y < matrixSize; y++) {
             const column = x + 1;
             const row = y + 2;
             const cell = $("#matrix")[0].rows[row].cells[column];
             cell.textContent = matrix[y][x];
-            setCellColor(cell, matrix[y][x], minValue, maxValue)
+            setCellColor(cell, matrix[y][x], maxValue);
         }
     }
 }
 
+/**
+ * Updates the matrix by retrieving the new data from the Django backend
+ */
 function updateMatrix() {
     const xhttp = new XMLHttpRequest();
-    const url = getUrlWithParameters("http://mechanism-browser:8000/api/mechanisms/matrix/", getParameters());
-    xhttp.open("GET", url.toString());
+    const url = buildUrlWithParameters("http://mechanism-browser:8000/api/mechanisms/matrix/", getParameters());
+    xhttp.open("GET", url);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     xhttp.onreadystatechange = function () {
