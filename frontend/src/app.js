@@ -7,6 +7,7 @@
 const cons = require("consolidate");
 const exec = require("child_process").exec;
 const express = require("express");
+const path = require("path");
 const socketIo = require("socket.io");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
@@ -27,10 +28,10 @@ init();
 function initExpressApp(port) {
     const app = express();
     app.use(express.static(__dirname + "/public"));
-    app.use("/bootstrap", express.static(__dirname + "/node_modules/bootstrap/dist/"));
-    app.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist/"));
-    app.use("/jscad", express.static(__dirname + "/external/OpenJSCAD.org/packages/web/"));
-    app.use("/socket.io", express.static(__dirname + "/node_modules/socket.io-client/dist/"));
+    app.use("/bootstrap", express.static(path.join(__dirname, "../node_modules/bootstrap/dist/")));
+    app.use("/jquery", express.static(path.join(__dirname, "../node_modules/jquery/dist/")));
+    app.use("/socket.io", express.static(path.join(__dirname, "../node_modules/socket.io-client/dist/")));
+    app.use("/jscad", express.static(path.join(__dirname, "../external/OpenJSCAD.org/packages/web/")));
     app.engine("html", cons.mustache);
     app.set("views", __dirname + "/public");
     app.set("view engine", "html");
