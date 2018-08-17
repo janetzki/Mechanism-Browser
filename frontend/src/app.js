@@ -1,5 +1,6 @@
-/*
- * @file The node server. Provides web pages and converts 3D model files.
+/**
+ * @module webServer
+ * @description The node server. Provides web pages and converts 3D model files.
  * @author Jonathan Janetzki
  */
 

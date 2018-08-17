@@ -1,8 +1,8 @@
-/*
- * @file JS code that is shared between multiple types of mechanism article pages
+/**
+ * @module mechanism
+ * @description JS code that is shared between multiple types of mechanism article pages
  * @author Jonathan Janetzki
  */
-
 
 /**
  * Initializes the data

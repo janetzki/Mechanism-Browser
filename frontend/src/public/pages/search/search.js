@@ -1,5 +1,5 @@
-/*
- * @file JS code for the search page
+/**
+ * @module searchPage
  * @author Jonathan Janetzki
  */
 

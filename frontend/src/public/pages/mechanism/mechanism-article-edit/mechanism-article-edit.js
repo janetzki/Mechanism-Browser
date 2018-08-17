@@ -1,5 +1,5 @@
-/*
- * @file JS code for the mechanism article editing page
+/**
+ * @module mechanismArticleEditPage
  * @author Jonathan Janetzki
  */
 
