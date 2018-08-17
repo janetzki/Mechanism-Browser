@@ -7,7 +7,7 @@ const axes = ["inputR1", "inputR2", "inputR3", "inputT1", "inputT2", "inputT3", 
 let id, transmissionInverted, transmissionGuessed, complete;
 
 /**
- * Initializes the data, infobox and 3D model
+ * Initializes and shows the data about a mechanism
  */
 window.onload = function () {
     initData();
@@ -16,17 +16,6 @@ window.onload = function () {
     initIncompleteRow();
     init3DModel();
 };
-
-/**
- * Initializes the data
- */
-function initData() {
-    const dataElement = $($(".data")[0]);
-    id = dataElement.data("id");
-    transmissionInverted = dataElement.data("transmission-inverted");
-    transmissionGuessed = dataElement.data("transmission-guessed");
-    complete = dataElement.data("complete");
-}
 
 /**
  * Shows the icons for the axes
@@ -39,7 +28,7 @@ function initAxesIcons() {
 }
 
 /**
- * Shows the transmission
+ * Shows additional information about the transmission
  */
 function initTransmissionInfo() {
     if (transmissionInverted || transmissionGuessed) {
@@ -78,24 +67,6 @@ function init3DModel() {
 }
 
 
-/**
- * Sets the icon for an axis
- *
- * @param {object} image The image as a DOM object
- * @param {boolean} status The status of this axis (true: set, false: not set)
- */
-function setAxisIcon(image, status) {
-    const baseFileName = image.id
-        .slice(-2)
-        .toLowerCase();
-
-    $(image).data("status", status);
-    if (status) {
-        image.src = "icons/" + baseFileName + "_selected.png";
-    } else {
-        image.src = "icons/" + baseFileName + ".png";
-    }
-}
 
 /**
  * Opens a page to edit this article

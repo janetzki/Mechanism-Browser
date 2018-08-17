@@ -42,6 +42,7 @@ function initInputEvents() {
 }
 
 
+
 /**
  * Inserts arguments into a string at given placeholders
  * @example
