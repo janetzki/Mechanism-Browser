@@ -80,9 +80,20 @@ At "Mechanisms", click "Add", fill in the form, and confirm.
 
 
 <br></br>
-## Documentation
+## Frontend documentation
 The documentation of the frontend can be found at `frontend/docs/index.html`. To re-generate it, run:
 ```
 cd frontend
 npm run docs:build
+```
+
+
+<br></br>
+## Web crawler
+To fill the database with the web crawler, perform the following steps. 
+You might want to create a virtual environment to prevent interfering libraries.
+```
+cd exploration/web_page_extractor
+pip install -r requirements.txt
+python web_page_extractor.py
 ```
