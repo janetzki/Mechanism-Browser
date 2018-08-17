@@ -112,11 +112,11 @@ function setImage(image, filePrefix, status, triState = false) {
 }
 
 /**
- * Toggles an image of an axis between three states (set, not set, not specified)
+ * Toggles the icon for an axis between three states (set, not set, not specified)
  *
  * @param {object} image The image as a DOM object
  */
-function toggleImage(image) {
+function toggleAxisIcon(image) {
     switch ($(image).data("status")) {
         case true:
             $(image).data("status", false);
