@@ -204,7 +204,7 @@ function renderEmptyPage(response, page) {
  * @returns {string} The command for the conversion
  */
 function buildCommandForConversion(modelName, convertFromScad) {
-    modelName = "src" + modelName;
+    modelName = path.join(__dirname, "..", modelName);
     let stlFileName = modelName;
     let command = "";
     if (convertFromScad) {
