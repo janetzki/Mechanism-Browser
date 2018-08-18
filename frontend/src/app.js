@@ -49,8 +49,8 @@ function initExpressApp(port) {
     app.get("/create", function (req, res) {
         renderEmptyPage(res, "mechanism/mechanism-article-edit/mechanism-article-edit");
     });
-    app.get("*/media/icons:name", function (req, res) {
-        res.sendFile(__dirname + "/media/icons/" + req.params["name"]);
+    app.get("*/imgs/busy.gif", function (req, res) {
+        res.sendFile(path.join(__dirname, "../media/busy.gif"));
     });
 
     app.listen(port);

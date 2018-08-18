@@ -16,6 +16,7 @@ db.sqlite3
 # media
 img/
 parametric_models/
+busy.gif
 
 # virtual environment
 venv/

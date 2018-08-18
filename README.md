@@ -56,8 +56,9 @@ sudo npm install
 Setup OpenJSCAD:
 ```
 git clone https://github.com/jscad/OpenJSCAD.org.git
+cp OpenJSCAD.org/packages/web/imgs/busy.gif media/busy.gif
 mkdir external
-mv OpenJSCA.org/ external/
+mv OpenJSCAD.org/ external/
 ```
 
 Then, start the Node.js server:
