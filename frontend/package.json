@@ -4,7 +4,7 @@
     "docs:build": "jsdoc -r src -d docs"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "consolidate": "^0.15.1",
     "express": "^4.16.3",
     "jquery": "^3.3.1",
