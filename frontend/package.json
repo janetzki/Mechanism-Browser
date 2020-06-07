@@ -7,7 +7,7 @@
     "bootstrap": "^3.4.1",
     "consolidate": "^0.15.1",
     "express": "^4.16.3",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jsdoc": "^3.5.5",
     "mustache": "^2.3.1",
     "socket.io": "^2.1.1",
