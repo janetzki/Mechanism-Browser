@@ -2,6 +2,6 @@ Django==2.0.8
 django-cors-headers==2.2.0
 django-filter==1.1.0
 django-updown==1.1.0
-djangorestframework==3.8.2
+djangorestframework==3.9.1
 Pillow==5.1.0
 pytz==2018.4
